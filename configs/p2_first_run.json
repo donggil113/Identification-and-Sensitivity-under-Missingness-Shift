@@ -1,0 +1,70 @@
+{
+  "experiment_id": "P2-FR1",
+  "title": "P2 FIRST RUN: exact finite-support bounds on the risk difference of two fixed models under an unknown missingness policy",
+  "work_id_mapping": "none (P2 is not mapped to any pre-existing Work ID; the repository had no prior work)",
+  "preregistration": {
+    "fixed_before_run": true,
+    "disclosure": "A smoke test on this exact scenario (same joint, models, q) was executed before this config was committed; it printed Delta(q), intervals for Gamma in {1,5/4,2,4,inf} and a Gamma* bracket for the pattern set. No scenario parameter was changed after that smoke test. Environments, Gamma grid, sampling design and hypotheses were written after it.",
+    "hypotheses": {
+      "H-ENG": "Every LP returns an exact certificate (primal-dual gap 0 or Farkas); Gamma=1 gives the point Delta(q); intervals are nested in Gamma and in constraint strength; pi* in Pi implies Delta(pi*) in interval; support violations are flagged / reported INFEASIBLE rather than as numbers.",
+      "H1": "Pattern-marginal set, primary scenario: the ranking-transfer threshold Gamma* is finite and the closed-form certified value Gamma_cf satisfies Gamma_cf <= Gamma*.",
+      "H2": "At Gamma_pre = 2 the joint interval (same unknown policy for both models) is strictly narrower than the separate-bounds interval, for every constraint kind.",
+      "H3": "Prop. 2 prediction: under Brier loss with non-constant f_A - f_B, the joint interval has positive width for every Gamma > 1 and every constraint kind including the unlabelled observed law; controls with additively separable D (C1) or constant f_A - f_B (C2, observed-law only) have zero width.",
+      "H4": "Plug-in intervals (empirical complete-data joint) do not reliably contain the population interval; containment frequency is reported per n with a Wilson interval, no nominal level is claimed."
+    },
+    "primary_metric": "Gamma* bracket (pattern-marginal set) for the primary scenario, compared with Gamma_cf.",
+    "secondary_metrics": ["interval endpoints and widths per (Gamma, kind)", "separate/joint width ratio", "scenario-grid range vs LP interval", "plug-in containment frequencies"],
+    "independent_unit": {
+      "population_parts": "one hand-specified finite population (n_units = 1): no statistical generalisation across scenarios is possible; environments are hand-specified illustrations, not samples.",
+      "sampling_part": "independent replication (fresh i.i.d. complete-data sample of size n per replication)"
+    },
+    "budget": {"cpu_threads": 2, "wall_seconds": 120, "gpu": false, "installs": false, "downloads": false},
+    "stop_conditions": [
+      "Any LP without a valid exact certificate -> stop, report FAIL, do not use its numbers.",
+      "Any case with pi* in Pi but Delta(pi*) outside the interval -> stop (bug).",
+      "Wall time over 120 s -> abort; unfinished parts are NOT_RUN.",
+      "Scientific: if the only supported statement is 'MNAR can reverse random-dropout rankings', make no method claim."
+    ]
+  },
+  "scenario": {
+    "d": 2,
+    "px": {"00": "2/5", "01": "3/20", "10": "3/20", "11": "3/10"},
+    "py1": {"00": "1/10", "01": "3/5", "10": "2/5", "11": "9/10"},
+    "loss": "brier",
+    "model_A": {"type": "bayes_under_mcar", "note": "idealised random-dropout-trained model: P(Y=1 | X_r = x_r)"},
+    "model_B": {"type": "mode_impute", "note": "fill missing features with the population mode, then full-data P(Y=1 | X)"},
+    "dropout_q": {"type": "independent", "drop_rates": ["1/5", "3/10"]}
+  },
+  "gamma_grid": ["1", "5/4", "3/2", "2", "3", "5", "inf"],
+  "gamma_pre": "2",
+  "kinds": ["none", "feature", "pattern"],
+  "environments": [
+    {"id": "E0_MCAR", "type": "mcar"},
+    {"id": "E1p_self_x2", "type": "interaction", "s": "x2", "t": "missing_x2", "eps": "3/2"},
+    {"id": "E1m_self_x2", "type": "interaction", "s": "x2", "t": "missing_x2", "eps": "-3/2"},
+    {"id": "E2p_label_x2", "type": "interaction", "s": "label", "t": "missing_x2", "eps": "3/2"},
+    {"id": "E2m_label_x2", "type": "interaction", "s": "label", "t": "missing_x2", "eps": "-3/2"},
+    {"id": "E3p_self_x2_strong", "type": "interaction", "s": "x2", "t": "missing_x2", "eps": "5/2"},
+    {"id": "E3m_self_x2_strong", "type": "interaction", "s": "x2", "t": "missing_x2", "eps": "-5/2"},
+    {"id": "E4_correlated_mcar", "type": "correlated_mcar", "kappa": "1/10"}
+  ],
+  "support_violation": {
+    "id": "SV1",
+    "q_evaluator": {"11": "1/2", "10": "3/10", "01": "1/5", "00": "0"},
+    "deployment": "independent dropout with the primary drop rates (uses mask 00, which q_evaluator never produces)"
+  },
+  "controls": {
+    "C1_additive_D": "replace D by its ANOVA additive part D - D_int (w, q weights)",
+    "C2_constant_shift_B": {"kappa": "1/20", "note": "B' = A + kappa, so f_A - f_B' is constant"}
+  },
+  "counterexample_d1": {
+    "id": "CX1",
+    "d": 1,
+    "px": {"0": "1/2", "1": "1/2"},
+    "py1": {"0": "1/4", "1": "3/4"},
+    "dropout_q": {"type": "independent", "drop_rates": ["1/4"]},
+    "expected_by_hand": {"delta_q": "-1/64", "observed_law_interval_gamma_inf": ["-5/64", "3/64"]}
+  },
+  "gamma_star": {"cap": "1024", "bisect_steps": 14, "kinds": ["none", "feature", "pattern"]},
+  "empirical": {"n": [100, 1000], "replications": 100, "seed": 20260926, "gamma": "2", "kind": "pattern"}
+}
