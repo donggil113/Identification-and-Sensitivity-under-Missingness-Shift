@@ -28,12 +28,19 @@ parameters but never identify label-dependent missingness.
 Random modality dropout (artificial mask $M \perp (X,Y)$) vs.\ natural
 missingness (mask $R \sim \pi(\cdot\mid x,y)$). Question: range of $\pi$ over
 which the sign of $\Delta(\pi)=R_A(\pi)-R_B(\pi)$ equals that of $\Delta(q)$.
-Contributions (to be confirmed against related work \todo{RELATED_WORK verification}):
-(i) exact sharp interval relative to stated assumptions;
-(ii) row-space characterisation of point identification (only the interaction matters);
-(iii) ranking-transfer threshold $\Gamma^*$ and a closed-form certificate;
-(iv) falsification of small $\Gamma$ from unlabelled deployment data.
+Candidate contributions (novelty unverified; see RELATED\_WORK.md):
+(i) the feature-mask estimand---risk difference of two fixed predictors under
+the same unknown policy with a $\Gamma$-box, matched marginals and the
+unlabelled deployment law---with an exact sharp interval relative to stated assumptions;
+(ii) its identification reading (only the cell-by-mask interaction matters;
+Brier: identified from unlabelled data iff $f_A-f_B$ is constant);
+(iii) falsification of small $\Gamma$ from unlabelled deployment data.
+Not contributions (prior work): bounding the difference jointly
+(Guerdan et al., ICML 2024); tipping-point summaries such as $\Gamma^*$ (E-value);
+LP sharp bounds (Manski; Balke--Pearl); label-dependent test-ordering shift with
+separate worst-case risks (Subbaswamy et al., AISTATS 2021).
 We make no claim about how often rankings reverse in practice.
+\todo{P2-FR2: does (i) add information beyond a difference bound without the observed-law constraint?}
 
 \section{Setting}
 Cells $c=(x,y)$, masks $r$, full-data law $w$, fixed predictors $f_A,f_B$,
@@ -82,8 +89,11 @@ Scenario grid vs.\ sharp interval, joint vs.\ separate bounds: see Table~\todo{P
 \todo{P2-FR1-loss}
 
 \section{Related work}
-\todo{RELATED_WORK verification: missingness shift, MNAR sensitivity, partial
-identification, DRO evaluation, feature deletion, missing-modality robustness}
+Closest: Subbaswamy et al.\ (AISTATS 2021); Guerdan et al.\ (ICML 2024);
+ICYM$^2$I (ICLR 2026); Zhou et al.\ (AISTATS 2023); Rockenschaub et al.\ (2024).
+Most entries were read at abstract level or through a summariser
+(RELATED\_WORK.md). \todo{RELATED_WORK: full-text reading of the closest five,
+forward-citation search, inference literature (Imbens--Manski, Stoye)}
 
 \section{Limitations}
 Assumptions A1--A3 are untestable (A2 only partly); $\Gamma$ is not estimable;

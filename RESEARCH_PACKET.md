@@ -283,7 +283,17 @@ the population endpoints but have no coverage guarantee (H4 as expected).
   matters and label-dependence is never identified; Prop. 3 certificate; Prop. 4
   falsification of small Γ). All are elementary and their novelty is
   unverified, so **no new-method claim is made**. The contribution candidate
-  is an analysis framework, pending the literature check and FR2.
+  is an analysis framework, pending FR2.
+* Literature consequences (RELATED_WORK.md): bounding the difference jointly
+  rather than separately is known (Guerdan et al., ICML 2024), so H2 is a
+  sanity check, **not** a P2 contribution; Γ* is a tipping-point summary of the
+  E-value / sensitivity-value kind; Prop. 2(b) is a one-line consequence of the
+  rank of transportation polytopes; label-dependent test-ordering shifts with
+  separate worst-case bounds already appear in Subbaswamy et al. (AISTATS 2021).
+  What remains is the feature-mask estimand with the unlabelled observed-law
+  constraint and its identification reading. In FR1 the matched pattern rates
+  add little (Γ* 1.397 → 1.439) while the unlabelled observed law adds more
+  (→ 2.069); one population only.
 
 ## 6. Threats to validity
 * A1 (no full-data shift) is strong; in practice complete cases are selected

@@ -50,13 +50,28 @@ characterisation), Cor. 2′ (Brier), Prop. 3 (closed-form bound), Prop. 4
 (written, elementary, self-checked only). C1 (complete-case source) UNPROVED;
 C2 (ANOVA vs optimal decomposition) CONJECTURE.
 
+## Literature status (RELATED_WORK.md)
+Closest prior work: Subbaswamy, Adams, Saria (AISTATS 2021) — label-dependent
+test-ordering shift, separate one-sided worst-case risks per model;
+Guerdan, Coston, Holstein, Wu (ICML 2024) — bounds on a performance
+*difference* under MSM-type assumptions; ICYM²I (ICLR 2026) — modality value
+under missingness shift, IPW under MAR. Known and **not** counted as P2
+contributions: joint-vs-separate cancellation (H2), LP sharp bounds, Γ-type
+sensitivity models, tipping-point summaries, transportation-polytope rank.
+No paper found (web search only, not exhaustive) with the feature-mask
+difference estimand + matched marginals / unlabelled observed law + row-space
+identification characterisation. Most reads are ABSTRACT_ONLY or
+summariser-mediated PARTIAL_TEXT.
+
 ## Stop-rule assessment
 FR1 produced identification/evaluation statements beyond "random dropout is
 bad" (only the interaction of D moves Δ; label dependence is never identified
 from unlabelled data; small Γ can be refuted by unlabelled data). They are
-elementary and novelty is unverified (RELATED_WORK.md), so **no new-method
-claim** is made. The project continues only as an analysis framework, and only
-if P2-FR2 shows it stays informative in the realistic data structure.
+elementary, several ingredients are known, and novelty is unverified, so
+**no new-method claim** is made. The project continues only as an analysis
+framework, and only if P2-FR2 shows that its distinctive ingredient (the
+unlabelled observed-law constraint) stays informative in the realistic data
+structure beyond a Guerdan-style difference bound without it.
 
 ## Next decision experiment (one)
 **P2-FR2 — complete-case source.** Realistic pipeline: labelled data exist
@@ -68,9 +83,16 @@ constraint `(ρ(r)/Γ) Σ_{r′} f(c, r′) ≤ f(c, r) ≤ Γ ρ(r) Σ_{r′} f
 `ρ` the observed mask rates. `Δ` is linear in `f`, so the sharp interval is
 again two exact LPs.
 * Hypothesis: on the FR1 population (each FR1 environment in turn as the true
-  policy), Γ*_FR2 stays well above 1.
-* Primary metric: Γ*_FR2 (pattern information) vs Γ*_FR1 = 1.439.
-* Decision rule (fix before running): if Γ*_FR2 < 1.05 for the MCAR truth,
-  stop the framework claim and write P2 up as a negative identification note;
-  otherwise proceed to a pre-registered real-data pilot (needs approval).
+  policy), the unlabelled-law interval stays informative once `w` is unknown.
+* Primary metric: Γ*_FR2 with the unlabelled incomplete-unit law, for the
+  MCAR truth; compared with Γ*_FR2 without it (a Guerdan-style difference
+  bound on the same Γ-box) and with Subbaswamy-style separate one-sided
+  worst-case risks. FR1 reference values: 2.069 / 1.397.
+* Decision rule (fix in the config before running):
+  (a) Γ*_FR2(observed law) < 1.05 → stop the framework claim; write P2 up as a
+      negative identification note;
+  (b) (Γ*_obs − 1) ≤ 1.1 × (Γ*_none − 1) → the distinctive constraint adds
+      nothing over known difference bounds; stop the independent-contribution
+      claim;
+  (c) otherwise → request approval for a pre-registered real-data pilot.
 * Budget: same (2 CPU threads, 120 s, no installs).
