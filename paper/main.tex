@@ -1,102 +1,795 @@
-% P2 manuscript SKELETON (English). Not a submission draft.
-% Rule: every place without a verified result carries \todo{EXPERIMENT_ID}.
-% Numbers quoted here must match results/raw/ and RESEARCH_PACKET.md.
+% =====================================================================
+% Manuscript v1 (P2).  TARGET_YEAR = 2027, TEMPLATE_YEAR = 2026,
+% SUBMISSION_READY = false.  No official ICML 2027 kit was found
+% (icml.cc 2027 pages returned 404 on 2026-09-26), so the official ICML 2026
+% anonymous/review style is used provisionally.  icml2026.sty / .bst are NOT
+% vendored (downloading them was not approved); see paper/README.md.
+% COMPILE_NOT_RUN: no LaTeX compiler in this environment.
+% All numbers come from results/raw via scripts/make_paper_tables.py or are
+% quoted from RESEARCH_PACKET.md; see paper/claims.csv.
+% =====================================================================
 \documentclass{article}
-\usepackage{amsmath,amssymb,amsthm,booktabs}
-\newcommand{\todo}[1]{\textbf{[TODO: #1]}}
-\newtheorem{proposition}{Proposition}
-\newtheorem{corollary}{Corollary}
-\title{When Can Modality-Dropout Rankings Transfer?\\
-\large Partial identification of model comparisons under missingness-policy shift}
-\author{\todo{authors}}
-\begin{document}
-\maketitle
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usepackage{icml2026}   % review (anonymous) mode; [accepted] is NOT used
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[capitalize,noabbrev]{cleveref}
 
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}{Assumption}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\Dnat}{\Delta_{\mathrm{nat}}}
+\newcommand{\Mcc}{\mathcal{M}_{\mathrm{cc}}}
+
+\icmltitlerunning{What Can Missing-Modality Evaluations Identify under Selective Observation?}
+
+\begin{document}
+
+\twocolumn[
+\icmltitle{What Can Missing-Modality Evaluations Identify\\ under Selective Observation?}
+\icmlsetsymbol{equal}{*}
+\begin{icmlauthorlist}
+\icmlauthor{Anonymous Authors}{anon}
+\end{icmlauthorlist}
+\icmlaffiliation{anon}{Anonymous Institution}
+\icmlcorrespondingauthor{Anonymous Authors}{anonymous@example.com}
+\icmlkeywords{missing modalities, partial identification, sensitivity analysis, model evaluation}
+\vskip 0.3in
+]
+\printAffiliationsAndNotice{}
+
+% ---------------------------------------------------------------------
 \begin{abstract}
-Multimodal models are routinely compared by deleting modalities at random.
-We ask for which natural missingness policies such a ranking remains valid.
-For finite supports we show that the set of deployment risk differences
-compatible with a bounded-selection sensitivity model and the available
-marginal information is an interval with attainable endpoints (two linear
-programs), that only the cell-by-mask interaction of the loss difference can
-move it, and that unlabelled deployment data can refute small sensitivity
-parameters but never identify label-dependent missingness.
-\todo{P2-FR2: realistic complete-case source} \todo{P2-real: empirical study}
+Multimodal models are usually compared by deleting modalities at random from
+complete test cases. We ask what such an evaluation, together with the data
+an evaluator can actually observe, identifies about the risk difference of
+two fixed models under the natural, possibly informative, missingness of
+deployment. We write the observable information of four observation models
+(an oracle that knows the full-data law; complete cases only; complete cases
+plus mask frequencies and the unlabelled law of incomplete units; and the
+same conditionals without selection fractions) as linear constraints on the
+joint law of cells and masks, and combine them with a pattern-mixture
+sensitivity model. For finite supports this yields exact linear programs,
+but the paper's claims are about identification, not about the programs. We
+show that (i) the general identification criterion is orthogonality of the
+loss contrast to the span of feasible differences, and the familiar
+additive-separability condition needs a relative-interior assumption that
+fails at the MCAR boundary; (ii) with complete cases and unlabelled
+incomplete units, the natural-missingness Brier-risk difference is
+identified only if the two models agree on every incomplete input; (iii)
+without mask frequencies the sign is not identified even under MCAR; and (iv)
+a feasible but too small sensitivity parameter can certify the wrong sign.
+In one hand-specified binary population (exploratory, results seen during
+development), random dropout on complete cases ranks the models opposite to
+the natural-missingness truth in a label-dependent environment, and a
+conservative confidence set preserves the population sign only at
+$n=10^5$. Results on real multimodal data are not reported.
 \end{abstract}
 
+% ---------------------------------------------------------------------
 \section{Introduction}
-Random modality dropout (artificial mask $M \perp (X,Y)$) vs.\ natural
-missingness (mask $R \sim \pi(\cdot\mid x,y)$). Question: range of $\pi$ over
-which the sign of $\Delta(\pi)=R_A(\pi)-R_B(\pi)$ equals that of $\Delta(q)$.
-Candidate contributions (novelty unverified; see RELATED\_WORK.md):
-(i) the feature-mask estimand---risk difference of two fixed predictors under
-the same unknown policy with a $\Gamma$-box, matched marginals and the
-unlabelled deployment law---with an exact sharp interval relative to stated assumptions;
-(ii) its identification reading (only the cell-by-mask interaction matters;
-Brier: identified from unlabelled data iff $f_A-f_B$ is constant);
-(iii) falsification of small $\Gamma$ from unlabelled deployment data.
-Not contributions (prior work): bounding the difference jointly
-(Guerdan et al., ICML 2024); tipping-point summaries such as $\Gamma^*$ (E-value);
-LP sharp bounds (Manski; Balke--Pearl); label-dependent test-ordering shift with
-separate worst-case risks (Subbaswamy et al., AISTATS 2021).
-We make no claim about how often rankings reverse in practice.
-\todo{P2-FR2: does (i) add information beyond a difference bound without the observed-law constraint?}
+\label{sec:intro}
 
-\section{Setting}
-Cells $c=(x,y)$, masks $r$, full-data law $w$, fixed predictors $f_A,f_B$,
-mask-specific losses $L_f(c,r)$, $D=L_A-L_B$,
-$\Delta(\pi)=\sum_{c,r} w_c\,\pi(r\mid c)\,D(c,r)$.
-Policy sets $\Pi(\Gamma;K)$: $\Gamma$-box around the dropout law $q$ plus
-$K\in\{\text{none},\text{feature},\text{pattern},\text{observed law}\}$.
-Assumptions A1--A4 (known full-data law, $\Gamma$-box, exact marginals, fixed models).
-Distinctions: natural $R$ vs.\ artificial $M$; population $w$ vs.\ complete sample
-$\hat w$ vs.\ complete-case law; exact constraints vs.\ plug-in; oracle vs.\ available.
+Robustness to missing modalities is typically measured by \emph{artificial}
+deletion: a modality is dropped at random from complete test cases and the
+resulting risks of competing models are compared
+\cite{neverova2016moddrop,ma2022multimodal}. At deployment, however,
+modalities are missing for reasons, such as cost, device failure, or a
+clinician's judgement, that can depend on the missing values and on the
+outcome. The evaluation therefore conflates two different random masks: the
+artificial mask $M$, which the evaluator draws independently of the data,
+and the natural mask $R$, whose law is unknown. It also usually conflates two
+populations: complete cases, on which $M$ is applied, and the full population
+in which $R$ occurs. Under informative missingness the complete-case law
+$P(C\mid R=\one)$ differs from the full-data law $P(C)$.
 
+This paper studies a narrow question: \emph{given what an evaluator can
+observe, what does a missing-modality evaluation identify about the
+natural-missingness risk difference of two fixed models?} We do not propose
+a new estimator or a new optimisation method. Finite-support partial
+identification by linear programming is classical
+\cite{manski2003partial,balke1997bounds,horowitz2000nonparametric}, bounded
+likelihood-ratio sensitivity models are standard
+\cite{rosenbaum1987sensitivity,tan2006distributional,zhao2019sensitivity,dorn2023sharp},
+and bounding a performance \emph{difference} directly instead of two separate
+risks is known to exploit shared uncertainty \cite{guerdan2024predictive}. Our
+contribution is an explicit account of the observation model and of what it
+does and does not identify in this evaluation problem:
+
+\begin{itemize}
+\item \textbf{Observation models.} We separate four information sets
+(A: full-data law known, as an oracle; B: complete cases only; C: complete
+cases plus mask frequencies and the unlabelled law of incomplete units; D:
+the conditionals of C without selection fractions) and derive each
+observable as a linear constraint on the joint mass $p(c,r)=P(C=c,R=r)$. We
+show that the pattern-mixture sensitivity model we use is exactly linear
+after a reparametrisation, and point out where a naive plug-in of unknown
+products would \emph{not} be (\cref{sec:setup}).
+\item \textbf{Identification limits.} We state the general criterion
+(orthogonality to feasible differences), show where additive separability
+fails (the MCAR boundary, structural zeros), and prove that in setting C the
+Brier-risk difference is identified only when the two models agree on all
+incomplete inputs, that in settings B and D its sign is undetermined even
+under MCAR, and that deleting a support restriction differs from letting the
+sensitivity parameter grow (\cref{sec:ident}).
+\item \textbf{Failure modes.} We exhibit an environment in which random
+dropout on complete cases ranks the models in the wrong order, and show that
+a sensitivity parameter below the truth can yield a non-empty set that
+certifies the wrong sign (\cref{sec:counter}).
+\item \textbf{Sampling.} Population identified sets are not confidence sets.
+We give an outer confidence interval with a short validity proof and show that
+the plug-in feasibility of the MCAR model is an unreliable diagnostic
+(\cref{sec:sampling}).
+\end{itemize}
+All numerical results come from one hand-specified finite population with
+two binary modalities; they are exact (rational arithmetic with certified
+linear programs) but they illustrate the statements rather than estimate how
+often rankings change in practice. Results on real multimodal data are not
+reported \todo{P2-real: dataset with natural modality missingness, license,
+approval, pre-registered analysis}.
+
+% ---------------------------------------------------------------------
+\section{Related Work}
+\label{sec:related}
+
+\textbf{Missingness shift.} \citet{zhou2023domain} study domain adaptation
+when source and target share $P(X,Y)$ but differ in the missingness
+mechanism, with identification results for MCAR-type shifts. The preprint of
+\citet{rockenschaub2024robust} shows that the Bayes predictor is invariant
+only under ignorable shifts and that label-dependent shifts are not
+ignorable. \citet{choi2026icym2i} show that estimates of a modality's value
+are biased when modality availability differs between source and target and
+correct them by inverse probability weighting under a missing-at-random
+assumption. These works learn or re-weight under ignorability; we study
+non-ignorable (value- and label-dependent) missingness through partial
+identification and do not learn predictors.
+
+\textbf{Evaluation under shift.} \citet{subbaswamy2021evaluating} define the
+worst-case risk of a fixed model when a user-chosen conditional $P(W\mid Z)$
+shifts, as the expected loss on the worst $(1-\alpha)$ subsample, and
+estimate it by a conditional-quantile (CVaR-type) dual. Their sepsis case
+study shifts $P(\text{test order}\mid \text{demographics, disease status})$,
+i.e.\ a label-dependent measurement policy, and reports the worst-case
+accuracy of two models separately. Our setting can be written in their
+notation with $W=R$ and $Z=(X,Y)$; we differ by (i) conditioning the
+information on what is observable when $X$ is partly missing, (ii) using a
+two-sided pattern-mixture ratio instead of a one-sided subsample bound, and
+(iii) bounding the difference of two models. \citet{guerdan2024predictive}
+bound the performance difference (a ``$\delta$-regret interval'') between a
+status-quo decision policy and a proposed one under selective labels, using
+marginal-sensitivity-type bounding functions, and show that terms shared by
+both policies cancel; their minimal uncertainty set is stated given the
+bounding functions and they note that the resulting interval need not be the
+tightest implied by the causal assumption. The joint-versus-separate
+comparison in our experiments is an instance of their observation and is not
+claimed as new.
+
+\textbf{Partial identification and sensitivity analysis.} Sharp bounds with
+missing outcomes and covariates go back to Manski
+\cite{manski2003partial,horowitz2000nonparametric}; linear-programming bounds
+for discrete variables are standard \cite{balke1997bounds}. Our sensitivity
+model is a pattern-mixture restriction \cite{little1993pattern} of the
+bounded-likelihood-ratio type used by
+\citet{rosenbaum1987sensitivity,tan2006distributional,zhao2019sensitivity,dorn2023sharp}
+and, for biased samples, by \citet{sahoo2022learning}. The ranking-transfer
+threshold we report is a tipping-point summary in the spirit of the E-value
+\cite{vanderweele2017sensitivity}. Confidence sets for partially identified
+parameters are discussed by \citet{imbens2004confidence,stoye2009more}; our
+outer interval is a simple, conservative projection construction.
+
+\textbf{Adversarial deletion and missing labels.} Worst-case per-instance
+feature deletion is studied for learning by \citet{globerson2006nightmare}.
+Non-random missingness of ratings changes the apparent ranking of
+recommender models \cite{marlin2009collaborative}, and robust policy
+improvement under confounding is studied by \citet{kallus2018confounding}.
+These concern learning or missing labels rather than evaluation with missing
+features.
+
+% ---------------------------------------------------------------------
+\section{Problem Setup: Observation Models}
+\label{sec:setup}
+
+\textbf{Population and masks.} A unit has a cell $c=(x,y)\in\cC$ with
+$x\in\{0,1\}^d$ and $y\in\{0,1\}$, a natural mask $R\in\cR=\{0,1\}^d$ ($r_j=1$
+means modality $j$ is observed, $\one$ is the complete mask), and a label
+indicator $S\in\{0,1\}$. The unknown joint mass is
+\[
+p(c,r)=P(C=c,R=r),\qquad w_c=\textstyle\sum_r p(c,r),\quad \rho_r=\sum_c p(c,r).
+\]
+The evaluator's artificial mask $M\sim q$ is drawn independently of $(C,R)$.
+Two fixed predictors $f_A,f_B$ see $x_r$ (the observed coordinates) and $r$;
+$L_f(c,r)=\ell(f(x_r,r),y)$ and $D(c,r)=L_A(c,r)-L_B(c,r)$. We use the Brier
+loss, so $D(c,r)=u(x_r)-2y\,\delta(x_r)$ with $\delta=f_A-f_B$ and
+$u=f_A^2-f_B^2$.
+
+\textbf{Estimands.} The target is the natural-missingness risk difference
+\[
+\Dnat=\textstyle\sum_{c,r}p(c,r)\,D(c,r).
+\]
+The usual evaluation computes the random-dropout difference on complete
+cases, $\Delta^{\mathrm{drop}}_{\mathrm{cc}}(q)=\sum_c v_c\sum_r q_r D(c,r)$
+with $v_c=P(C=c\mid R=\one)$. We write
+$\Delta^{\mathrm{cc}}_r=\sum_c v_c D(c,r)$ for the per-mask differences on
+complete cases.
+
+\begin{assumption}[Labels]\label{ass:labels}
+$S=\mathbb{1}[R=\one]$: labels are observed exactly for complete cases. (If
+label availability were independent of the mask, $S$ would enter as a
+separate factor; we do not analyse that case.)
+\end{assumption}
+
+\textbf{Information sets.} Each observable becomes one family of linear rows
+in the unknowns. Constants are the observed quantities; unknowns are $p$ and
+the auxiliary scalars listed.
+\begin{itemize}
+\item[\textbf{B}] complete cases only (known: $v$; unknown: $p$, $\rho_{\one}$):
+$p(c,\one)-\rho_{\one}v_c=0$ for all $c$; $\sum_{c,r}p(c,r)=1$.
+\item[\textbf{C}] one sample with \cref{ass:labels} (known: $\theta_c=p(c,\one)$
+and $\omega(r,o)=P(R=r,X_r=o)$ for $r\neq\one$):
+$p(c,\one)=\theta_c$; $\sum_{c:\,x_r(c)=o}p(c,r)=\omega(r,o)$. These rows fix
+all $\rho_r$.
+\item[\textbf{D}] separate samples (known: $v$ and
+$\mu_r(o)=P(X_r=o\mid R=r)$; unknown: $p,\rho$):
+$p(c,\one)-\rho_{\one}v_c=0$; $\sum_{c:\,x_r(c)=o}p(c,r)-\mu_r(o)\rho_r=0$.
+\item[\textbf{A}] oracle: the rows of C plus $\sum_r p(c,r)=w_c$ with $w$
+known. A is not available in practice; it is the observation model implicitly
+assumed when complete data are treated as the population.
+\end{itemize}
+In the notation above, B $\supseteq$ D $\supseteq$ C $\supseteq$ A as feasible
+sets. Replacing $P(C\mid R=\one)$ by $P(C)$ moves the analysis from C to A
+without justification; our experiments show the change is material.
+
+\textbf{Sensitivity model.} For each incomplete mask $r$, the full-data law
+among units with mask $r$ may differ from the complete-case law by a bounded
+likelihood ratio:
+\begin{equation}\label{eq:mcc}
+\frac{\lambda_r}{\Gamma}\le\frac{P(C=c\mid R=r)}{v_c}\le\lambda_r\Gamma
+\quad\text{for all }c\text{ with }v_c>0,
+\end{equation}
+for some unknown $\lambda_r>0$; equivalently the ratio varies across cells by
+at most $\Gamma^2$. We call this $\Mcc(\Gamma)$. $\Gamma=1$ means every mask
+has the complete-case law, i.e.\ the mask is independent of the cell (MCAR).
+$\Gamma$ is chosen by the analyst and is not estimable.
+
+\begin{lemma}[Exact linearisation]\label{lem:linear}
+Multiplying \eqref{eq:mcc} by $\rho_r$ gives
+$\rho_r\lambda_r v_c/\Gamma\le p(c,r)\le\Gamma\rho_r\lambda_r v_c$, which contains
+the product of two unknowns. Because $\lambda_r$ appears in no other
+constraint, the map $(\rho_r,\lambda_r)\mapsto b_r=\rho_r\lambda_r$ is onto
+$[0,\infty)$ whenever $\rho_r>0$, and $p(\cdot,r)=0$ when $\rho_r=0$. Hence
+\begin{equation}\label{eq:mcc-lin}
+b_r\kappa_c/\Gamma\le p(c,r)\le\Gamma b_r\kappa_c,\qquad b_r\ge 0
+\end{equation}
+with the known constant $\kappa=v$ (B, D) or $\kappa=\theta$ (A, C) describes
+the same set of $p$. No unknown product is plugged in.
+\end{lemma}
+
+The identified set of $p$ is therefore the projection of a polytope, and
+$\Dnat$ ranges over an interval computed by two linear programs.
+\Cref{app:proofs} records one caveat: in B and D the programs admit
+$\rho_{\one}=0$, which is not a valid population (no complete cases), so
+the computed interval is the \emph{closure} of the identified set.
+
+Two relaxations of \eqref{eq:mcc-lin} must be kept apart. \textsc{Support-only}
+keeps only $p(c,r)=0$ whenever $\kappa_c=0$; it is the closure of
+$\bigcup_{\Gamma<\infty}\Mcc(\Gamma)$. \textsc{No-model} drops all
+restrictions (Manski-type). They differ exactly when the complete-case
+support misses a cell.
+
+% ---------------------------------------------------------------------
 \section{Identification}
-\begin{proposition}[Attainability and sharpness relative to $\Pi$]
-\label{prop:sharp} \dots\ (proof in RESEARCH\_PACKET.md, Prop.~1)
+\label{sec:ident}
+
+Let $F$ be the lifted feasible polytope in $(p,b,\rho)$ and
+$g$ the objective, with zeros on auxiliary coordinates.
+
+\begin{theorem}[General criterion]\label{thm:general}
+$\Dnat$ is constant on $F$ if and only if $g\perp\mathrm{span}\{z-z':z,z'\in F\}$.
+Equivalently, $g$ lies in the row space of the equality constraints augmented
+with $e_j^\top$ for every coordinate $j$ that is constant on $F$.
+\end{theorem}
+This is a standard polyhedral fact (the affine hull of $F$ is cut out by its
+equalities and implicit equalities); we state it because the familiar
+row-space test \emph{without} the implicit equalities is only sufficient.
+It becomes necessary under a relative-interior assumption: some $z\in F$ lies
+strictly inside every non-degenerate bound. That assumption fails in three
+cases that matter here. (a) At $\Gamma=1$ every incomplete coordinate is tied
+to $b_r$; in our population the explicit test reports ``not identified''
+while the width is exactly zero (\cref{tab:audit}). (b) With structural zeros,
+where $\kappa_c=0$ forces $p(c,r)=0$. (c) At the smallest $\Gamma$ for which
+a set is feasible, bounds may bind at every feasible point.
+
+\begin{proposition}[MCAR boundary]\label{prop:gamma1}
+Under $\Mcc(1)$, $P(C\mid R=r)=v$ for every $r$ with $\rho_r>0$, so
+$\Dnat=\sum_r\rho_r\Delta^{\mathrm{cc}}_r$.
+(i) In C, $\Dnat$ is point-identified, and $\Mcc(1)$ is refutable: it is
+feasible iff $\omega(r,o)=\rho_r\sum_{c:x_r(c)=o}v_c$ for all $(r,o)$.
+(ii) In B and D, the identified set is
+$\{\sum_r\rho_r\Delta^{\mathrm{cc}}_r:\rho\in\Delta(\cR),\rho_{\one}>0\}$, whose
+closure is $[\min_r\Delta^{\mathrm{cc}}_r,\max_r\Delta^{\mathrm{cc}}_r]$. The sign
+is undetermined whenever the per-mask complete-case differences have
+different signs or include $0$.
+(iii) $\Delta^{\mathrm{drop}}_{\mathrm{cc}}(q)=\Dnat$ at $\Gamma=1$ iff
+$\sum_r(\rho_r-q_r)\Delta^{\mathrm{cc}}_r=0$.
 \end{proposition}
-\begin{proposition}[Row-space characterisation]
-$\Delta$ is constant on $\Pi$ iff $g\in\operatorname{rowspace}(A)$, given an interior point. \dots
+
+\begin{proposition}[Setting C: identification requires agreement on incomplete inputs]\label{prop:C}
+In setting C, assume $\theta_c>0$ for all $c$ and $\Gamma^2$ strictly larger
+than the true cross-cell ratio in \eqref{eq:mcc}, so that the true $p^*$ is
+interior. Then $\Dnat$ is identified iff, for every incomplete mask $r$ and
+observed value $o$, $D(\cdot,r)$ is constant on the group
+$G(r,o)=\{c:x_r(c)=o\}$. Under the Brier loss, if every group contains cells
+with both labels, this holds iff $f_A(o,r)=f_B(o,r)$ for every incomplete
+input $(o,r)$. In that case $\Dnat=\sum_c\theta_c D(c,\one)$ is a
+complete-case quantity.
 \end{proposition}
-\begin{corollary}[Brier loss]
-With unlabelled deployment data, $\Delta$ is identified iff $f_A-f_B$ is constant. \dots
-\end{corollary}
-\begin{proposition}[Closed-form certificate]
-$|\Delta(\pi)-\Delta(q)|\le(\Gamma-1)\,\mathbb{E}_{w\otimes q}|D_{\mathrm{int}}|$.
+
+\begin{remark}[Oracle A]
+Adding $\sum_r p(c,r)=w_c$ enlarges the row space to functions
+$a(c)+b(r,x_r(c))$ on incomplete coordinates. Under the Brier loss, with both
+labels at every $x$ and the all-missing mask present, identification then
+holds iff $\delta$ is constant on incomplete inputs. The oracle is strictly
+more informative than C. In the FR1 analysis, which assumed $w$ known and no
+labels at all, the analogous condition was that $\delta$ is constant on
+\emph{all} inputs (\cref{app:fr1}).
+\end{remark}
+
+\begin{proposition}[Support restriction versus $\Gamma\to\infty$]\label{prop:support}
+If $p^*(c,r)>0$ for some incomplete $r$ and a cell with $\kappa_c=0$, then
+$p^*\notin\Mcc(\Gamma)$ for every $\Gamma$ and also $p^*\notin$
+\textsc{Support-only}. Only \textsc{No-model} contains $p^*$. Increasing
+$\Gamma$ never repairs a positivity violation.
 \end{proposition}
-\begin{proposition}[Unlabelled data bound $\Gamma$ from below only] \dots \end{proposition}
-Example (hand-checkable, $d=1$): $\Delta(q)=-1/64$, identified set $[-5/64,3/64]$
-under the MCAR unlabelled law (existence example, not a frequency).
 
-\section{Estimation and inference}
-Plug-in intervals are estimates, not population sharp bounds (FR1 part F:
-population interval contained in 8/100 and 5/100 replications for $n=100,1000$).
-Valid confidence sets for partially identified parameters:
-\todo{P2-FR3: inference for interval endpoints}.
+Proofs are in \cref{app:proofs}. They are elementary and have been checked
+only by the authors; the exact certificates attached to each linear program
+verify individual instances and are not proofs of these statements.
 
-\section{Experiments}
-\subsection{Exact synthetic population (P2-FR1)}
-Single hand-specified population; exact rational LPs with certificates.
-$\Delta(q)\approx-0.0253$; $\Gamma^*(\text{pattern})\in(1.4390,1.4391]$;
-$\Gamma^*(\text{observed law of MCAR})\in(2.0692,2.0693]$; $\Gamma_{cf}\approx1.269$.
-Scenario grid vs.\ sharp interval, joint vs.\ separate bounds: see Table~\todo{P2-FR1 table formatting}.
-\subsection{Realistic complete-case source}
-\todo{P2-FR2}
-\subsection{Real multimodal data with natural missingness}
-\todo{P2-real: dataset, license, approval}
-\subsection{Other losses (0--1, log loss)}
-\todo{P2-FR1-loss}
+% ---------------------------------------------------------------------
+\section{Counterexamples and Failure Modes}
+\label{sec:counter}
 
-\section{Related work}
-Closest: Subbaswamy et al.\ (AISTATS 2021); Guerdan et al.\ (ICML 2024);
-ICYM$^2$I (ICLR 2026); Zhou et al.\ (AISTATS 2023); Rockenschaub et al.\ (2024).
-Most entries were read at abstract level or through a summariser
-(RELATED\_WORK.md). \todo{RELATED_WORK: full-text reading of the closest five,
-forward-citation search, inference literature (Imbens--Manski, Stoye)}
+\begin{example}[Identical unlabelled data, opposite rankings; $w$ known]\label{ex:cx1}
+Take $d=1$, $P(X=1)=1/2$, $P(Y=1\mid X=x)=1/4$ or $3/4$, and random dropout rate
+$1/4$. Let $f_A$ be Bayes under MCAR ($f_A(\varnothing)=1/2$) and $f_B$ impute
+the mode ($f_B(\varnothing)=1/4$). Then $D=0$ on complete inputs,
+$D((x,0),\varnothing)=3/16$ and $D((x,1),\varnothing)=-5/16$. Among policies
+that reproduce the MCAR unlabelled law, the risk difference ranges over
+exactly $[-5/64,3/64]$, and random dropout gives $-1/64$: both rankings occur
+with identical unlabelled data.
+\end{example}
 
+\textbf{Complete-case dropout can rank the models the wrong way.} In our
+population (\cref{sec:exp}), environment E2m makes modality 2 more likely to
+be missing when $Y=0$, with the same full-data law and mask frequencies as
+MCAR. Its natural-missingness difference is $\Dnat=+0.0075$ (model B better),
+while random dropout on complete cases gives $-0.0436$ (A better) and random
+dropout on the population gives $-0.0253$ (\cref{tab:truths}). The reversal is
+one hand-specified case, not a frequency.
+
+\textbf{A too-small $\Gamma$ can certify the wrong sign.} For E2m the true
+parameter is $\Gamma_{cc}\approx 2.32$. In setting C with $\Gamma=3/2$ the
+feasible set is non-empty and its interval $[-0.0495,-0.0239]$ certifies ``A
+better''. With the oracle information and $\Gamma=2$ the interval
+$[0.0018,0.0025]$ has the correct sign but excludes the truth. Feasibility
+therefore does not validate $\Gamma$; non-emptiness is only a necessary
+condition (\cref{app:fr2}).
+
+\textbf{Support.} In a constructed check, one cell is never fully observed.
+Under every $\Mcc(\Gamma)$, including $\Gamma=1000$, and under
+\textsc{Support-only}, the oracle setting becomes infeasible. In setting C
+these sets stay feasible and contain the true value although the true law is
+excluded. \textsc{No-model} contains it in both settings (\cref{tab:support}).
+
+% ---------------------------------------------------------------------
+\section{Sampling Uncertainty}
+\label{sec:sampling}
+
+The intervals above are population identified sets. With a finite sample,
+the plug-in interval (sample frequencies treated as exact) is an estimate,
+not a confidence set. In the FR1 analysis the plug-in interval contained the
+population interval in only 8/100 ($n=100$) and 5/100 ($n=1000$) replications.
+Those numbers are containment frequencies of an estimate, not coverage of a
+confidence procedure.
+
+\begin{proposition}[Outer confidence interval]\label{prop:outer}
+In setting C, let the $K$ observable cell probabilities
+$(\theta_c,\omega(r,o))$ be estimated from $n$ i.i.d.\ units, and let
+$B_\alpha$ be the box $|\hat\vartheta_k-\vartheta_k|\le\varepsilon$ with
+$\varepsilon=\sqrt{\log(2K/\alpha)/(2n)}$ (Hoeffding with a Bonferroni
+split), rounded outward. Relax \eqref{eq:mcc-lin} to
+$b_r\kappa^{\mathrm{lo}}_c/\Gamma\le p(c,r)\le\Gamma b_r\kappa^{\mathrm{hi}}_c$
+and bound $b_r\le\Gamma/\sum_c\kappa^{\mathrm{lo}}_c$. On the event that
+$B_\alpha$ contains the true probabilities, which has probability at least
+$1-\alpha$, the relaxed program contains every point of the population
+identified set. Its interval therefore covers the identified interval, and
+hence $\Dnat$, with probability at least $1-\alpha$, simultaneously for all
+$\Gamma$.
+\end{proposition}
+
+The construction is conservative. It is not sharp, and we have not analysed
+its width or compared it with the procedures of
+\citet{imbens2004confidence,stoye2009more}. Validity needs i.i.d.\ sampling,
+\cref{ass:labels}, and a correctly specified $\Mcc(\Gamma)$.
+
+% ---------------------------------------------------------------------
+\section{Experiments: One Finite Population}
+\label{sec:exp}
+
+\textbf{Design.} Everything is exact (rational arithmetic, a bounded-variable
+simplex with primal--dual and Farkas certificates). There is one population:
+$d=2$; $P(x)=(2/5,3/20,3/20,3/10)$ for $x\in\{00,01,10,11\}$;
+$P(Y=1\mid x)=(1/10,3/5,2/5,9/10)$. Model A is the Bayes predictor under
+MCAR dropout, an idealised dropout-trained model. Model B imputes the mode and
+applies the full-data Bayes predictor. The dropout law $q$ drops modalities
+independently with rates $1/5$ and $3/10$. The environments are
+$\pi(r\mid c)=q_r(1+\varepsilon(s(c)-\bar s)(t(r)-\bar t))$, where $s$ is the
+value of modality 2 (E1, E3) or the label (E2) and $t$ indicates that modality
+2 is missing. They share $P(C)$ and all mask frequencies with MCAR. E4 is
+correlated MCAR. The population was fixed before any analysis, but results
+from it were seen during development (a smoke test preceded the first
+pre-registered run), so all experiments are \textbf{exploratory}. No other
+population was searched. Runs: P2-FR1 (9.9\,s) and P2-FR2 (33.3\,s), both
+on 2 CPU threads.
+
+\begin{table*}[t]
+\centering\small
+\caption{Setting-wise interval for $\Dnat$ under $\Mcc(\Gamma)$, MCAR truth
+($\Dnat=-0.0253$). ``A'' means the interval lies below 0 (A better) and ``?''
+means undetermined. The bottom rows give the width ratio of the separate-risk
+interval $[\min R_A-\max R_B,\max R_A-\min R_B]$ to the direct-difference
+interval on the same feasible set (P2-FR2-B).}
+\label{tab:fr2}
+\input{generated/tab_fr2_primary.tex}
+\end{table*}
+
+\textbf{What each information set identifies (\cref{tab:fr2}).}
+\begin{itemize}
+\item Setting C (the realistic one-sample case) point-identifies $\Dnat$ at
+$\Gamma=1$. The MCAR sign is kept at $\Gamma=1.4463$ and lost by
+$\Gamma=1.4473$ (the bisection bracket), and without a sensitivity model the
+interval is $[-0.111,0.078]$.
+\item Settings B and D are undetermined already at $\Gamma=1$ with closure
+$[-0.130,0]$, because the mask frequencies are unknown and the complete-mask
+difference is 0. D adds refutability but, in this population, narrows the
+interval only for large $\Gamma$.
+\item The oracle A certifies ``A better'' even with no model, at
+$[-0.051,-0.002]$. Assuming the full-data law is known therefore changes the
+conclusion, which is why the FR1 results (\cref{app:fr1}) should be read as
+oracle results.
+\end{itemize}
+The direct-difference interval is 1.6--3.5 times narrower than the
+separate-risk interval. This is consistent with \citet{guerdan2024predictive}
+and is not a new finding.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=\columnwidth,height=0.62\columnwidth,xlabel={$\Gamma$},
+  ylabel={$\Dnat$ bounds},xmin=1,xmax=3,ymin=-0.46,ymax=0.18,
+  legend style={font=\scriptsize,at={(0.02,0.02)},anchor=south west},
+  tick label style={font=\scriptsize},label style={font=\small}]
+\input{generated/fig_fr2_intervals_coords.tex}
+\addplot[gray,thin,forget plot] coordinates {(1,0) (3,0)};
+\end{axis}
+\end{tikzpicture}
+\caption{Lower and upper bounds of $\Dnat$ versus $\Gamma$ for settings A
+(dotted), C (solid) and B (dashed); MCAR truth (P2-FR2-B).}
+\label{fig:fr2}
+\end{figure}
+
+\begin{table}[t]
+\centering\scriptsize
+\caption{Oracle values (target labels, true policy; scoring only) versus the
+two dropout estimands, and the true $\Mcc$ parameter (P2-FR2-A). Z\_check is
+the constructed support violation.}
+\label{tab:truths}
+\resizebox{\columnwidth}{!}{\input{generated/tab_fr2_truths.tex}}
+\end{table}
+
+\textbf{Dropout estimands versus the truth (\cref{tab:truths}).} Random dropout
+on the population gives $-0.0253$ in every environment that preserves $P(C)$,
+because it does not depend on the policy. Random dropout on complete cases
+does depend on it, but it can move in the wrong direction: E2p has truth
+$-0.058$ and complete-case dropout $-0.007$, while E2m has truth $+0.0075$ and
+complete-case dropout $-0.044$.
+
+\begin{table}[t]
+\centering\scriptsize
+\caption{Finite samples in setting C, MCAR truth; 2 draws per $n$, shown as
+illustrations only (P2-FR2-F). ``infeas.'' means the plug-in program is
+empty.}
+\label{tab:finite}
+\resizebox{\columnwidth}{!}{\input{generated/tab_fr2_finite.tex}}
+\end{table}
+
+\textbf{Sampling (\cref{tab:finite}).} Under $\Gamma=1$ the plug-in program is
+infeasible in all six draws, although the population satisfies $\Gamma=1$:
+sampling noise alone makes the observed law inconsistent with the
+complete-case law. A plug-in feasibility check would therefore wrongly
+``refute'' MCAR. The outer 95\% interval preserves the population sign at
+$\Gamma=1$ only for $n=10^5$ (both draws) and is undetermined at
+$n\le10^4$. At $\Gamma=2$ the population interval already contains 0.
+Coverage is argued by \cref{prop:outer}; we did not estimate it by Monte
+Carlo.
+
+\textbf{Earlier oracle results (P2-FR1).} Under the FR1 sensitivity model
+(box around $q$, $w$ known), the per-mask stress tests all favour A, yet the
+ranking is guaranteed only up to $\Gamma^*\approx1.44$ with pattern rates
+matched. Matching pattern rates barely helps over no constraint (1.40), the
+unlabelled law helps more (2.07), and a small hand-specified MNAR grid at
+$\Gamma=2$ spans $[-0.058,-0.025]$ while the sharp interval is
+$[-0.071,0.019]$. Details and all FR1 checks are in \cref{app:fr1}. FR1 and
+FR2 use different sensitivity models, so their $\Gamma$ values are not
+comparable.
+
+% ---------------------------------------------------------------------
 \section{Limitations}
-Assumptions A1--A3 are untestable (A2 only partly); $\Gamma$ is not estimable;
-finite support only; no claim of reversal frequency.
+\label{sec:limits}
+
+\begin{itemize}
+\item \textbf{One population.} All numbers come from one binary population
+with two modalities, two fixed models and the Brier loss. They show that the
+stated phenomena can occur; they say nothing about how often they occur. The
+population was seen during development.
+\item \textbf{Real data.} Results on real multimodal data are not reported
+\todo{P2-real: natural-missingness dataset, labels only for complete cases,
+approval and license}. Continuous or high-dimensional features would require
+discretisation or smoothness assumptions. The resulting bounds would be
+estimates, not population sharp bounds.
+\item \textbf{Assumptions.} $\Mcc(\Gamma)$ is one of many sensitivity models.
+$\Gamma$ is not estimable, and a feasible but misspecified $\Gamma$ can
+certify the wrong sign (\cref{sec:counter}). \Cref{ass:labels} excludes
+labels on incomplete units, and the case of a label indicator independent of
+the mask is not analysed \todo{P2-S: label availability not tied to the mask}.
+\item \textbf{Inference.} The outer confidence interval is conservative and
+its width is not analysed. Sharper procedures
+\cite{imbens2004confidence,stoye2009more} are not implemented
+\todo{P2-FR3: valid and less conservative inference; coverage study}.
+\item \textbf{Proofs and novelty.} The proofs are elementary and self-checked
+only. Several ingredients are known (see \cref{sec:related}), and a
+forward-citation search of the closest works has not been done
+\todo{RW: forward citations of Subbaswamy et al.\ 2021, Guerdan et al.\ 2024,
+Zhou et al.\ 2023, Choi et al.\ 2026}.
+\item \textbf{Losses.} Only the Brier loss was computed; 0--1 and log loss are
+not run \todo{P2-FR1-loss}.
+\end{itemize}
+
+% ---------------------------------------------------------------------
+\section{Conclusion}
+\label{sec:conclusion}
+
+A missing-modality evaluation identifies little about deployment rankings
+unless the evaluator also knows how often each modality is missing and what
+the incomplete units look like. Even then, with labels only on complete
+cases, the natural-missingness Brier difference is identified only when the
+two models agree on every incomplete input. Beyond that point, conclusions
+depend on an unverifiable sensitivity parameter, and in our population they
+are lost at modest values. Treating complete cases as the population (the
+oracle setting) can make conclusions look far more robust than the observable
+information supports. Plug-in feasibility checks and plug-in intervals are
+not confidence statements. We recommend that missing-modality benchmarks
+report the mask frequencies and the unlabelled law of incomplete units, and
+present robustness as a function of an explicit sensitivity parameter
+rather than as a single dropout score.
+
+% ---------------------------------------------------------------------
+\section*{Impact Statement}
+This paper concerns the evaluation of predictive models when inputs are
+missing for informative reasons, a common situation in clinical and other
+high-stakes settings. Its main message is cautionary: standard
+random-dropout evaluations can rank models incorrectly and should not be read
+as evidence of safety under natural missingness. The analysis uses only
+synthetic, hand-specified distributions. No personal or patient data were
+used, and no model was trained. A possible misuse is to present a narrow
+interval computed under an optimistic sensitivity parameter as a
+certification. We explicitly show that this can certify the wrong ranking.
+
+\bibliography{references}
+\bibliographystyle{icml2026}
+
+% =====================================================================
+\newpage
+\appendix
+\onecolumn
+
+\section{Proofs}
+\label{app:proofs}
+
+\textbf{\Cref{lem:linear} (exact linearisation; closure in B/D).} Fix $r$.
+If $\rho_r>0$ and $(p,\lambda_r)$ satisfy \eqref{eq:mcc} multiplied by
+$\rho_r$, then $b_r=\rho_r\lambda_r$ satisfies \eqref{eq:mcc-lin} (with
+$\kappa=v$; with $\kappa=\theta=\rho_{\one}v$ use
+$b_r=\rho_r\lambda_r/\rho_{\one}$). Conversely, given $(p,b_r)$ with
+$\rho_r=\sum_c p(c,r)>0$, set $\lambda_r=b_r/\rho_r$ (resp.\
+$b_r\rho_{\one}/\rho_r$). If $\rho_r=0$ both descriptions force $p(\cdot,r)=0$.
+$\lambda_r$ enters no other row. In B and D the rows
+$p(c,\one)=\rho_{\one}v_c$ allow $\rho_{\one}=0$, under which $v$ is not the
+complete-case law of any population. Any such feasible point is a limit of
+valid points: set $\rho_{\one}=\epsilon$, scale all incomplete masses by
+$1-\epsilon$, and scale $b$ accordingly. The LP interval is therefore the
+closure of the identified interval. The endpoint
+$\min_r\Delta^{\mathrm{cc}}_r$ in \cref{prop:gamma1}(ii) is of this kind when
+it requires $\rho_{\one}=0$. $\square$
+
+\textbf{\Cref{thm:general}.} If $g\perp(z-z')$ for all $z,z'\in F$, then
+$g^\top z$ is constant. Conversely, if $g^\top z\neq g^\top z'$ for some
+$z,z'$, then $g\not\perp z-z'$. For a polyhedron
+$\{Az=b,\ l\le z\le u\}$, $\mathrm{aff}(F)=\{Az=b,\ z_j=\mathrm{const}\ (j\in T)\}$,
+where $T$ is the set of implicitly tight bounds. So the span of differences
+is the null space of $A$ augmented with $\{e_j\}_{j\in T}$. Adding $e_j$ for
+all constant coordinates (a superset of $T$ whose extra rows lie in the
+row space already) does not change it. $\square$
+
+\textbf{\Cref{prop:gamma1}.} At $\Gamma=1$, \eqref{eq:mcc-lin} gives
+$p(c,r)=b_r\kappa_c$, so $P(C\mid R=r)\propto\kappa\propto v$. Then
+$\Dnat=\sum_r\rho_r\sum_c v_cD(c,r)$. In C, $\rho$ is fixed by the rows, so
+$\Dnat$ is identified. Feasibility requires the stated equality of the
+observed and implied unlabelled laws. In B there is no row on $\rho$ other than
+the simplex. In D the $\mu$-rows are satisfied by $\rho_r=b_r$ whenever the
+implied conditionals match, and add no restriction on $\rho$. The range over
+the simplex with $\rho_{\one}>0$ is the stated set, and its closure is the
+hull of the $\Delta^{\mathrm{cc}}_r$. (iii) is immediate. $\square$
+
+\textbf{\Cref{prop:C}.} Take the lifted polytope in $(p,b)$; in C the rows
+fix $p(c,\one)$, the group sums $\sum_{c\in G(r,o)}p(c,r)$, and hence the
+total mass. Because $p^*$ satisfies \eqref{eq:mcc-lin} strictly for some
+$b^*$ (the true ratio spread is strictly below $\Gamma^2$ and $\theta_c>0$),
+every direction $h$ with $h(c,\one)=0$ and
+$\sum_{c\in G(r,o)}h(c,r)=0$, together with $\Delta b=0$, keeps
+$p^*\pm th$ feasible for small $t$. Directions that move only $b$ leave $p$,
+and hence $\Dnat$, unchanged. So $\Dnat$ is constant iff $D(\cdot,r)$ is
+orthogonal to every zero-sum vector on each group, i.e.\ constant on each
+group. Under the Brier loss, for $c,c'\in G(r,o)$ with labels $0$ and $1$,
+$D(c,r)-D(c',r)=2\delta(o,r)$, so constancy forces $\delta(o,r)=0$, and then
+$u(o,r)=0$ as well. Conversely, if $\delta=0$ on all incomplete inputs, then
+$D(c,r)=0$ for $r\neq\one$ and $\Dnat=\sum_c\theta_cD(c,\one)$. $\square$
+
+\textbf{Remark (oracle A).} The additional rows $\sum_rp(c,r)=w_c$ add the
+functions $a(c)$. Differencing labels at fixed $x$ gives
+$-2\delta(x_r,r)=a(x,1)-a(x,0)$ for every incomplete $r$. With the all-missing
+mask present, $\delta(\varnothing)=\alpha(x)$ for every $x$, so $\delta$ is
+constant on incomplete inputs. The converse holds with $a(x,y)=-2\kappa y$.
+$\square$
+
+\textbf{\Cref{prop:support}.} Every $\Mcc(\Gamma)$ and \textsc{Support-only}
+impose $p(c,r)\le\Gamma b_r\kappa_c=0$ when $\kappa_c=0$. $\square$
+
+\textbf{\Cref{prop:outer}.} Hoeffding's inequality for each cell indicator,
+followed by a union bound over $K$ cells, gives
+$P(\vartheta\in B_\alpha)\ge1-\alpha$. Outward rounding only enlarges
+$B_\alpha$. On this event, any $p$ in the population identified set has
+$p(c,\one)=\theta_c\in[\kappa^{\mathrm{lo}}_c,\kappa^{\mathrm{hi}}_c]$ and group
+sums inside the box. With $b_r$ its population scale,
+$p(c,r)\ge b_r\theta_c/\Gamma\ge b_r\kappa^{\mathrm{lo}}_c/\Gamma$ and
+$p(c,r)\le\Gamma b_r\kappa^{\mathrm{hi}}_c$. Summing the lower inequality over
+$c$ gives $b_r\le\Gamma/\sum_c\theta_c\le\Gamma/\sum_c\kappa^{\mathrm{lo}}_c$,
+so the auxiliary bounds are not active. Hence $p$ is feasible for the relaxed
+program. The event does not involve $\Gamma$, so the statement holds for all
+$\Gamma$ simultaneously. $\square$
+
+\textbf{Status.} All proofs above are complete as written but have only been
+self-checked. Open: whether the closure caveat can be removed by a
+constraint $\rho_{\one}\ge\underline\rho$ that is known in practice (UNPROVED);
+width guarantees for \cref{prop:outer} (UNPROVED); extension to label
+availability independent of the mask (NOT STARTED).
+
+\section{Linear-Programming Formulation and Checks (P2-FR2)}
+\label{app:fr2}
+
+The program uses the substitution $p(c,r)=b_r\kappa_c/\Gamma+s(c,r)$,
+$s(c,r)+t(c,r)=(\Gamma\kappa^{\mathrm{hi}}_c-\kappa^{\mathrm{lo}}_c/\Gamma)b_r$,
+with $s,t\ge0$ and finite bounds on all auxiliaries (\texttt{src/msid/observation.py}).
+Every endpoint carries a certificate that is checked independently of the
+pivoting code: either a primal point with exact feasibility and a dual vector
+whose weak-duality bound equals the objective, or a Farkas vector. The
+following engineering checks all passed (P2-FR2 manifest):
+\begin{itemize}
+\item every linear program was certified (0 uncertified);
+\item nesting in information (A $\subseteq$ C $\subseteq$ D $\subseteq$ B) and in $\Gamma$;
+\item whenever the truth satisfies $\Mcc(\Gamma)$, the truth lies in the interval;
+\item the structural-zero check (\cref{prop:support});
+\item the outer interval contains the population interval whenever the box
+contains the truth;
+\item the general criterion (\cref{thm:general}) agrees with zero width in
+all audited cases.
+\end{itemize}
+Engineering success is not evidence for the scientific statements.
+
+\begin{table}[h]
+\centering\small
+\caption{Identification criterion audit on FR1 feasible sets (P2-FR2-G).}
+\label{tab:audit}
+\input{generated/tab_fr2_audit.tex}
+\end{table}
+
+\begin{table}[h]
+\centering\small
+\caption{Structural zero: one cell never fully observed (P2-FR2-E).}
+\label{tab:support}
+\input{generated/tab_fr2_support.tex}
+\end{table}
+
+Secondary environments (P2-FR2-C): whenever $\Gamma\ge\Gamma_{cc}$ the interval
+contains the truth. Below $\Gamma_{cc}$, sets are often empty, but not always.
+For E1m, E2p and E2m in setting C at $\Gamma=3/2$ or $2$, the set is
+non-empty and the interval excludes the truth. For E2m at $\Gamma=3/2$ it
+certifies the wrong sign.
+
+\section{Earlier Oracle Analysis (P2-FR1)}
+\label{app:fr1}
+
+FR1 assumed the full-data law $w$ known and used the policy box
+$q_r/\Gamma\le\pi(r\mid c)\le\min(1,\Gamma q_r)$ around the dropout law, with
+optional feature-rate, pattern-rate or unlabelled-law constraints (labels
+observed nowhere). Its rows labelled ``$\Gamma=\infty$'' are the
+\emph{no-box} set. They coincide with the closure of the union over finite
+$\Gamma$ when $q>0$, but in the support-violation check (where $q$ gives
+mask 00 zero probability) they amount to deleting the support restriction,
+not to taking $\Gamma\to\infty$.
+
+\begin{table}[h]
+\centering\small
+\caption{FR1: joint versus separate interval and a hand-specified scenario
+grid, pattern-rate constraint (P2-FR1-B). ``A'' means A better and ``?''
+means undetermined.}
+\input{generated/tab_fr1_intervals.tex}
+\end{table}
+
+\begin{table}[h]
+\centering\small
+\caption{FR1: ranking-transfer threshold $\Gamma^*$ (smallest $\Gamma$ whose
+interval contains 0) by information set, and the closed-form lower bound
+(P2-FR1-E).}
+\input{generated/tab_fr1_gammastar.tex}
+\end{table}
+
+FR1 statements, with the corrections made in this version:
+\begin{itemize}
+\item \textbf{Attainability and sharpness relative to the set.} The
+endpoints are attained by valid policies, and the interval is sharp relative
+to the stated assumptions.
+\item \textbf{Row-space characterisation.} It needs the relative-interior
+assumption. The $\Gamma=1$ row of \cref{tab:audit} shows the explicit test
+failing at the boundary.
+\item \textbf{Brier corollary.} Here $\delta$ constant is required on all
+inputs, because labels are observed nowhere. It needs both labels at every
+$x$, the all-missing mask with positive probability, and interiority.
+\item \textbf{Closed-form bound.} Under matched pattern rates,
+$|\Delta(\pi)-\Delta(q)|\le(\Gamma-1)\,\mathbb{E}_{w\otimes q}|D_{\mathrm{int}}|$,
+where $D_{\mathrm{int}}$ is the cell-by-mask interaction component.
+\item \textbf{Unlabelled data and $\Gamma$.} They can refute small $\Gamma$
+but never bound it from above.
+\end{itemize}
+FR1 checks, all PASS: certificates; $\Gamma=1$ point; nesting; membership
+implies containment; support violation reported as infeasible (not a
+number); rank test against width, 36/36; hand values of \cref{ex:cx1}. In
+FR1 the plug-in containment frequencies were 8/100 and 5/100. These are not
+coverage.
+
+\section{Reproducibility}
+Code: \texttt{src/msid}. Drivers: \texttt{scripts/run\_p2\_first\_run.py} and
+\texttt{scripts/run\_p2\_fr2.py}. Configs: \texttt{configs/}. Raw outputs and
+manifests: \texttt{results/raw/}. Tables: \texttt{scripts/make\_paper\_tables.py}.
+Only the Python standard library is used. Claims are mapped to evidence in
+\texttt{paper/claims.csv}.
 
 \end{document}

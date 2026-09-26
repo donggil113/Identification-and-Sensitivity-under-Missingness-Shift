@@ -1,0 +1,664 @@
+{
+ "experiment_id": "P2-FR2-F",
+ "config": {
+  "setting": "C_cc_plus_unlab",
+  "n": [
+   1000,
+   10000,
+   100000
+  ],
+  "draws_per_n": 2,
+  "seed": 20260927,
+  "alpha": "0.05",
+  "gammas": [
+   "1",
+   "2"
+  ],
+  "region": "Hoeffding + Bonferroni box over the 13 observable cell probabilities, rounded outward to 1e-6"
+ },
+ "rows": [
+  {
+   "n": 1000,
+   "draw": 0,
+   "gamma": "1",
+   "eps": 0.05591882078178488,
+   "truth_in_box": true,
+   "plug_in": {
+    "status": "INFEASIBLE",
+    "lo": null,
+    "hi": null,
+    "width": null,
+    "certified": true,
+    "decision": "infeasible"
+   },
+   "outer_ci": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-1144740686967472050504120329/8819961404734183646250000000",
+     "float": -0.1297897614782105
+    },
+    "hi": {
+     "exact": "302708761168306928175901/5798812061543551875000000",
+     "float": 0.05220185754523844
+    },
+    "width": {
+     "exact": "13675688805591909295863752469354521545069/75144607641684030392410441606998750000000",
+     "float": 0.18199161902344893
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "population": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-12633/500000",
+     "float": -0.025266
+    },
+    "hi": {
+     "exact": "-12633/500000",
+     "float": -0.025266
+    },
+    "width": {
+     "exact": "0",
+     "float": 0.0
+    },
+    "certified": true,
+    "decision": "A_better"
+   }
+  },
+  {
+   "n": 1000,
+   "draw": 0,
+   "gamma": "2",
+   "eps": 0.05591882078178488,
+   "truth_in_box": true,
+   "plug_in": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-248948496109/4201271250000",
+     "float": -0.05925551607956758
+    },
+    "hi": {
+     "exact": "3920060993054269/197768222066250000",
+     "float": 0.019821490794112995
+    },
+    "width": {
+     "exact": "10530963748144699/133173524953557000",
+     "float": 0.07907700687368058
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "outer_ci": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-633528036899795272913663531/3932630980237351878750000000",
+     "float": -0.16109521592121492
+    },
+    "hi": {
+     "exact": "5352596843425517859355129429/52728372295637498666250000000",
+     "float": 0.10151265078721891
+    },
+    "width": {
+     "exact": "12001033688276060784848487358747662270156767/45699444722272820789510179870498084125000000",
+     "float": 0.26260786670843383
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "population": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-177805401/2796500000",
+     "float": -0.06358140568567852
+    },
+    "hi": {
+     "exact": "24520967/1080750000",
+     "float": 0.022688842933148278
+    },
+    "width": {
+     "exact": "208588857077/2417853900000",
+     "float": 0.0862702486188268
+    },
+    "certified": true,
+    "decision": "undetermined"
+   }
+  },
+  {
+   "n": 1000,
+   "draw": 1,
+   "gamma": "1",
+   "eps": 0.05591882078178488,
+   "truth_in_box": true,
+   "plug_in": {
+    "status": "INFEASIBLE",
+    "lo": null,
+    "hi": null,
+    "width": null,
+    "certified": true,
+    "decision": "infeasible"
+   },
+   "outer_ci": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-538974521374063456347589141/4154899466703682991250000000",
+     "float": -0.1297202316670402
+    },
+    "hi": {
+     "exact": "3884766618175359074255013539/60294441838571009066250000000",
+     "float": 0.06442992918943038
+    },
+    "width": {
+     "exact": "721825901721867872552069876448980302719/3717874342918995901511468490714597500000",
+     "float": 0.19415016085647058
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "population": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-12633/500000",
+     "float": -0.025266
+    },
+    "hi": {
+     "exact": "-12633/500000",
+     "float": -0.025266
+    },
+    "width": {
+     "exact": "0",
+     "float": 0.0
+    },
+    "certified": true,
+    "decision": "A_better"
+   }
+  },
+  {
+   "n": 1000,
+   "draw": 1,
+   "gamma": "2",
+   "eps": 0.05591882078178488,
+   "truth_in_box": true,
+   "plug_in": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-322905676727089/5326561721250000",
+     "float": -0.06062178448789508
+    },
+    "hi": {
+     "exact": "27783252089143/1100140470000000",
+     "float": 0.025254276928057196
+    },
+    "width": {
+     "exact": "14150540569648139/164778639545520000",
+     "float": 0.08587606141595228
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "outer_ci": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-21593490600534527356734176123/131686562470625006748750000000",
+     "float": -0.1639764163891159
+    },
+    "hi": {
+     "exact": "40849597707100771211898795691/376515930952059116996250000000",
+     "float": 0.10849367675840005
+    },
+    "width": {
+     "exact": "5012340602098420904684859694514371786247037/18395929418149860212155212489103754562500000",
+     "float": 0.2724700931475159
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "population": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-177805401/2796500000",
+     "float": -0.06358140568567852
+    },
+    "hi": {
+     "exact": "24520967/1080750000",
+     "float": 0.022688842933148278
+    },
+    "width": {
+     "exact": "208588857077/2417853900000",
+     "float": 0.0862702486188268
+    },
+    "certified": true,
+    "decision": "undetermined"
+   }
+  },
+  {
+   "n": 10000,
+   "draw": 0,
+   "gamma": "1",
+   "eps": 0.017683084457891997,
+   "truth_in_box": true,
+   "plug_in": {
+    "status": "INFEASIBLE",
+    "lo": null,
+    "hi": null,
+    "width": null,
+    "certified": true,
+    "decision": "infeasible"
+   },
+   "outer_ci": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-10422899434973320799/178360454404687500000",
+     "float": -0.058437277869479325
+    },
+    "hi": {
+     "exact": "1107894231936778331/395717280560937500000",
+     "float": 0.0027997115272962434
+    },
+    "width": {
+     "exact": "676087724095884672893/11040512127650156250000",
+     "float": 0.06123698939677557
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "population": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-12633/500000",
+     "float": -0.025266
+    },
+    "hi": {
+     "exact": "-12633/500000",
+     "float": -0.025266
+    },
+    "width": {
+     "exact": "0",
+     "float": 0.0
+    },
+    "certified": true,
+    "decision": "A_better"
+   }
+  },
+  {
+   "n": 10000,
+   "draw": 0,
+   "gamma": "2",
+   "eps": 0.017683084457891997,
+   "truth_in_box": true,
+   "plug_in": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-69131928790710641/1090333637043750000",
+     "float": -0.06340438049600106
+    },
+    "hi": {
+     "exact": "3164586694100477587/124742730645225000000",
+     "float": 0.025368906690849437
+    },
+    "width": {
+     "exact": "280471367316997756882981/3159411757803449379000000",
+     "float": 0.0887732871868505
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "outer_ci": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-4137633618004639014160067/41035841589105030937500000",
+     "float": -0.10082974925761425
+    },
+    "hi": {
+     "exact": "24008067108405575405342971/432584752163082347812500000",
+     "float": 0.05549910621758265
+    },
+    "width": {
+     "exact": "164736790236680625470638194459849281/1053783639213156778487618183135625000",
+     "float": 0.1563288554751969
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "population": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-177805401/2796500000",
+     "float": -0.06358140568567852
+    },
+    "hi": {
+     "exact": "24520967/1080750000",
+     "float": 0.022688842933148278
+    },
+    "width": {
+     "exact": "208588857077/2417853900000",
+     "float": 0.0862702486188268
+    },
+    "certified": true,
+    "decision": "undetermined"
+   }
+  },
+  {
+   "n": 10000,
+   "draw": 1,
+   "gamma": "1",
+   "eps": 0.017683084457891997,
+   "truth_in_box": true,
+   "plug_in": {
+    "status": "INFEASIBLE",
+    "lo": null,
+    "hi": null,
+    "width": null,
+    "certified": true,
+    "decision": "infeasible"
+   },
+   "outer_ci": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-1116050163662219567723/19086883223760000000000",
+     "float": -0.05847210100143131
+    },
+    "hi": {
+     "exact": "8156583454394017/5677588620000000000",
+     "float": 0.001436628118081936
+    },
+    "width": {
+     "exact": "1003632508812741262298473/16752692363254320000000000",
+     "float": 0.05990872911951325
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "population": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-12633/500000",
+     "float": -0.025266
+    },
+    "hi": {
+     "exact": "-12633/500000",
+     "float": -0.025266
+    },
+    "width": {
+     "exact": "0",
+     "float": 0.0
+    },
+    "certified": true,
+    "decision": "A_better"
+   }
+  },
+  {
+   "n": 10000,
+   "draw": 1,
+   "gamma": "2",
+   "eps": 0.017683084457891997,
+   "truth_in_box": true,
+   "plug_in": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-4999898102170501/80145208873125000",
+     "float": -0.06238548969390872
+    },
+    "hi": {
+     "exact": "2936142602838834617/123780383902560000000",
+     "float": 0.02372058084058107
+    },
+    "width": {
+     "exact": "753020005506243594170898683/8745260361226464464928000000",
+     "float": 0.08610607053448979
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "outer_ci": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-821315962674177628297/8290875409051640625000",
+     "float": -0.0990626347825102
+    },
+    "hi": {
+     "exact": "68790398462727150898123663/1290526355971040543437500000",
+     "float": 0.05330414070541525
+    },
+    "width": {
+     "exact": "23226602385701974702858168029777983/152438760427417476695567032087500000",
+     "float": 0.15236677548792546
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "population": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-177805401/2796500000",
+     "float": -0.06358140568567852
+    },
+    "hi": {
+     "exact": "24520967/1080750000",
+     "float": 0.022688842933148278
+    },
+    "width": {
+     "exact": "208588857077/2417853900000",
+     "float": 0.0862702486188268
+    },
+    "certified": true,
+    "decision": "undetermined"
+   }
+  },
+  {
+   "n": 100000,
+   "draw": 0,
+   "gamma": "1",
+   "eps": 0.005591882978178489,
+   "truth_in_box": true,
+   "plug_in": {
+    "status": "INFEASIBLE",
+    "lo": null,
+    "hi": null,
+    "width": null,
+    "certified": true,
+    "decision": "infeasible"
+   },
+   "outer_ci": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-33311343077710048499/944692500386250000000",
+     "float": -0.03526157248426368
+    },
+    "hi": {
+     "exact": "-20770570660900290941/1259094234512812500000",
+     "float": -0.016496438544123068
+    },
+    "width": {
+     "exact": "1395483199088936754371478601/74365746790852917303750000000",
+     "float": 0.01876513394014061
+    },
+    "certified": true,
+    "decision": "A_better"
+   },
+   "population": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-12633/500000",
+     "float": -0.025266
+    },
+    "hi": {
+     "exact": "-12633/500000",
+     "float": -0.025266
+    },
+    "width": {
+     "exact": "0",
+     "float": 0.0
+    },
+    "certified": true,
+    "decision": "A_better"
+   }
+  },
+  {
+   "n": 100000,
+   "draw": 0,
+   "gamma": "2",
+   "eps": 0.005591882978178489,
+   "truth_in_box": true,
+   "plug_in": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-242631383616310435253213/3769608604852424812500000",
+     "float": -0.06436513947468801
+    },
+    "hi": {
+     "exact": "68202325120507581138263/2998517833434679875000000",
+     "float": 0.022745345837208046
+    },
+    "width": {
+     "exact": "1169015379722984459166329761142391/13419915817681023724233387953000000",
+     "float": 0.08711048531189607
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "outer_ci": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-214503421918502060526879707/2818637762495333841562500000",
+     "float": -0.07610180519564268
+    },
+    "hi": {
+     "exact": "74079197288056874223014333/2282263221891440143125000000",
+     "float": 0.03245865620472264
+    },
+    "width": {
+     "exact": "23689480080712031373855436956513801759/218214622295556244333610657327305000000",
+     "float": 0.10856046140036532
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "population": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-177805401/2796500000",
+     "float": -0.06358140568567852
+    },
+    "hi": {
+     "exact": "24520967/1080750000",
+     "float": 0.022688842933148278
+    },
+    "width": {
+     "exact": "208588857077/2417853900000",
+     "float": 0.0862702486188268
+    },
+    "certified": true,
+    "decision": "undetermined"
+   }
+  },
+  {
+   "n": 100000,
+   "draw": 1,
+   "gamma": "1",
+   "eps": 0.005591882978178489,
+   "truth_in_box": true,
+   "plug_in": {
+    "status": "INFEASIBLE",
+    "lo": null,
+    "hi": null,
+    "width": null,
+    "certified": true,
+    "decision": "infeasible"
+   },
+   "outer_ci": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-14156281154945762330293/407920220488780312500000",
+     "float": -0.034703553400670724
+    },
+    "hi": {
+     "exact": "-654106522687493476277/40367536124272500000000",
+     "float": -0.01620377623924853
+    },
+    "width": {
+     "exact": "762069008115885957854157169/41193415545838991077500000000",
+     "float": 0.01849977716142219
+    },
+    "certified": true,
+    "decision": "A_better"
+   },
+   "population": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-12633/500000",
+     "float": -0.025266
+    },
+    "hi": {
+     "exact": "-12633/500000",
+     "float": -0.025266
+    },
+    "width": {
+     "exact": "0",
+     "float": 0.0
+    },
+    "certified": true,
+    "decision": "A_better"
+   }
+  },
+  {
+   "n": 100000,
+   "draw": 1,
+   "gamma": "2",
+   "eps": 0.005591882978178489,
+   "truth_in_box": true,
+   "plug_in": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-434466476500420951843/6837164001362062500000",
+     "float": -0.06354483765693918
+    },
+    "hi": {
+     "exact": "2424906478716753501307/107041973985727687500000",
+     "float": 0.02265379073670741
+    },
+    "width": {
+     "exact": "5561267883916752097809194956661/64516895309747809804534234125000",
+     "float": 0.08619862839364659
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "outer_ci": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-71820978901044585243182519/955011479649714372187500000",
+     "float": -0.07520430950985801
+    },
+    "hi": {
+     "exact": "16628204518265619475229309/515455786630221624687500000",
+     "float": 0.03225922562043985
+    },
+    "width": {
+     "exact": "201081690435818041495381315194613447/1871162066202360043846701131857875000",
+     "float": 0.10746353513029785
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "population": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-177805401/2796500000",
+     "float": -0.06358140568567852
+    },
+    "hi": {
+     "exact": "24520967/1080750000",
+     "float": 0.022688842933148278
+    },
+    "width": {
+     "exact": "208588857077/2417853900000",
+     "float": 0.0862702486188268
+    },
+    "certified": true,
+    "decision": "undetermined"
+   }
+  }
+ ],
+ "note": "Two draws per n are illustrations; coverage is argued (Prop. FR2-4), not estimated."
+}

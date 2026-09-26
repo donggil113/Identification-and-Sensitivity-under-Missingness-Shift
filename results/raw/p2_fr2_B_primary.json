@@ -1,0 +1,1070 @@
+{
+ "experiment_id": "P2-FR2-B",
+ "truth": "E0_MCAR",
+ "rows": [
+  {
+   "setting": "A_oracle_w",
+   "gamma": "1",
+   "joint": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-12633/500000",
+     "float": -0.025266
+    },
+    "hi": {
+     "exact": "-12633/500000",
+     "float": -0.025266
+    },
+    "width": {
+     "exact": "0",
+     "float": 0.0
+    },
+    "certified": true,
+    "decision": "A_better"
+   },
+   "separate": {
+    "lo": {
+     "exact": "-12633/500000",
+     "float": -0.025266
+    },
+    "hi": {
+     "exact": "-12633/500000",
+     "float": -0.025266
+    },
+    "width": {
+     "exact": "0",
+     "float": 0.0
+    }
+   },
+   "separate_over_joint_width": null,
+   "truth_in_model": true,
+   "oracle_contained": true
+  },
+  {
+   "setting": "A_oracle_w",
+   "gamma": "5/4",
+   "joint": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-3751306107/127385500000",
+     "float": -0.029448454549379638
+    },
+    "hi": {
+     "exact": "-7894465581/370166500000",
+     "float": -0.021326796403780462
+    },
+    "width": {
+     "exact": "1740760939947/214335657662500",
+     "float": 0.008121658145599177
+    },
+    "certified": true,
+    "decision": "A_better"
+   },
+   "separate": {
+    "lo": {
+     "exact": "-281943099575937/7045446435500000",
+     "float": -0.040017776326466116
+    },
+    "hi": {
+     "exact": "-151370233383/13040157625000",
+     "float": -0.011608006416486856
+    },
+    "width": {
+     "exact": "37750083990667431/1328771197735300000",
+     "float": 0.028409769909979263
+    }
+   },
+   "separate_over_joint_width": 3.4980258219035543,
+   "truth_in_model": true,
+   "oracle_contained": true
+  },
+  {
+   "setting": "A_oracle_w",
+   "gamma": "3/2",
+   "joint": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-3792307/115500000",
+     "float": -0.032833826839826837
+    },
+    "hi": {
+     "exact": "-233201/12900000",
+     "float": -0.018077596899224807
+    },
+    "width": {
+     "exact": "2290213/155203125",
+     "float": 0.014756229940602033
+    },
+    "certified": true,
+    "decision": "A_better"
+   },
+   "separate": {
+    "lo": {
+     "exact": "-9273478719/178194500000",
+     "float": -0.052041329665057
+    },
+    "hi": {
+     "exact": "-530480281/4811251500000",
+     "float": -0.000110258272925454
+    },
+    "width": {
+     "exact": "62463361283/1202812875000",
+     "float": 0.05193107139213155
+    }
+   },
+   "separate_over_joint_width": 3.5192641752784204,
+   "truth_in_model": true,
+   "oracle_contained": true
+  },
+  {
+   "setting": "A_oracle_w",
+   "gamma": "2",
+   "joint": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-47406969/1256750000",
+     "float": -0.03772187706385518
+    },
+    "hi": {
+     "exact": "-5873323/461500000",
+     "float": -0.012726593716143013
+    },
+    "width": {
+     "exact": "57988070053/2319960500000",
+     "float": 0.02499528334771217
+    },
+    "certified": true,
+    "decision": "A_better"
+   },
+   "separate": {
+    "lo": {
+     "exact": "-10228363003/147262500000",
+     "float": -0.06945667093116034
+    },
+    "hi": {
+     "exact": "629807/38500000",
+     "float": 0.016358623376623378
+    },
+    "width": {
+     "exact": "902669627/10518750000",
+     "float": 0.08581529430778372
+    }
+   },
+   "separate_over_joint_width": 3.433259511964622,
+   "truth_in_model": true,
+   "oracle_contained": true
+  },
+  {
+   "setting": "A_oracle_w",
+   "gamma": "3",
+   "joint": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-3769814963/86453500000",
+     "float": -0.04360511677375699
+    },
+    "hi": {
+     "exact": "-7470269/989500000",
+     "float": -0.007549539161192521
+    },
+    "width": {
+     "exact": "3084401004897/85545738250000",
+     "float": 0.03605557761256447
+    },
+    "certified": true,
+    "decision": "A_better"
+   },
+   "separate": {
+    "lo": {
+     "exact": "-1270219/14500000",
+     "float": -0.08760131034482758
+    },
+    "hi": {
+     "exact": "121684369/3668500000",
+     "float": 0.033170061060378904
+    },
+    "width": {
+     "exact": "27690611/229281250",
+     "float": 0.12077137140520648
+    }
+   },
+   "separate_over_joint_width": 3.3495891454841282,
+   "truth_in_model": true,
+   "oracle_contained": true
+  },
+  {
+   "setting": "A_oracle_w",
+   "gamma": "SUPPORT_ONLY",
+   "joint": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-25297/500000",
+     "float": -0.050594
+    },
+    "hi": {
+     "exact": "-1017/500000",
+     "float": -0.002034
+    },
+    "width": {
+     "exact": "607/12500",
+     "float": 0.04856
+    },
+    "certified": true,
+    "decision": "A_better"
+   },
+   "separate": {
+    "lo": {
+     "exact": "-52401/500000",
+     "float": -0.104802
+    },
+    "hi": {
+     "exact": "24663/500000",
+     "float": 0.049326
+    },
+    "width": {
+     "exact": "9633/62500",
+     "float": 0.154128
+    }
+   },
+   "separate_over_joint_width": 3.173970345963756,
+   "truth_in_model": true,
+   "oracle_contained": true
+  },
+  {
+   "setting": "A_oracle_w",
+   "gamma": "NO_MODEL",
+   "joint": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-25297/500000",
+     "float": -0.050594
+    },
+    "hi": {
+     "exact": "-1017/500000",
+     "float": -0.002034
+    },
+    "width": {
+     "exact": "607/12500",
+     "float": 0.04856
+    },
+    "certified": true,
+    "decision": "A_better"
+   },
+   "separate": {
+    "lo": {
+     "exact": "-52401/500000",
+     "float": -0.104802
+    },
+    "hi": {
+     "exact": "24663/500000",
+     "float": 0.049326
+    },
+    "width": {
+     "exact": "9633/62500",
+     "float": 0.154128
+    }
+   },
+   "separate_over_joint_width": 3.173970345963756,
+   "truth_in_model": true,
+   "oracle_contained": true
+  },
+  {
+   "setting": "B_cc_only",
+   "gamma": "1",
+   "joint": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-81/625",
+     "float": -0.1296
+    },
+    "hi": {
+     "exact": "0",
+     "float": 0.0
+    },
+    "width": {
+     "exact": "81/625",
+     "float": 0.1296
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "separate": {
+    "lo": {
+     "exact": "-243/1000",
+     "float": -0.243
+    },
+    "hi": {
+     "exact": "567/5000",
+     "float": 0.1134
+    },
+    "width": {
+     "exact": "891/2500",
+     "float": 0.3564
+    }
+   },
+   "separate_over_joint_width": 2.75,
+   "truth_in_model": true,
+   "oracle_contained": true
+  },
+  {
+   "setting": "B_cc_only",
+   "gamma": "5/4",
+   "joint": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-131868/629375",
+     "float": -0.20952214498510427
+    },
+    "hi": {
+     "exact": "0",
+     "float": 0.0
+    },
+    "width": {
+     "exact": "131868/629375",
+     "float": 0.20952214498510427
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "separate": {
+    "lo": {
+     "exact": "-9927182511/28378166300",
+     "float": -0.34981761703891345
+    },
+    "hi": {
+     "exact": "615681/5035000",
+     "float": 0.12228023833167825
+    },
+    "width": {
+     "exact": "669863572479/1418908315000",
+     "float": 0.47209785537059173
+    }
+   },
+   "separate_over_joint_width": 2.2532122101181953,
+   "truth_in_model": true,
+   "oracle_contained": true
+  },
+  {
+   "setting": "B_cc_only",
+   "gamma": "3/2",
+   "joint": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-1188/4375",
+     "float": -0.27154285714285714
+    },
+    "hi": {
+     "exact": "22059/1621400",
+     "float": 0.013604909337609473
+    },
+    "width": {
+     "exact": "80909253/283745000",
+     "float": 0.28514776648046664
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "separate": {
+    "lo": {
+     "exact": "-171861/389620",
+     "float": -0.44109901955751757
+    },
+    "hi": {
+     "exact": "15286273/95287500",
+     "float": 0.16042264725173816
+    },
+    "width": {
+     "exact": "329575601/547903125",
+     "float": 0.6015216668092558
+    }
+   },
+   "separate_over_joint_width": 2.109508604025701,
+   "truth_in_model": true,
+   "oracle_contained": true
+  },
+  {
+   "setting": "B_cc_only",
+   "gamma": "2",
+   "joint": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-26406/74375",
+     "float": -0.3550386554621849
+    },
+    "hi": {
+     "exact": "6156/81875",
+     "float": 0.07518778625954199
+    },
+    "width": {
+     "exact": "33534/77945",
+     "float": 0.43022644172172686
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "separate": {
+    "lo": {
+     "exact": "-39372327/70555100",
+     "float": -0.5580365841732207
+    },
+    "hi": {
+     "exact": "2658973/9952250",
+     "float": 0.26717305132005326
+    },
+    "width": {
+     "exact": "13682345863/16580448500",
+     "float": 0.8252096354932739
+    }
+   },
+   "separate_over_joint_width": 1.9180820969321655,
+   "truth_in_model": true,
+   "oracle_contained": true
+  },
+  {
+   "setting": "B_cc_only",
+   "gamma": "3",
+   "joint": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-3537/8125",
+     "float": -0.4353230769230769
+    },
+    "hi": {
+     "exact": "19961/129360",
+     "float": 0.15430581323438466
+    },
+    "width": {
+     "exact": "123945889/210210000",
+     "float": 0.5896288901574616
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "separate": {
+    "lo": {
+     "exact": "-19585077/29415100",
+     "float": -0.665817114339234
+    },
+    "hi": {
+     "exact": "639651/1558480",
+     "float": 0.4104326009958421
+    },
+    "width": {
+     "exact": "20387747493/18943324400",
+     "float": 1.076249715335076
+    }
+   },
+   "separate_over_joint_width": 1.8253001732117662,
+   "truth_in_model": true,
+   "oracle_contained": true
+  },
+  {
+   "setting": "B_cc_only",
+   "gamma": "SUPPORT_ONLY",
+   "joint": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-324/625",
+     "float": -0.5184
+    },
+    "hi": {
+     "exact": "17/45",
+     "float": 0.37777777777777777
+    },
+    "width": {
+     "exact": "5041/5625",
+     "float": 0.8961777777777777
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "separate": {
+    "lo": {
+     "exact": "-9401/12100",
+     "float": -0.7769421487603306
+    },
+    "hi": {
+     "exact": "7979/12100",
+     "float": 0.6594214876033058
+    },
+    "width": {
+     "exact": "79/55",
+     "float": 1.4363636363636363
+    }
+   },
+   "separate_over_joint_width": 1.6027664063768012,
+   "truth_in_model": true,
+   "oracle_contained": true
+  },
+  {
+   "setting": "B_cc_only",
+   "gamma": "NO_MODEL",
+   "joint": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-324/625",
+     "float": -0.5184
+    },
+    "hi": {
+     "exact": "17/45",
+     "float": 0.37777777777777777
+    },
+    "width": {
+     "exact": "5041/5625",
+     "float": 0.8961777777777777
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "separate": {
+    "lo": {
+     "exact": "-9401/12100",
+     "float": -0.7769421487603306
+    },
+    "hi": {
+     "exact": "7979/12100",
+     "float": 0.6594214876033058
+    },
+    "width": {
+     "exact": "79/55",
+     "float": 1.4363636363636363
+    }
+   },
+   "separate_over_joint_width": 1.6027664063768012,
+   "truth_in_model": true,
+   "oracle_contained": true
+  },
+  {
+   "setting": "C_cc_plus_unlab",
+   "gamma": "1",
+   "joint": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-12633/500000",
+     "float": -0.025266
+    },
+    "hi": {
+     "exact": "-12633/500000",
+     "float": -0.025266
+    },
+    "width": {
+     "exact": "0",
+     "float": 0.0
+    },
+    "certified": true,
+    "decision": "A_better"
+   },
+   "separate": {
+    "lo": {
+     "exact": "-12633/500000",
+     "float": -0.025266
+    },
+    "hi": {
+     "exact": "-12633/500000",
+     "float": -0.025266
+    },
+    "width": {
+     "exact": "0",
+     "float": 0.0
+    }
+   },
+   "separate_over_joint_width": null,
+   "truth_in_model": true,
+   "oracle_contained": true
+  },
+  {
+   "setting": "C_cc_plus_unlab",
+   "gamma": "5/4",
+   "joint": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-695384603043/18149664500000",
+     "float": -0.03831390949639868
+    },
+    "hi": {
+     "exact": "-121759548927/11742615500000",
+     "float": -0.010369031407611022
+    },
+    "width": {
+     "exact": "21657232928937069/774998297009090000",
+     "float": 0.027944878088787657
+    },
+    "certified": true,
+    "decision": "A_better"
+   },
+   "separate": {
+    "lo": {
+     "exact": "-111123486069914285211/1830711048008111500000",
+     "float": -0.060699631539789516
+    },
+    "hi": {
+     "exact": "2175943215591845151/215696428680848500000",
+     "float": 0.010087989072880952
+    },
+    "width": {
+     "exact": "8342872556999047743257073/117857790455323403363725000",
+     "float": 0.07078762061267047
+    }
+   },
+   "separate_over_joint_width": 2.533116100480418,
+   "truth_in_model": true,
+   "oracle_contained": true
+  },
+  {
+   "setting": "C_cc_plus_unlab",
+   "gamma": "3/2",
+   "joint": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-125619101/2656500000",
+     "float": -0.047287446263881046
+    },
+    "hi": {
+     "exact": "943203/368500000",
+     "float": 0.00255957394843962
+    },
+    "width": {
+     "exact": "277251463/5562046875",
+     "float": 0.04984702021232067
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "separate": {
+    "lo": {
+     "exact": "-100385487381/1127241500000",
+     "float": -0.0890541089739865
+    },
+    "hi": {
+     "exact": "80557607931/2107451500000",
+     "float": 0.03822513017784751
+    },
+    "width": {
+     "exact": "1542350234949/12117846125000",
+     "float": 0.127279239151834
+    }
+   },
+   "separate_over_joint_width": 2.5533971461021143,
+   "truth_in_model": true,
+   "oracle_contained": true
+  },
+  {
+   "setting": "C_cc_plus_unlab",
+   "gamma": "2",
+   "joint": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-177805401/2796500000",
+     "float": -0.06358140568567852
+    },
+    "hi": {
+     "exact": "24520967/1080750000",
+     "float": 0.022688842933148278
+    },
+    "width": {
+     "exact": "208588857077/2417853900000",
+     "float": 0.0862702486188268
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "separate": {
+    "lo": {
+     "exact": "-132003163959/1007439125000",
+     "float": -0.13102842711116663
+    },
+    "hi": {
+     "exact": "5331087331329/66307811500000",
+     "float": 0.08039908437226886
+    },
+    "width": {
+     "exact": "30842450270187/145877185300000",
+     "float": 0.2114275114834355
+    }
+   },
+   "separate_over_joint_width": 2.4507581103376532,
+   "truth_in_model": true,
+   "oracle_contained": true
+  },
+  {
+   "setting": "C_cc_plus_unlab",
+   "gamma": "3",
+   "joint": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-86033819/1033500000",
+     "float": -0.08324510788582487
+    },
+    "hi": {
+     "exact": "20751263619/446946500000",
+     "float": 0.046428965477971075
+    },
+    "width": {
+     "exact": "57595139648/444153084375",
+     "float": 0.12967407336379594
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "separate": {
+    "lo": {
+     "exact": "-344920211450669/1920757338500000",
+     "float": -0.17957511057593128
+    },
+    "hi": {
+     "exact": "32260968490867/239035114500000",
+     "float": 0.13496330260241743
+    },
+    "width": {
+     "exact": "532408919466854/1692667404553125",
+     "float": 0.31453841317834874
+    }
+   },
+   "separate_over_joint_width": 2.4256075637874237,
+   "truth_in_model": true,
+   "oracle_contained": true
+  },
+  {
+   "setting": "C_cc_plus_unlab",
+   "gamma": "SUPPORT_ONLY",
+   "joint": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-55317/500000",
+     "float": -0.110634
+    },
+    "hi": {
+     "exact": "39183/500000",
+     "float": 0.078366
+    },
+    "width": {
+     "exact": "189/1000",
+     "float": 0.189
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "separate": {
+    "lo": {
+     "exact": "-123317/500000",
+     "float": -0.246634
+    },
+    "hi": {
+     "exact": "107183/500000",
+     "float": 0.214366
+    },
+    "width": {
+     "exact": "461/1000",
+     "float": 0.461
+    }
+   },
+   "separate_over_joint_width": 2.439153439153439,
+   "truth_in_model": true,
+   "oracle_contained": true
+  },
+  {
+   "setting": "C_cc_plus_unlab",
+   "gamma": "NO_MODEL",
+   "joint": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-55317/500000",
+     "float": -0.110634
+    },
+    "hi": {
+     "exact": "39183/500000",
+     "float": 0.078366
+    },
+    "width": {
+     "exact": "189/1000",
+     "float": 0.189
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "separate": {
+    "lo": {
+     "exact": "-123317/500000",
+     "float": -0.246634
+    },
+    "hi": {
+     "exact": "107183/500000",
+     "float": 0.214366
+    },
+    "width": {
+     "exact": "461/1000",
+     "float": 0.461
+    }
+   },
+   "separate_over_joint_width": 2.439153439153439,
+   "truth_in_model": true,
+   "oracle_contained": true
+  },
+  {
+   "setting": "D_conditionals",
+   "gamma": "1",
+   "joint": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-81/625",
+     "float": -0.1296
+    },
+    "hi": {
+     "exact": "0",
+     "float": 0.0
+    },
+    "width": {
+     "exact": "81/625",
+     "float": 0.1296
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "separate": {
+    "lo": {
+     "exact": "-243/1000",
+     "float": -0.243
+    },
+    "hi": {
+     "exact": "567/5000",
+     "float": 0.1134
+    },
+    "width": {
+     "exact": "891/2500",
+     "float": 0.3564
+    }
+   },
+   "separate_over_joint_width": 2.75,
+   "truth_in_model": true,
+   "oracle_contained": true
+  },
+  {
+   "setting": "D_conditionals",
+   "gamma": "5/4",
+   "joint": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-131868/629375",
+     "float": -0.20952214498510427
+    },
+    "hi": {
+     "exact": "0",
+     "float": 0.0
+    },
+    "width": {
+     "exact": "131868/629375",
+     "float": 0.20952214498510427
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "separate": {
+    "lo": {
+     "exact": "-1275777/3650375",
+     "float": -0.3494920384891963
+    },
+    "hi": {
+     "exact": "615681/5035000",
+     "float": 0.12228023833167825
+    },
+    "width": {
+     "exact": "68885829/146015000",
+     "float": 0.4717722768208746
+    }
+   },
+   "separate_over_joint_width": 2.2516583001496793,
+   "truth_in_model": true,
+   "oracle_contained": true
+  },
+  {
+   "setting": "D_conditionals",
+   "gamma": "3/2",
+   "joint": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-1188/4375",
+     "float": -0.27154285714285714
+    },
+    "hi": {
+     "exact": "1143/110000",
+     "float": 0.010390909090909091
+    },
+    "width": {
+     "exact": "217089/770000",
+     "float": 0.28193376623376626
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "separate": {
+    "lo": {
+     "exact": "-617/1400",
+     "float": -0.4407142857142857
+    },
+    "hi": {
+     "exact": "183589/1254000",
+     "float": 0.14640271132376395
+    },
+    "width": {
+     "exact": "5153713/8778000",
+     "float": 0.5871169970380496
+    }
+   },
+   "separate_over_joint_width": 2.0824642783342235,
+   "truth_in_model": true,
+   "oracle_contained": true
+  },
+  {
+   "setting": "D_conditionals",
+   "gamma": "2",
+   "joint": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-26406/74375",
+     "float": -0.3550386554621849
+    },
+    "hi": {
+     "exact": "6156/81875",
+     "float": 0.07518778625954199
+    },
+    "width": {
+     "exact": "33534/77945",
+     "float": 0.43022644172172686
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "separate": {
+    "lo": {
+     "exact": "-365019/654500",
+     "float": -0.5577066462948815
+    },
+    "hi": {
+     "exact": "832223/3515600",
+     "float": 0.23672289225167822
+    },
+    "width": {
+     "exact": "5750081/7238000",
+     "float": 0.7944295385465598
+    }
+   },
+   "separate_over_joint_width": 1.8465381517865929,
+   "truth_in_model": true,
+   "oracle_contained": true
+  },
+  {
+   "setting": "D_conditionals",
+   "gamma": "3",
+   "joint": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-3537/8125",
+     "float": -0.4353230769230769
+    },
+    "hi": {
+     "exact": "11583/83125",
+     "float": 0.13934436090225563
+    },
+    "width": {
+     "exact": "4968/8645",
+     "float": 0.5746674378253326
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "separate": {
+    "lo": {
+     "exact": "-1760881/2645500",
+     "float": -0.6656136836136836
+    },
+    "hi": {
+     "exact": "163421/438900",
+     "float": 0.3723422191843245
+    },
+    "width": {
+     "exact": "273904756/263888625",
+     "float": 1.037955902798008
+    }
+   },
+   "separate_over_joint_width": 1.806185342127371,
+   "truth_in_model": true,
+   "oracle_contained": true
+  },
+  {
+   "setting": "D_conditionals",
+   "gamma": "SUPPORT_ONLY",
+   "joint": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-324/625",
+     "float": -0.5184
+    },
+    "hi": {
+     "exact": "126/625",
+     "float": 0.2016
+    },
+    "width": {
+     "exact": "18/25",
+     "float": 0.72
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "separate": {
+    "lo": {
+     "exact": "-1064/1375",
+     "float": -0.7738181818181818
+    },
+    "hi": {
+     "exact": "1777/2750",
+     "float": 0.6461818181818182
+    },
+    "width": {
+     "exact": "71/50",
+     "float": 1.42
+    }
+   },
+   "separate_over_joint_width": 1.9722222222222223,
+   "truth_in_model": true,
+   "oracle_contained": true
+  },
+  {
+   "setting": "D_conditionals",
+   "gamma": "NO_MODEL",
+   "joint": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-324/625",
+     "float": -0.5184
+    },
+    "hi": {
+     "exact": "126/625",
+     "float": 0.2016
+    },
+    "width": {
+     "exact": "18/25",
+     "float": 0.72
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "separate": {
+    "lo": {
+     "exact": "-1064/1375",
+     "float": -0.7738181818181818
+    },
+    "hi": {
+     "exact": "1777/2750",
+     "float": 0.6461818181818182
+    },
+    "width": {
+     "exact": "71/50",
+     "float": 1.42
+    }
+   },
+   "separate_over_joint_width": 1.9722222222222223,
+   "truth_in_model": true,
+   "oracle_contained": true
+  }
+ ]
+}

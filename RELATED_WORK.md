@@ -1,6 +1,25 @@
 # RELATED_WORK — P2 (missingness-policy shift and model-ranking transfer)
 
-Checked 2026-09-26. **How this was read.** A literature sub-agent searched the
+Checked 2026-09-26 (first pass) and updated the same day (second pass).
+
+**Second pass (for manuscript v1).** A second sub-agent read the main bodies of
+the two closest papers from the arXiv HTML *without* a summariser (curl +
+text extraction; read by the sub-agent, not by the lead): Subbaswamy et al.
+§1–§4 (not the appendix, not the PMLR PDF) and Guerdan et al. main body plus
+App. B, B.6, D.0.4, E.2 (App. A skimmed by headings). Key facts used in the
+manuscript: Subbaswamy et al. Eq. (1)–(2) define the worst (1−α)-subsample risk
+with E_P[h(W,Z)|Z] = 1−α; Eq. (3)–(4) give the conditional-quantile dual; the
+sepsis study shifts P(test order | demographics, disease status) and reports
+each model's worst-case accuracy separately (no difference bound). Guerdan
+et al. Def. 4.2 optimises the difference jointly (δ-regret) over
+V(p; τ); Thm. 5.3 gives minimality of V(p; τ) given bounding functions τ, and
+App. B.6.2 states that this does not guarantee the tightest regret interval
+under a given causal assumption (MSM via Lemma B.4). BibTeX for 22 works was
+verified field-by-field (PMLR, Crossref, arXiv, OpenReview, publisher pages)
+and is in `paper/references.bib`; unverified works are not cited there.
+Read levels for these two papers: **FULL_TEXT (main body, arXiv HTML, by sub-agent)**.
+
+**How the first pass was read.** A literature sub-agent searched the
 web and read pages through a fetch tool that returns *model-generated
 summaries* of the page, so even "PARTIAL_TEXT" means "targeted questions
 answered by a summariser from the full text", not a line-by-line reading. The

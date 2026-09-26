@@ -1,0 +1,50 @@
+{
+ "experiment_id": "P2-FR2-G",
+ "rows": [
+  {
+   "set": "pattern",
+   "gamma": "1",
+   "width_zero": true,
+   "width": {
+    "exact": "0",
+    "float": 0.0
+   },
+   "explicit_rowspace_test": false,
+   "general_test": true
+  },
+  {
+   "set": "pattern",
+   "gamma": "2",
+   "width_zero": false,
+   "width": {
+    "exact": "48939479/544500000",
+    "float": 0.08987966758494031
+   },
+   "explicit_rowspace_test": false,
+   "general_test": false
+  },
+  {
+   "set": "observed_law(E1p)",
+   "gamma": "400/211",
+   "width_zero": false,
+   "width": {
+    "exact": "54739881/2637500000",
+    "float": 0.020754457251184834
+   },
+   "explicit_rowspace_test": false,
+   "general_test": false
+  },
+  {
+   "set": "observed_law(E1p)",
+   "gamma": "2",
+   "width_zero": false,
+   "width": {
+    "exact": "25533/1000000",
+    "float": 0.025533
+   },
+   "explicit_rowspace_test": false,
+   "general_test": false
+  }
+ ],
+ "note": "explicit_rowspace_test needs the relative-interior assumption; general_test adds constant coordinates."
+}

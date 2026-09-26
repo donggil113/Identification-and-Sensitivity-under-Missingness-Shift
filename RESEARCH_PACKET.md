@@ -1,6 +1,10 @@
 # RESEARCH_PACKET — P2: When Can Modality-Dropout Rankings Transfer?
 
-Last updated: 2026-09-26 (after experiment P2-FR1).
+Last updated: 2026-09-26 (after P2-FR1 and P2-FR2; manuscript v1).
+**All experiments in this packet are EXPLORATORY/DEVELOPMENT**: the single
+population was examined in a smoke test before FR1 was pre-registered.
+Sections 1-7 describe FR1 as run (with corrections flagged in §8); §9-§10 add
+the observation models and FR2.
 Status labels used below: PROVED (a complete written proof is given here; it is
 elementary and has only been self-checked, not externally reviewed),
 CONJECTURE / UNPROVED, NOT_RUN, ABSTRACT_ONLY (literature).
@@ -307,3 +311,84 @@ the population endpoints but have no coverage guarantee (H4 as expected).
 
 ## 7. Next decision experiment (single)
 See STATUS.md §"Next decision experiment".
+
+
+## 8. Audit of the FR1 statements (2026-09-26, second pass)
+Raw FR1 outputs are unchanged; corrections are documentary.
+
+| Item | Finding | Action |
+|---|---|---|
+| Γ = 1 / binding bounds | Prop. 2's "iff" needs the relative-interior condition. At Γ = 1 the explicit row-space test says "not identified" while the width is exactly 0 (P2-FR2-G audit, pattern set). | General criterion added (Thm. "general" in the manuscript): the loss contrast must be orthogonal to span{π − π′ : π, π′ ∈ Π}, i.e. lie in the row space augmented with e_j for coordinates constant on Π. Implemented in `src/msid/identification.py`; agrees with LP width in all 4 audited cases. |
+| Structural zeros | If q(r) = 0 or a cell has zero mass, coordinates are fixed; the explicit test is again only sufficient. | Covered by the general criterion. |
+| Cor. 2′ (Brier iff) | Support conditions were stated (both labels at every x, all-missing mask with q > 0), but two were implicit: the interior condition (Γ > 1) and that the observation model is FR1's (w known, **no labels anywhere**). Without the all-missing mask only a weaker condition follows. | Stated explicitly; the corollary is restricted to the FR1 observation model. |
+| "Γ = ∞" rows | FR1's `inf` is the **no-box** set. With q > 0 it equals the closure of ∪_{Γ<∞} Π(Γ) (endpoints are generally not attained at any finite Γ). In SV1 (q(00) = 0) it deletes the support restriction; that is **not** the Γ → ∞ limit, under which π(00|c) = 0 persists. §5.1 and `p2_fr1_C_checks.json` wording "removing the box" should be read that way. | Documented; FR2 separates SUPPORT_ONLY from NO_MODEL. |
+| LP certificates vs theorems | Certificates verify instances only. | Kept separate everywhere. |
+| Plug-in "containment" (FR1-F) | 8/100 and 5/100 are containment frequencies of an estimate, not CI coverage. | Wording kept; FR2 adds a valid (conservative) outer CI. |
+| Prop. 1 attainability | Holds for the closed polytope. In FR2 settings B/D the LP admits ρ_full = 0 (not a valid population), so the LP interval is the **closure** of the identified set. | Stated in FR2 notes. |
+| Observation model | FR1 assumed w known — equivalent to treating the full-data law as observed. P(C | R = complete) must not be substituted for P(C). | FR2 relaxes this. |
+
+## 9. Observation models (FR2)
+Unknown joint mass p(c, r) = P(C = c, R = r); label indicator S with
+assumption L1: S = 1[R = complete] (a separate, mask-independent S is not analysed).
+Rows derived from the observables:
+
+* normalisation: Σ_{c,r} p(c, r) = 1.
+* **A (oracle)**: C-rows plus Σ_r p(c, r) = w_c (w known).
+* **B (complete cases only)**: p(c, 1) − ρ_1 v_c = 0 (v known, ρ_1 unknown).
+* **C (one sample)**: p(c, 1) = θ_c; Σ_{c: x_r(c)=o} p(c, r) = ω(r, o) for incomplete r (fixes ρ).
+* **D (conditionals, selection fractions unknown)**: p(c, 1) − ρ_1 v_c = 0; Σ_{c: x_r(c)=o} p(c, r) − μ_r(o) ρ_r = 0.
+
+Sensitivity model M_cc(Γ) (pattern mixture relative to complete cases):
+λ_r/Γ ≤ P(c | R=r)/v_c ≤ λ_r Γ. Constants: Γ (analyst), κ_c = v_c (B, D) or
+θ_c (A, C). Unknowns: p, b_r. The product ρ_r λ_r of two unknowns is replaced
+by the free scalar b_r = ρ_r λ_r — exact because λ_r appears nowhere else
+(Lemma "exact linearisation"). In the finite-sample outer relaxation the
+product b_r·p(c, 1) with p(c, 1) uncertain is replaced by κ_lo/κ_hi bounds — an
+OUTER relaxation, not an exact LP.
+
+SUPPORT_ONLY (closure of the Γ → ∞ union) ≠ NO_MODEL (Manski) exactly when
+the complete-case support misses a cell.
+
+Formal statements (proofs in `paper/main.tex`, App. A; PROVED = written,
+elementary, self-checked only):
+* General criterion — KNOWN standard polyhedral fact; stated for correctness.
+* MCAR boundary (Γ = 1): C point-identifies and M_cc(1) is refutable; B/D give
+  the hull of per-mask complete-case differences (closure). PROVED.
+* Setting C, interior truth: Brier Δ_nat identified iff f_A = f_B on every
+  incomplete input whose group has both labels. PROVED.
+* Oracle A: Brier identified iff f_A − f_B is constant on incomplete inputs. PROVED (sketch).
+* Support: no Γ repairs a positivity violation. PROVED.
+* Outer CI (Hoeffding + Bonferroni box, relaxed rows): coverage ≥ 1 − α of the
+  identified interval, simultaneously over Γ. PROVED under iid, L1, correct M_cc(Γ).
+  Width/sharpness: UNPROVED.
+* Removing the closure caveat with a known lower bound on ρ_1: UNPROVED.
+
+## 10. P2-FR2 results (exploratory; one population; `configs/p2_fr2.json`)
+Pre-registration commit before the run; a 12-interval timing smoke preceded it
+(disclosed). Official run 33.3 s, 2-CPU affinity, 0 uncertified LPs; all six
+engineering checks PASS (`results/raw/p2_fr2_manifest.json`).
+
+MCAR truth (Δ_nat = −0.0253):
+| setting | Γ=1 | Γ=3/2 | Γ=2 | no model |
+|---|---|---|---|---|
+| A oracle w | point, A | [−0.033, −0.018] A | [−0.038, −0.013] A | [−0.051, −0.002] A |
+| C one sample | point, A | [−0.047, 0.003] ? | [−0.064, 0.023] ? | [−0.111, 0.078] ? |
+| D conditionals | [−0.130, 0] ? | [−0.272, 0.010] ? | [−0.355, 0.075] ? | [−0.518, 0.202] ? |
+| B complete cases | [−0.130, 0] ? | [−0.272, 0.014] ? | [−0.355, 0.075] ? | [−0.518, 0.378] ? |
+
+* Γ*(C) ∈ (1.4463, 1.4473] (M_cc parameter; not comparable to FR1's Γ).
+  Γ*(A): interval excludes 0 even without a model.
+* Separate-risk / direct-difference width ratio 1.6–3.5 (known idea).
+* Complete-case random dropout vs truth: E2m truth +0.0075 (B better) vs
+  −0.0436; E2p truth −0.058 vs −0.007.
+* Misspecified Γ: E2m (Γ_cc ≈ 2.32) in C at Γ = 3/2 → non-empty set certifying
+  the wrong sign ("A better"); oracle A at Γ = 2 → [0.0018, 0.0025], excludes the truth.
+* Structural zero (constructed): oracle infeasible under every M_cc(Γ) and
+  SUPPORT_ONLY; C remains feasible and contains the truth although p* is
+  excluded; NO_MODEL contains it in both.
+* Finite sample (C, MCAR truth, 2 draws per n): plug-in infeasible at Γ = 1 in
+  6/6 draws; outer 95% CI keeps the sign at Γ = 1 only at n = 10^5.
+
+Interpretation: engineering PASS ≠ scientific support. The statements above
+are exact for this one population; they show possibility, not prevalence.
+Novelty of the observation-model account remains UNVERIFIED.

@@ -1,0 +1,34 @@
+{
+ "experiment_id": "P2-FR2-D",
+ "truth": "E0_MCAR",
+ "gamma_star": {
+  "A_oracle_w": {
+   "status": "ABOVE_CAP",
+   "lo_excludes_0": {
+    "exact": "64",
+    "float": 64.0
+   },
+   "hi_contains_0": null
+  },
+  "C_cc_plus_unlab": {
+   "status": "BRACKETED",
+   "lo_excludes_0": {
+    "exact": "1481/1024",
+    "float": 1.4462890625
+   },
+   "hi_contains_0": {
+    "exact": "741/512",
+    "float": 1.447265625
+   }
+  },
+  "B_cc_only": {
+   "status": "ZERO_AT_GAMMA_1",
+   "note": "mask frequencies unknown: interval at Gamma=1 is the hull of per-mask complete-case differences (LP closure; the endpoint needing rho_full = 0 is not attained)"
+  },
+  "D_conditionals": {
+   "status": "ZERO_AT_GAMMA_1",
+   "note": "mask frequencies unknown: interval at Gamma=1 is the hull of per-mask complete-case differences (LP closure; the endpoint needing rho_full = 0 is not attained)"
+  }
+ },
+ "note": "Gamma here is the M_cc parameter; not comparable to FR1's Gamma (different sensitivity model)."
+}

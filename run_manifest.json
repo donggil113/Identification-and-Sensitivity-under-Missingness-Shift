@@ -72,5 +72,37 @@
   "GPU training",
   "complete-case-source partial identification (w unknown)",
   "empirical observed-law plug-in (infeasibility study)"
+ ],
+ "subsequent_runs": {
+  "P2-FR2": {
+   "manifest": "results/raw/p2_fr2_manifest.json",
+   "note": "FR2 run of commit recorded in that manifest; FR1 fields above are unchanged."
+  }
+ },
+ "cost_log": [
+  {
+   "what": "FR1 smoke test (pre-registration disclosure)",
+   "seconds": "<5 (not timed precisely)"
+  },
+  {
+   "what": "FR1 official run",
+   "seconds": 9.914
+  },
+  {
+   "what": "FR1 reproducibility rerun (scratchpad)",
+   "seconds": "~10"
+  },
+  {
+   "what": "FR2 timing smoke (12 intervals)",
+   "seconds": "~2"
+  },
+  {
+   "what": "FR2 official run",
+   "seconds": 33.34
+  },
+  {
+   "what": "unit tests (several invocations)",
+   "seconds": "~7 each"
+  }
  ]
 }

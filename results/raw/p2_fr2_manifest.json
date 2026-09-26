@@ -1,0 +1,64 @@
+{
+ "experiment_id": "P2-FR2",
+ "label": "EXPLORATORY/DEVELOPMENT (same population, models and environments as P2-FR1, whose Gamma* was seen in a smoke test before FR1 pre-registration; no new population was searched)",
+ "config": "configs/p2_fr2.json",
+ "config_sha256": "5e86979e9c29afebe7c4794fd24bb6a2e6862d2b5edf5271724557bd1b839774",
+ "fr1_config_sha256": "2f5eec79eb202ba134e7d8a55a913b78eee6ba4ce6128134d5e26f6798c28c33",
+ "git_commit_at_run": "b5225f617ab3af94d3242506e455f7ad89a2d390",
+ "git_tracked_code_dirty_at_run": false,
+ "python": "3.11.15",
+ "platform": "Linux-6.18.44-fc-v42-x86_64-with-glibc2.39",
+ "cpu_affinity_count": 2,
+ "start_utc": "2026-09-26T21:53:44.955309+00:00",
+ "end_utc": "2026-09-26T21:54:18.206586+00:00",
+ "wall_seconds": 33.251,
+ "parts": {
+  "A": {
+   "status": "DONE",
+   "seconds": 0.008
+  },
+  "B": {
+   "status": "DONE",
+   "seconds": 12.09
+  },
+  "C": {
+   "status": "DONE",
+   "seconds": 12.28
+  },
+  "D": {
+   "status": "DONE",
+   "seconds": 4.318
+  },
+  "E": {
+   "status": "DONE",
+   "seconds": 0.25
+  },
+  "F": {
+   "status": "DONE",
+   "seconds": 2.467
+  },
+  "G": {
+   "status": "DONE",
+   "seconds": 1.824
+  }
+ },
+ "engineering_checks": {
+  "nesting_information_and_gamma": "PASS",
+  "truth_in_model_implies_contained": "PASS",
+  "structural_zero_support_vs_gamma_limit": "PASS",
+  "outer_ci_contains_population_when_box_holds": "PASS",
+  "general_criterion_matches_width": "PASS",
+  "all_lps_certified": "PASS"
+ },
+ "uncertified_lps": [],
+ "outputs": {
+  "results/raw/p2_fr2_A_truths.json": "1030aa16ea8305f6417bb6f37c4f70dc52b875ba6c47c69d32c2214d7dab16a8",
+  "results/raw/p2_fr2_B_primary.json": "5cb480f3addf1f8988a767814a9243c95563a3600221b31ab7002eb17f6eb5d1",
+  "results/raw/p2_fr2_C_secondary.json": "b65e27b7900e5622abb7a0374b96b5d12b35e51064b80104d3d3440cb147799a",
+  "results/raw/p2_fr2_D_gamma_star.json": "7a7b74359341969556b0d737e75668c845f91ba3e5472e30a7b9154ad2653460",
+  "results/raw/p2_fr2_E_structural_zero.json": "4d1f2762c2c7e19b49ab699d663be1235070653a72eefa5f3eb197873d26f138",
+  "results/raw/p2_fr2_F_finite_sample.json": "0b3cc73af929fffb58e9fe0984f7f6ebd6da8ad33d9326346465c62eae136760",
+  "results/raw/p2_fr2_G_criterion_audit.json": "e17cff9e7a73470afe512cb780d0af5d7f9120def5881b74c105acf2fff13e46"
+ },
+ "software": "Python standard library only; msid package in this repository"
+}

@@ -1,0 +1,162 @@
+{
+ "experiment_id": "P2-FR2-E",
+ "check": {
+  "id": "Z_check",
+  "base": "E0_MCAR",
+  "cell_x": "11",
+  "cell_y": 1,
+  "move_full_mask_mass_to": "10",
+  "note": "constructed support check, not an effect-size scenario"
+ },
+ "gamma_cc_squared": null,
+ "rows": [
+  {
+   "setting": "A_oracle_w",
+   "gamma": "2",
+   "interval": {
+    "status": "INFEASIBLE",
+    "lo": null,
+    "hi": null,
+    "width": null,
+    "certified": true,
+    "decision": "infeasible"
+   },
+   "truth_in_model": false,
+   "oracle_contained": null
+  },
+  {
+   "setting": "A_oracle_w",
+   "gamma": "1000",
+   "interval": {
+    "status": "INFEASIBLE",
+    "lo": null,
+    "hi": null,
+    "width": null,
+    "certified": true,
+    "decision": "infeasible"
+   },
+   "truth_in_model": false,
+   "oracle_contained": null
+  },
+  {
+   "setting": "A_oracle_w",
+   "gamma": "SUPPORT_ONLY",
+   "interval": {
+    "status": "INFEASIBLE",
+    "lo": null,
+    "hi": null,
+    "width": null,
+    "certified": true,
+    "decision": "infeasible"
+   },
+   "truth_in_model": false,
+   "oracle_contained": null
+  },
+  {
+   "setting": "A_oracle_w",
+   "gamma": "NO_MODEL",
+   "interval": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-47137/500000",
+     "float": -0.094274
+    },
+    "hi": {
+     "exact": "-22857/500000",
+     "float": -0.045714
+    },
+    "width": {
+     "exact": "607/12500",
+     "float": 0.04856
+    },
+    "certified": true,
+    "decision": "A_better"
+   },
+   "truth_in_model": true,
+   "oracle_contained": true
+  },
+  {
+   "setting": "C_cc_plus_unlab",
+   "gamma": "2",
+   "interval": {
+    "status": "INFEASIBLE",
+    "lo": null,
+    "hi": null,
+    "width": null,
+    "certified": true,
+    "decision": "infeasible"
+   },
+   "truth_in_model": false,
+   "oracle_contained": null
+  },
+  {
+   "setting": "C_cc_plus_unlab",
+   "gamma": "1000",
+   "interval": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-244331123800372662085137/1583348125043500040500000",
+     "float": -0.15431295236709872
+    },
+    "hi": {
+     "exact": "26826235140573249791583429/198000366666870166701500000",
+     "float": 0.13548578516375986
+    },
+    "width": {
+     "exact": "103241955923187436461486958159149727836471/356253987863539093220774047667337501603125",
+     "float": 0.28979873753085855
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "truth_in_model": false,
+   "oracle_contained": true
+  },
+  {
+   "setting": "C_cc_plus_unlab",
+   "gamma": "SUPPORT_ONLY",
+   "interval": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-77157/500000",
+     "float": -0.154314
+    },
+    "hi": {
+     "exact": "67743/500000",
+     "float": 0.135486
+    },
+    "width": {
+     "exact": "1449/5000",
+     "float": 0.2898
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "truth_in_model": false,
+   "oracle_contained": true
+  },
+  {
+   "setting": "C_cc_plus_unlab",
+   "gamma": "NO_MODEL",
+   "interval": {
+    "status": "OPTIMAL",
+    "lo": {
+     "exact": "-77157/500000",
+     "float": -0.154314
+    },
+    "hi": {
+     "exact": "67743/500000",
+     "float": 0.135486
+    },
+    "width": {
+     "exact": "1449/5000",
+     "float": 0.2898
+    },
+    "certified": true,
+    "decision": "undetermined"
+   },
+   "truth_in_model": true,
+   "oracle_contained": true
+  }
+ ]
+}

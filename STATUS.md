@@ -1,98 +1,87 @@
-# STATUS — P2: When Can Modality-Dropout Rankings Transfer?
+# STATUS — P2: What Can Missing-Modality Evaluations Identify under Selective Observation?
 
-Date: 2026-09-26. Branch: `claude/keen-franklin-ua0v00`.
+Date: 2026-09-26 (second session). Branch: `claude/keen-franklin-ua0v00`.
 
-## Starting state (verified)
-* The checkout had **no commits and no files**; the remote had no branches.
-  No CLAUDE.md, STATUS.md, RESEARCH_PACKET.md, configs or results existed, so
-  there were no prior STOP/ARCHIVE decisions and no Work IDs. P2 is **not**
-  mapped to any Work ID.
-* Environment: Python 3.11.15, standard library only (numpy, scipy, pytest,
-  cvxpy are **not** installed; nothing was installed or downloaded).
-* No server, GPU, dataset, or patient data was accessed.
+## Starting state of this session (verified)
+Checkout at `0eb7bab` (FR1 code/results/docs, related-work pass 1). No
+CLAUDE.md. Remote branch identical. No LaTeX compiler, no matplotlib/numpy;
+Python stdlib only. Nothing installed or downloaded (ICML style kit not downloaded).
+
+## Labels that stay in force
+* **All P2 experiments are EXPLORATORY/DEVELOPMENT**: the only population was
+  seen in a smoke test before FR1 pre-registration (disclosed in both configs).
+* FR1 is an exact computation on one *known* population (oracle observation model).
+* No new-method claim; novelty of the observation-model account is UNVERIFIED.
+* No STOP/FAIL existed to preserve; no check has failed in FR1 or FR2.
+* **Withdrawn**: the FR2 "decision rule" in the previous STATUS (Γ* < 1.05 →
+  stop; relative improvement ≤ 1.1 → stop the independent-contribution claim)
+  is no longer used as a novelty/publishability criterion (instruction of this
+  session). FR2 reports what information identifies and whether it survives
+  sampling, descriptively.
 
 ## Experiment register
 | ID | What | Status |
 |---|---|---|
-| P2-FR1-A | scenario, fixed models, same-`w`/same-marginal environments, complete-case diagnostic | DONE |
-| P2-FR1-B | joint vs separate vs closed-form vs scenario-grid intervals; observed-law intervals | DONE |
-| P2-FR1-C | Γ=1, nesting, membership⇒containment, support violation | DONE (all PASS) |
-| P2-FR1-D | row-space identification test, controls C1/C2, counterexamples CX1/CX2 | DONE (all PASS) |
-| P2-FR1-E | Γ* brackets (none/feature/pattern/observed law) and Γ_cf | DONE |
-| P2-FR1-F | plug-in vs population, n ∈ {100, 1000}, 100 reps each | DONE |
+| P2-FR1-A…F | oracle (w known) finite-support analysis | DONE (exploratory), raw unchanged |
+| P2-FR2-A | truths, dropout estimands, Γ_cc per environment | DONE |
+| P2-FR2-B | settings A–D × Γ grid, direct vs separate, MCAR truth | DONE |
+| P2-FR2-C | secondary truths, settings A and C | DONE |
+| P2-FR2-D | Γ* brackets (A, C) | DONE |
+| P2-FR2-E | structural-zero support check | DONE |
+| P2-FR2-F | finite sample: plug-in vs outer CI, 2 draws × n ∈ {1e3, 1e4, 1e5} | DONE (illustration; no MC coverage) |
+| P2-FR2-G | identification-criterion audit on FR1 sets | DONE |
 | P2-FR1-loss | 0–1 / log loss | NOT_RUN |
-| P2-FR2 | complete-case source (w unknown) | NOT_RUN (proposed next) |
-| P2-FR3 | valid inference for interval endpoints | NOT_RUN |
-| P2-real | real multimodal data with natural missingness | NOT_RUN (needs approval, data license) |
+| P2-FR3 | less conservative valid inference; coverage study | NOT_RUN |
+| P2-S | label availability independent of the mask | NOT_RUN (not analysed) |
+| P2-real | real multimodal data with natural missingness | NOT_RUN (needs approval) |
 
-Official run: commit `a762fc3` (code + config committed before running),
-`run_manifest.json`, 9.9 s wall, CPU affinity 2, 0 uncertified LPs.
-Disclosure: a smoke test on the same scenario was run before the config was
-committed; no scenario parameter changed afterwards.
+FR2 run: pre-registration commit `b5225f6`, `results/raw/p2_fr2_manifest.json`,
+33.3 s wall, 2-CPU affinity, 0 uncertified LPs, 6/6 engineering checks PASS.
 
-## Engineering vs science (kept separate)
-* **Engineering: PASS.** Exact rational LP with primal–dual/Farkas
-  certificates; 27 unit tests pass; all FR1 checks pass (see
-  RESEARCH_PACKET.md §5.1).
-* **Science (one hand-specified population, n_units = 1):**
-  H1 supported (Γ*(pattern) ∈ (1.43903, 1.43909], Γ_cf = 1.2689 ≤ Γ*);
-  H2 supported (separate bounds 1.7–2.3× wider than the joint interval);
-  H3 supported (positive width for Brier D under every constraint kind,
-  zero width for the additive and constant-shift controls, as Prop. 2 predicts);
-  H4 reported descriptively (plug-in contains the population interval in
-  8/100 and 5/100 replications).
-  None of this generalises beyond the single population.
+## Cost log (all CPU, 2-thread affinity, stdlib)
+FR1 smoke (<5 s, before pre-registration), FR1 official 9.9 s, FR1 rerun ~10 s,
+FR2 timing smoke ~2 s (12 intervals, numbers seen, disclosed), FR2 official
+33.3 s, unit tests ~7 s per invocation (32 tests). Also recorded in `run_manifest.json`.
 
-## Proof status
-Prop. 1 (attainability/sharpness relative to Π), Prop. 2 (row-space
-characterisation), Cor. 2′ (Brier), Prop. 3 (closed-form bound), Prop. 4
-(unlabelled data bound Γ from below only), Example CX1: PROVED
-(written, elementary, self-checked only). C1 (complete-case source) UNPROVED;
-C2 (ANOVA vs optimal decomposition) CONJECTURE.
+## Engineering vs science vs novelty
+* **Engineering: PASS** (certificates, nesting, containment-when-in-model,
+  support check, outer-CI containment, criterion audit; 32 unit tests).
+* **Toy-population science (exploratory, n_units = 1)**: setting C point-
+  identifies at Γ = 1 but loses the sign by Γ ≈ 1.447; B/D are undetermined even
+  at Γ = 1; the oracle certifies the sign without any model; complete-case
+  dropout misranks E2m; a too-small Γ certifies the wrong sign; plug-in
+  refutes MCAR spuriously in 6/6 draws; the outer CI keeps the sign only at n = 1e5.
+* **Real-model results / external utility**: none (NOT_RUN).
+* **Novelty**: UNVERIFIED; known ingredients listed in RELATED_WORK.md and
+  excluded from the contribution list.
 
-## Literature status (RELATED_WORK.md)
-Closest prior work: Subbaswamy, Adams, Saria (AISTATS 2021) — label-dependent
-test-ordering shift, separate one-sided worst-case risks per model;
-Guerdan, Coston, Holstein, Wu (ICML 2024) — bounds on a performance
-*difference* under MSM-type assumptions; ICYM²I (ICLR 2026) — modality value
-under missingness shift, IPW under MAR. Known and **not** counted as P2
-contributions: joint-vs-separate cancellation (H2), LP sharp bounds, Γ-type
-sensitivity models, tipping-point summaries, transportation-polytope rank.
-No paper found (web search only, not exhaustive) with the feature-mask
-difference estimand + matched marginals / unlabelled observed law + row-space
-identification characterisation. Most reads are ABSTRACT_ONLY or
-summariser-mediated PARTIAL_TEXT.
+## Proof status (manuscript App. A)
+Exact linearisation, closure in B/D, MCAR-boundary proposition, setting-C Brier
+characterisation, support proposition, outer-CI validity: PROVED (written,
+elementary, self-checked only). Oracle-A remark: PROVED (sketch). General
+criterion: KNOWN. Open: closure removal (UNPROVED), outer-CI width (UNPROVED),
+mask-independent label availability (NOT STARTED).
 
-## Stop-rule assessment
-FR1 produced identification/evaluation statements beyond "random dropout is
-bad" (only the interaction of D moves Δ; label dependence is never identified
-from unlabelled data; small Γ can be refuted by unlabelled data). They are
-elementary, several ingredients are known, and novelty is unverified, so
-**no new-method claim** is made. The project continues only as an analysis
-framework, and only if P2-FR2 shows that its distinctive ingredient (the
-unlabelled observed-law constraint) stays informative in the realistic data
-structure beyond a Guerdan-style difference bound without it.
+## Manuscript v1
+`paper/main.tex` (ICML 2026 anonymous style, provisional; TARGET_YEAR 2027,
+TEMPLATE_YEAR 2026, SUBMISSION_READY = false). **COMPILE_NOT_RUN** (no
+compiler; style kit not vendored). Sections complete: Abstract, Introduction,
+Related Work, Problem Setup, Identification, Counterexamples, Sampling
+Uncertainty, Experiments, Limitations, Conclusion, Impact Statement,
+Appendices A–D. Remaining `\todo`: P2-real (×2), P2-S, P2-FR3, RW
+forward-citation search, P2-FR1-loss. Claims ↔ evidence: `paper/claims.csv`.
 
 ## Next decision experiment (one)
-**P2-FR2 — complete-case source.** Realistic pipeline: labelled data exist
-only for complete cases (the usual curated test set); incomplete units are
-observed without labels; `w` is unknown. Parametrise `f(c, r) = P(C = c, R = r)`:
-`f(c, 1…1)` is known from the labelled complete cases, `Σ_{c: x_r(c)=v} f(c, r)`
-is known from the unlabelled incomplete units, and the Γ-box becomes the linear
-constraint `(ρ(r)/Γ) Σ_{r′} f(c, r′) ≤ f(c, r) ≤ Γ ρ(r) Σ_{r′} f(c, r′)` with
-`ρ` the observed mask rates. `Δ` is linear in `f`, so the sharp interval is
-again two exact LPs.
-* Hypothesis: on the FR1 population (each FR1 environment in turn as the true
-  policy), the unlabelled-law interval stays informative once `w` is unknown.
-* Primary metric: Γ*_FR2 with the unlabelled incomplete-unit law, for the
-  MCAR truth; compared with Γ*_FR2 without it (a Guerdan-style difference
-  bound on the same Γ-box) and with Subbaswamy-style separate one-sided
-  worst-case risks. FR1 reference values: 2.069 / 1.397.
-* Decision rule (fix in the config before running):
-  (a) Γ*_FR2(observed law) < 1.05 → stop the framework claim; write P2 up as a
-      negative identification note;
-  (b) (Γ*_obs − 1) ≤ 1.1 × (Γ*_none − 1) → the distinctive constraint adds
-      nothing over known difference bounds; stop the independent-contribution
-      claim;
-  (c) otherwise → request approval for a pre-registered real-data pilot.
-* Budget: same (2 CPU threads, 120 s, no installs).
+**P2-real pilot.** Pre-register one public multimodal dataset whose natural
+modality missingness co-occurs with labels for *incomplete* units as well, so
+that Δ_nat is computable as a held-out check. Hide the labels of incomplete
+units to emulate setting C, fit two fixed simple models on complete cases,
+discretise features by a pre-registered rule, and report: complete-case
+dropout ranking, setting-C identified intervals and outer CIs at pre-registered
+Γ values, and the label-revealed Δ_nat. The question it decides: do the
+phenomena shown on the toy population (loss of sign at small Γ, dropout
+misranking, sampling-driven indeterminacy) appear on real data, or do real
+rankings stay determined over the Γ range an analyst would defend?
+**Unapproved resources needed:** dataset download and license review; possibly
+additional CPU budget beyond 120 s per run; any use of patient data would need
+ethics approval and must stay local. No GPU or paid API is needed.

@@ -1,0 +1,571 @@
+{
+ "experiment_id": "P2-FR2-A",
+ "label": "EXPLORATORY/DEVELOPMENT (same population, models and environments as P2-FR1, whose Gamma* was seen in a smoke test before FR1 pre-registration; no new population was searched)",
+ "truths": {
+  "E0_MCAR": {
+   "oracle_delta_nat": {
+    "exact": "-12633/500000",
+    "float": -0.025266
+   },
+   "oracle_risk_A": {
+    "exact": "19623/125000",
+    "float": 0.156984
+   },
+   "oracle_risk_B": {
+    "exact": "729/4000",
+    "float": 0.18225
+   },
+   "mask_frequencies_rho": {
+    "(1,1)": {
+     "exact": "14/25",
+     "float": 0.56
+    },
+    "(1,0)": {
+     "exact": "6/25",
+     "float": 0.24
+    },
+    "(0,1)": {
+     "exact": "7/50",
+     "float": 0.14
+    },
+    "(0,0)": {
+     "exact": "3/50",
+     "float": 0.06
+    }
+   },
+   "gamma_cc_squared": {
+    "exact": "1",
+    "float": 1.0
+   },
+   "gamma_cc_float": 1.0,
+   "complete_case_dropout_delta_q": {
+    "exact": "-12633/500000",
+    "float": -0.025266
+   },
+   "population_dropout_delta_q": {
+    "exact": "-12633/500000",
+    "float": -0.025266
+   },
+   "per_mask_complete_case_delta": {
+    "(1,1)": {
+     "exact": "0",
+     "float": 0.0
+    },
+    "(1,0)": {
+     "exact": "-53/880",
+     "float": -0.060227272727272727
+    },
+    "(0,1)": {
+     "exact": "-477/22000",
+     "float": -0.02168181818181818
+    },
+    "(0,0)": {
+     "exact": "-81/625",
+     "float": -0.1296
+    }
+   }
+  },
+  "E1p_self_x2": {
+   "oracle_delta_nat": {
+    "exact": "-1115829081/24200000000",
+    "float": -0.046108639710743804
+   },
+   "oracle_risk_A": {
+    "exact": "240110109/1512500000",
+    "float": 0.1587504852892562
+   },
+   "oracle_risk_B": {
+    "exact": "1638873/8000000",
+    "float": 0.204859125
+   },
+   "mask_frequencies_rho": {
+    "(1,1)": {
+     "exact": "14/25",
+     "float": 0.56
+    },
+    "(1,0)": {
+     "exact": "6/25",
+     "float": 0.24
+    },
+    "(0,1)": {
+     "exact": "7/50",
+     "float": 0.14
+    },
+    "(0,0)": {
+     "exact": "3/50",
+     "float": 0.06
+    }
+   },
+   "gamma_cc_squared": {
+    "exact": "303511/63511",
+    "float": 4.778872951142322
+   },
+   "gamma_cc_float": 2.1860633456380723,
+   "complete_case_dropout_delta_q": {
+    "exact": "-377315601/24200000000",
+    "float": -0.015591553760330579
+   },
+   "population_dropout_delta_q": {
+    "exact": "-12633/500000",
+    "float": -0.025266
+   },
+   "per_mask_complete_case_delta": {
+    "(1,1)": {
+     "exact": "0",
+     "float": 0.0
+    },
+    "(1,0)": {
+     "exact": "-133483/3872000",
+     "float": -0.034473915289256196
+    },
+    "(0,1)": {
+     "exact": "-158157/8800000",
+     "float": -0.017972386363636364
+    },
+    "(0,0)": {
+     "exact": "-20007/250000",
+     "float": -0.080028
+    }
+   }
+  },
+  "E1m_self_x2": {
+   "oracle_delta_nat": {
+    "exact": "-107045319/24200000000",
+    "float": -0.004423360289256198
+   },
+   "oracle_risk_A": {
+    "exact": "234766491/1512500000",
+    "float": 0.1552175147107438
+   },
+   "oracle_risk_B": {
+    "exact": "1277127/8000000",
+    "float": 0.159640875
+   },
+   "mask_frequencies_rho": {
+    "(1,1)": {
+     "exact": "14/25",
+     "float": 0.56
+    },
+    "(1,0)": {
+     "exact": "6/25",
+     "float": 0.24
+    },
+    "(0,1)": {
+     "exact": "7/50",
+     "float": 0.14
+    },
+    "(0,0)": {
+     "exact": "3/50",
+     "float": 0.06
+    }
+   },
+   "gamma_cc_squared": {
+    "exact": "293911/53911",
+    "float": 5.4517816401105526
+   },
+   "gamma_cc_float": 2.334905060192074,
+   "complete_case_dropout_delta_q": {
+    "exact": "-845558799/24200000000",
+    "float": -0.03494044623966942
+   },
+   "population_dropout_delta_q": {
+    "exact": "-12633/500000",
+    "float": -0.025266
+   },
+   "per_mask_complete_case_delta": {
+    "(1,1)": {
+     "exact": "0",
+     "float": 0.0
+    },
+    "(1,0)": {
+     "exact": "-332917/3872000",
+     "float": -0.08598063016528926
+    },
+    "(0,1)": {
+     "exact": "-20313/800000",
+     "float": -0.02539125
+    },
+    "(0,0)": {
+     "exact": "-44793/250000",
+     "float": -0.179172
+    }
+   }
+  },
+  "E2p_label_x2": {
+   "oracle_delta_nat": {
+    "exact": "-319158897/5500000000",
+    "float": -0.058028890363636364
+   },
+   "oracle_risk_A": {
+    "exact": "109044141/687500000",
+    "float": 0.15860965963636364
+   },
+   "oracle_risk_B": {
+    "exact": "4332771/20000000",
+    "float": 0.21663855
+   },
+   "mask_frequencies_rho": {
+    "(1,1)": {
+     "exact": "14/25",
+     "float": 0.56
+    },
+    "(1,0)": {
+     "exact": "6/25",
+     "float": 0.24
+    },
+    "(0,1)": {
+     "exact": "7/50",
+     "float": 0.14
+    },
+    "(0,0)": {
+     "exact": "3/50",
+     "float": 0.06
+    }
+   },
+   "gamma_cc_squared": {
+    "exact": "1891369/391369",
+    "float": 4.832700086107995
+   },
+   "gamma_cc_float": 2.198340302616498,
+   "complete_case_dropout_delta_q": {
+    "exact": "-421635507/60500000000",
+    "float": -0.006969181933884298
+   },
+   "population_dropout_delta_q": {
+    "exact": "-12633/500000",
+    "float": -0.025266
+   },
+   "per_mask_complete_case_delta": {
+    "(1,1)": {
+     "exact": "0",
+     "float": 0.0
+    },
+    "(1,0)": {
+     "exact": "-159943/9680000",
+     "float": -0.016523037190082645
+    },
+    "(0,1)": {
+     "exact": "-97749/242000000",
+     "float": -0.0004039214876033058
+    },
+    "(0,0)": {
+     "exact": "-30699/625000",
+     "float": -0.0491184
+    }
+   }
+  },
+  "E2m_label_x2": {
+   "oracle_delta_nat": {
+    "exact": "41232897/5500000000",
+    "float": 0.007496890363636364
+   },
+   "oracle_risk_A": {
+    "exact": "106808859/687500000",
+    "float": 0.15535834036363635
+   },
+   "oracle_risk_B": {
+    "exact": "2957229/20000000",
+    "float": 0.14786145
+   },
+   "mask_frequencies_rho": {
+    "(1,1)": {
+     "exact": "14/25",
+     "float": 0.56
+    },
+    "(1,0)": {
+     "exact": "6/25",
+     "float": 0.24
+    },
+    "(0,1)": {
+     "exact": "7/50",
+     "float": 0.14
+    },
+    "(0,0)": {
+     "exact": "3/50",
+     "float": 0.06
+    }
+   },
+   "gamma_cc_squared": {
+    "exact": "1843369/343369",
+    "float": 5.368478226048362
+   },
+   "gamma_cc_float": 2.3169976750200596,
+   "complete_case_dropout_delta_q": {
+    "exact": "-2635550493/60500000000",
+    "float": -0.0435628180661157
+   },
+   "population_dropout_delta_q": {
+    "exact": "-12633/500000",
+    "float": -0.025266
+   },
+   "per_mask_complete_case_delta": {
+    "(1,1)": {
+     "exact": "0",
+     "float": 0.0
+    },
+    "(1,0)": {
+     "exact": "-1006057/9680000",
+     "float": -0.1039315082644628
+    },
+    "(0,1)": {
+     "exact": "-10396251/242000000",
+     "float": -0.042959714876033055
+    },
+    "(0,0)": {
+     "exact": "-131301/625000",
+     "float": -0.2100816
+    }
+   }
+  },
+  "E3p_self_x2_strong": {
+   "oracle_delta_nat": {
+    "exact": "-290418067/4840000000",
+    "float": -0.060003732851239666
+   },
+   "oracle_risk_A": {
+    "exact": "48378263/302500000",
+    "float": 0.15992814214876033
+   },
+   "oracle_risk_B": {
+    "exact": "351891/1600000",
+    "float": 0.219931875
+   },
+   "mask_frequencies_rho": {
+    "(1,1)": {
+     "exact": "14/25",
+     "float": 0.56
+    },
+    "(1,0)": {
+     "exact": "6/25",
+     "float": 0.24
+    },
+    "(0,1)": {
+     "exact": "7/50",
+     "float": 0.14
+    },
+    "(0,0)": {
+     "exact": "3/50",
+     "float": 0.06
+    }
+   },
+   "gamma_cc_squared": {
+    "exact": "16799/799",
+    "float": 21.02503128911139
+   },
+   "gamma_cc_float": 4.585306019134534,
+   "complete_case_dropout_delta_q": {
+    "exact": "-44246907/4840000000",
+    "float": -0.009141922933884298
+   },
+   "population_dropout_delta_q": {
+    "exact": "-12633/500000",
+    "float": -0.025266
+   },
+   "per_mask_complete_case_delta": {
+    "(1,1)": {
+     "exact": "0",
+     "float": 0.0
+    },
+    "(1,0)": {
+     "exact": "-13401/774400",
+     "float": -0.01730501033057851
+    },
+    "(0,1)": {
+     "exact": "-27279/1760000",
+     "float": -0.015499431818181818
+    },
+    "(0,0)": {
+     "exact": "-2349/50000",
+     "float": -0.04698
+    }
+   }
+  },
+  "E3m_self_x2_strong": {
+   "oracle_delta_nat": {
+    "exact": "45843187/4840000000",
+    "float": 0.009471732851239669
+   },
+   "oracle_risk_A": {
+    "exact": "46597057/302500000",
+    "float": 0.15403985785123966
+   },
+   "oracle_risk_B": {
+    "exact": "231309/1600000",
+    "float": 0.144568125
+   },
+   "mask_frequencies_rho": {
+    "(1,1)": {
+     "exact": "14/25",
+     "float": 0.56
+    },
+    "(1,0)": {
+     "exact": "6/25",
+     "float": 0.24
+    },
+    "(0,1)": {
+     "exact": "7/50",
+     "float": 0.14
+    },
+    "(0,0)": {
+     "exact": "3/50",
+     "float": 0.06
+    }
+   },
+   "gamma_cc_squared": {
+    "exact": "16159/159",
+    "float": 101.62893081761007
+   },
+   "gamma_cc_float": 10.081117538130883,
+   "complete_case_dropout_delta_q": {
+    "exact": "-200327973/4840000000",
+    "float": -0.0413900770661157
+   },
+   "population_dropout_delta_q": {
+    "exact": "-12633/500000",
+    "float": -0.025266
+   },
+   "per_mask_complete_case_delta": {
+    "(1,1)": {
+     "exact": "0",
+     "float": 0.0
+    },
+    "(1,0)": {
+     "exact": "-79879/774400",
+     "float": -0.10314953512396695
+    },
+    "(0,1)": {
+     "exact": "-49041/1760000",
+     "float": -0.027864204545454546
+    },
+    "(0,0)": {
+     "exact": "-10611/50000",
+     "float": -0.21222
+    }
+   }
+  },
+  "E4_correlated_mcar": {
+   "oracle_delta_nat": {
+    "exact": "-165193/5500000",
+    "float": -0.03003509090909091
+   },
+   "oracle_risk_A": {
+    "exact": "443341/2750000",
+    "float": 0.1612149090909091
+   },
+   "oracle_risk_B": {
+    "exact": "153/800",
+    "float": 0.19125
+   },
+   "mask_frequencies_rho": {
+    "(1,1)": {
+     "exact": "33/50",
+     "float": 0.66
+    },
+    "(1,0)": {
+     "exact": "7/50",
+     "float": 0.14
+    },
+    "(0,1)": {
+     "exact": "1/25",
+     "float": 0.04
+    },
+    "(0,0)": {
+     "exact": "4/25",
+     "float": 0.16
+    }
+   },
+   "gamma_cc_squared": {
+    "exact": "1",
+    "float": 1.0
+   },
+   "gamma_cc_float": 1.0,
+   "complete_case_dropout_delta_q": {
+    "exact": "-12633/500000",
+    "float": -0.025266
+   },
+   "population_dropout_delta_q": {
+    "exact": "-12633/500000",
+    "float": -0.025266
+   },
+   "per_mask_complete_case_delta": {
+    "(1,1)": {
+     "exact": "0",
+     "float": 0.0
+    },
+    "(1,0)": {
+     "exact": "-53/880",
+     "float": -0.060227272727272727
+    },
+    "(0,1)": {
+     "exact": "-477/22000",
+     "float": -0.02168181818181818
+    },
+    "(0,0)": {
+     "exact": "-81/625",
+     "float": -0.1296
+    }
+   }
+  },
+  "Z_check": {
+   "oracle_delta_nat": {
+    "exact": "-34473/500000",
+    "float": -0.068946
+   },
+   "oracle_risk_A": {
+    "exact": "10389/62500",
+    "float": 0.166224
+   },
+   "oracle_risk_B": {
+    "exact": "23517/100000",
+    "float": 0.23517
+   },
+   "mask_frequencies_rho": {
+    "(1,1)": {
+     "exact": "511/1250",
+     "float": 0.4088
+    },
+    "(1,0)": {
+     "exact": "489/1250",
+     "float": 0.3912
+    },
+    "(0,1)": {
+     "exact": "7/50",
+     "float": 0.14
+    },
+    "(0,0)": {
+     "exact": "3/50",
+     "float": 0.06
+    }
+   },
+   "gamma_cc_squared": null,
+   "gamma_cc_float": null,
+   "complete_case_dropout_delta_q": {
+    "exact": "79851/9125000",
+    "float": 0.008750794520547946
+   },
+   "population_dropout_delta_q": {
+    "exact": "-12633/500000",
+    "float": -0.025266
+   },
+   "per_mask_complete_case_delta": {
+    "(1,1)": {
+     "exact": "0",
+     "float": 0.0
+    },
+    "(1,0)": {
+     "exact": "391/16060",
+     "float": 0.02434620174346202
+    },
+    "(0,1)": {
+     "exact": "1179/80300",
+     "float": 0.014682440846824409
+    },
+    "(0,0)": {
+     "exact": "648/45625",
+     "float": 0.014202739726027397
+    }
+   }
+  }
+ },
+ "note": "oracle_* use target labels and the true policy; for scoring only."
+}
