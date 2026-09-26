@@ -27,8 +27,8 @@ Pattern = Tuple[int, ...]
 Obs = Tuple[Optional[int], ...]
 
 
-def all_x(d: int) -> List[X]:
-    return [tuple(v) for v in itertools.product((0, 1), repeat=d)]
+def all_x(d: int, levels: int = 2) -> List[X]:
+    return [tuple(v) for v in itertools.product(range(levels), repeat=d)]
 
 
 def all_patterns(d: int) -> List[Pattern]:
@@ -56,9 +56,10 @@ class FiniteJoint:
 
     d: int
     prob: Dict[Cell, Fraction]
+    levels: int = 2  # values per feature (2 = binary, as in FR1/FR2)
 
     def __post_init__(self):
-        expected = {(x, y) for x in all_x(self.d) for y in (0, 1)}
+        expected = {(x, y) for x in all_x(self.d, self.levels) for y in (0, 1)}
         if set(self.prob) != expected:
             raise ValueError("prob must list every (x, y) cell (use 0 for no mass)")
         if any(p < 0 for p in self.prob.values()):
@@ -75,7 +76,7 @@ class FiniteJoint:
         return cls(d=d, prob=prob)
 
     def cells(self) -> List[Cell]:
-        return [(x, y) for x in all_x(self.d) for y in (0, 1)]
+        return [(x, y) for x in all_x(self.d, self.levels) for y in (0, 1)]
 
     def patterns(self) -> List[Pattern]:
         return all_patterns(self.d)
@@ -102,7 +103,7 @@ class FiniteJoint:
         return sum((p for (_, y), p in self.prob.items() if y == 1), Q(0))
 
     def with_prob(self, prob: Dict[Cell, Fraction]) -> "FiniteJoint":
-        return FiniteJoint(d=self.d, prob=dict(prob))
+        return FiniteJoint(d=self.d, prob=dict(prob), levels=self.levels)
 
 
 @dataclass(frozen=True)
@@ -224,7 +225,7 @@ def observed_law(joint: FiniteJoint, pi: Policy) -> Dict[Tuple[Pattern, Obs], Fr
     """Unlabelled deployment law P(R = r, X_r = x_r) (labels never enter)."""
     out: Dict[Tuple[Pattern, Obs], Fraction] = {}
     for r in joint.patterns():
-        for x in all_x(joint.d):
+        for x in all_x(joint.d, joint.levels):
             out.setdefault((r, observe(x, r)), Q(0))
     for (x, y), w in joint.prob.items():
         for r, p in pi[(x, y)].items():

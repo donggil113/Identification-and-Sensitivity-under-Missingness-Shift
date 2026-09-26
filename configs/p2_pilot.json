@@ -1,0 +1,49 @@
+{
+  "experiment_id": "P2-PILOT1",
+  "title": "Semi-synthetic pilot: real covariates and labels (UCI Adult), fixed semi-synthetic missingness, setting C",
+  "status_label": "PRE-REGISTERED before the data are read; the data have never been opened in this project",
+  "preregistration": {
+    "fixed_before_data": ["entity key and split rule", "binning thresholds", "model definitions", "mask rules and seed", "evaluator dropout law", "Gamma grid", "alpha", "reporting list"],
+    "report_regardless": "All pre-registered quantities are reported whether or not any ranking reversal occurs. The dataset, binning, models and mask rules must not be changed after the data are seen; any change would be a new, separately labelled exploratory analysis.",
+    "questions": {
+      "P1": "Does complete-case random dropout rank A and B in the same order as the held-out natural-missingness risk difference?",
+      "P2": "What sign category does the setting-C identified set have at each pre-registered Gamma_cc (finite-population identification)?",
+      "P3": "Does the conservative outer 95% interval keep that category?"
+    },
+    "independent_unit": "entity (unique attribute tuple excluding fnlwgt); split by hash, so duplicates never cross the split",
+    "budget": {"cpu_threads": 2, "wall_seconds": 120, "gpu": false},
+    "stop_conditions": ["any uncertified LP -> FAIL", "coarsening check fails -> estimand invalid, report and stop", "wall time > 120 s -> remaining parts NOT_RUN"]
+  },
+  "data": {
+    "name": "UCI Adult (Census Income)",
+    "source_url": "https://archive.ics.uci.edu/static/public/2/adult.zip",
+    "files": ["adult.data", "adult.test"],
+    "license_expected": "CC BY 4.0 (to be confirmed on the UCI page at download time and recorded)",
+    "local_dir": "data/external/adult",
+    "download_approved": false
+  },
+  "entity": {"key": "all attributes except fnlwgt", "train_pct": 50},
+  "label": "income > 50K (trailing '.' in adult.test stripped)",
+  "modalities": [
+    {"name": "education", "column": "education-num", "cuts": [9, 12], "levels_note": "0: <=9, 1: 10-12, 2: >=13"},
+    {"name": "work_hours", "column": "hours-per-week", "cuts": [34, 45], "levels_note": "0: <=34, 1: 35-45, 2: >45"}
+  ],
+  "levels": 3,
+  "models": {"A": "Laplace-smoothed P(Y=1 | X_r=x_r) on train (Bayes under MCAR dropout)", "B": "train-mode imputation of missing binned modality, then Laplace-smoothed P(Y=1 | X=x)"},
+  "loss": "brier",
+  "evaluator_dropout_q": {"type": "independent", "drop_rates": ["3/20", "3/10"]},
+  "mask_rules": {
+    "primary_mnar": [
+      {"base": "3/20"},
+      {"base": "3/20", "per_label": "1/4", "per_level": {"2": "1/10"}}
+    ],
+    "control_mcar": [
+      {"base": "3/20"},
+      {"base": "3/10"}
+    ]
+  },
+  "mask_seed": 20260928,
+  "setting": "C_cc_plus_unlab",
+  "gamma_grid": ["1", "5/4", "3/2", "2", "3", "SUPPORT_ONLY", "NO_MODEL"],
+  "outer_ci": {"alpha": "0.05", "gammas": ["1", "3/2", "2", "NO_MODEL"]}
+}

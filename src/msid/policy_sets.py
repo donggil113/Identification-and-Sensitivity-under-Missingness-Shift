@@ -122,7 +122,7 @@ def build_system(joint: FiniteJoint, spec: PolicySetSpec) -> LinearSystem:
         tgt = spec.target_observed
         for r in pats:
             values = []
-            for x in all_x(joint.d):
+            for x in all_x(joint.d, joint.levels):
                 o = observe(x, r)
                 if o not in values:
                     values.append(o)

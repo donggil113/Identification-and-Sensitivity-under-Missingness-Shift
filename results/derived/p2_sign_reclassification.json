@@ -1,0 +1,298 @@
+{
+ "fr2_primary": [
+  {
+   "setting": "A_oracle_w",
+   "gamma_cc": "1",
+   "old_decision": "A_better",
+   "lo_attained": null,
+   "hi_attained": null,
+   "category": "STRICT_A",
+   "margin": "12633/500000"
+  },
+  {
+   "setting": "A_oracle_w",
+   "gamma_cc": "5/4",
+   "old_decision": "A_better",
+   "lo_attained": null,
+   "hi_attained": null,
+   "category": "STRICT_A",
+   "margin": "7894465581/370166500000"
+  },
+  {
+   "setting": "A_oracle_w",
+   "gamma_cc": "3/2",
+   "old_decision": "A_better",
+   "lo_attained": null,
+   "hi_attained": null,
+   "category": "STRICT_A",
+   "margin": "233201/12900000"
+  },
+  {
+   "setting": "A_oracle_w",
+   "gamma_cc": "2",
+   "old_decision": "A_better",
+   "lo_attained": null,
+   "hi_attained": null,
+   "category": "STRICT_A",
+   "margin": "5873323/461500000"
+  },
+  {
+   "setting": "A_oracle_w",
+   "gamma_cc": "3",
+   "old_decision": "A_better",
+   "lo_attained": null,
+   "hi_attained": null,
+   "category": "STRICT_A",
+   "margin": "7470269/989500000"
+  },
+  {
+   "setting": "A_oracle_w",
+   "gamma_cc": "SUPPORT_ONLY",
+   "old_decision": "A_better",
+   "lo_attained": null,
+   "hi_attained": null,
+   "category": "STRICT_A",
+   "margin": "1017/500000"
+  },
+  {
+   "setting": "A_oracle_w",
+   "gamma_cc": "NO_MODEL",
+   "old_decision": "A_better",
+   "lo_attained": null,
+   "hi_attained": null,
+   "category": "STRICT_A",
+   "margin": "1017/500000"
+  },
+  {
+   "setting": "B_cc_only",
+   "gamma_cc": "1",
+   "old_decision": "undetermined",
+   "lo_attained": false,
+   "hi_attained": true,
+   "category": "WEAK_A",
+   "margin": "0"
+  },
+  {
+   "setting": "B_cc_only",
+   "gamma_cc": "5/4",
+   "old_decision": "undetermined",
+   "lo_attained": false,
+   "hi_attained": true,
+   "category": "WEAK_A",
+   "margin": "0"
+  },
+  {
+   "setting": "B_cc_only",
+   "gamma_cc": "3/2",
+   "old_decision": "undetermined",
+   "lo_attained": false,
+   "hi_attained": false,
+   "category": "BOTH_ORDERS",
+   "margin": "0"
+  },
+  {
+   "setting": "B_cc_only",
+   "gamma_cc": "2",
+   "old_decision": "undetermined",
+   "lo_attained": false,
+   "hi_attained": false,
+   "category": "BOTH_ORDERS",
+   "margin": "0"
+  },
+  {
+   "setting": "B_cc_only",
+   "gamma_cc": "3",
+   "old_decision": "undetermined",
+   "lo_attained": false,
+   "hi_attained": false,
+   "category": "BOTH_ORDERS",
+   "margin": "0"
+  },
+  {
+   "setting": "B_cc_only",
+   "gamma_cc": "SUPPORT_ONLY",
+   "old_decision": "undetermined",
+   "lo_attained": false,
+   "hi_attained": false,
+   "category": "BOTH_ORDERS",
+   "margin": "0"
+  },
+  {
+   "setting": "B_cc_only",
+   "gamma_cc": "NO_MODEL",
+   "old_decision": "undetermined",
+   "lo_attained": false,
+   "hi_attained": false,
+   "category": "BOTH_ORDERS",
+   "margin": "0"
+  },
+  {
+   "setting": "C_cc_plus_unlab",
+   "gamma_cc": "1",
+   "old_decision": "A_better",
+   "lo_attained": null,
+   "hi_attained": null,
+   "category": "STRICT_A",
+   "margin": "12633/500000"
+  },
+  {
+   "setting": "C_cc_plus_unlab",
+   "gamma_cc": "5/4",
+   "old_decision": "A_better",
+   "lo_attained": null,
+   "hi_attained": null,
+   "category": "STRICT_A",
+   "margin": "121759548927/11742615500000"
+  },
+  {
+   "setting": "C_cc_plus_unlab",
+   "gamma_cc": "3/2",
+   "old_decision": "undetermined",
+   "lo_attained": null,
+   "hi_attained": null,
+   "category": "BOTH_ORDERS",
+   "margin": "0"
+  },
+  {
+   "setting": "C_cc_plus_unlab",
+   "gamma_cc": "2",
+   "old_decision": "undetermined",
+   "lo_attained": null,
+   "hi_attained": null,
+   "category": "BOTH_ORDERS",
+   "margin": "0"
+  },
+  {
+   "setting": "C_cc_plus_unlab",
+   "gamma_cc": "3",
+   "old_decision": "undetermined",
+   "lo_attained": null,
+   "hi_attained": null,
+   "category": "BOTH_ORDERS",
+   "margin": "0"
+  },
+  {
+   "setting": "C_cc_plus_unlab",
+   "gamma_cc": "SUPPORT_ONLY",
+   "old_decision": "undetermined",
+   "lo_attained": null,
+   "hi_attained": null,
+   "category": "BOTH_ORDERS",
+   "margin": "0"
+  },
+  {
+   "setting": "C_cc_plus_unlab",
+   "gamma_cc": "NO_MODEL",
+   "old_decision": "undetermined",
+   "lo_attained": null,
+   "hi_attained": null,
+   "category": "BOTH_ORDERS",
+   "margin": "0"
+  },
+  {
+   "setting": "D_conditionals",
+   "gamma_cc": "1",
+   "old_decision": "undetermined",
+   "lo_attained": false,
+   "hi_attained": true,
+   "category": "WEAK_A",
+   "margin": "0"
+  },
+  {
+   "setting": "D_conditionals",
+   "gamma_cc": "5/4",
+   "old_decision": "undetermined",
+   "lo_attained": false,
+   "hi_attained": true,
+   "category": "WEAK_A",
+   "margin": "0"
+  },
+  {
+   "setting": "D_conditionals",
+   "gamma_cc": "3/2",
+   "old_decision": "undetermined",
+   "lo_attained": false,
+   "hi_attained": false,
+   "category": "BOTH_ORDERS",
+   "margin": "0"
+  },
+  {
+   "setting": "D_conditionals",
+   "gamma_cc": "2",
+   "old_decision": "undetermined",
+   "lo_attained": false,
+   "hi_attained": false,
+   "category": "BOTH_ORDERS",
+   "margin": "0"
+  },
+  {
+   "setting": "D_conditionals",
+   "gamma_cc": "3",
+   "old_decision": "undetermined",
+   "lo_attained": false,
+   "hi_attained": false,
+   "category": "BOTH_ORDERS",
+   "margin": "0"
+  },
+  {
+   "setting": "D_conditionals",
+   "gamma_cc": "SUPPORT_ONLY",
+   "old_decision": "undetermined",
+   "lo_attained": false,
+   "hi_attained": false,
+   "category": "BOTH_ORDERS",
+   "margin": "0"
+  },
+  {
+   "setting": "D_conditionals",
+   "gamma_cc": "NO_MODEL",
+   "old_decision": "undetermined",
+   "lo_attained": false,
+   "hi_attained": false,
+   "category": "BOTH_ORDERS",
+   "margin": "0"
+  }
+ ],
+ "fr1_pattern": [
+  {
+   "gamma_box": "1",
+   "old_decision": "A_better",
+   "category": "STRICT_A"
+  },
+  {
+   "gamma_box": "5/4",
+   "old_decision": "A_better",
+   "category": "STRICT_A"
+  },
+  {
+   "gamma_box": "3/2",
+   "old_decision": "undetermined",
+   "category": "BOTH_ORDERS"
+  },
+  {
+   "gamma_box": "2",
+   "old_decision": "undetermined",
+   "category": "BOTH_ORDERS"
+  },
+  {
+   "gamma_box": "3",
+   "old_decision": "undetermined",
+   "category": "BOTH_ORDERS"
+  },
+  {
+   "gamma_box": "5",
+   "old_decision": "undetermined",
+   "category": "BOTH_ORDERS"
+  },
+  {
+   "gamma_box": "inf",
+   "old_decision": "undetermined",
+   "category": "BOTH_ORDERS"
+  }
+ ],
+ "notes": [
+  "gamma_cc (FR2, reference = complete-case law, free scale) and gamma_box (FR1, reference = dropout law q / population law w) are different parameters; do not compare their values.",
+  "attained=None means the endpoint is attained by construction (closed set of valid models)."
+ ],
+ "seconds": 1.33
+}

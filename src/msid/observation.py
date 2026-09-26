@@ -75,7 +75,7 @@ def truth_from_policy(joint: FiniteJoint, pi: Policy) -> Truth:
     for r in joint.patterns():
         if r == full:
             continue
-        for x in all_x(joint.d):
+        for x in all_x(joint.d, joint.levels):
             obs.setdefault((r, observe(x, r)), Q(0))
         for c in joint.cells():
             obs[(r, observe(c[0], r))] += p[(c, r)]
@@ -185,7 +185,16 @@ def build(t: Truth, setting: str, gamma, theta_box=None, obs_box=None) -> Built:
             continue
         g = Q(gamma)
         if sum_klo == 0:
-            raise ValueError("empty complete-case support")
+            # Every kappa_lo is 0 (e.g. an outer box whose lower ends are all 0,
+            # or n_complete = 0).  The lower Gamma inequality is then vacuous and
+            # b_r is unbounded, so the exact projection of the relaxed set onto p
+            # is the support restriction p(c, r) = 0 where kappa_hi = 0.
+            # Empirical zeros (kappa_lo = 0 < kappa_hi) are NOT fixed at zero.
+            for c in cells:
+                up = Q(0) if khi[c] == 0 else Q(1)
+                j = B.var(f"p{c}{r}", 0, up)
+                pexpr[(c, r)] = {j: Q(1)}
+            continue
         bmax = g / sum_klo
         bj = B.var(f"b{r}", 0, bmax)
         tmax = g * max(khi.values()) * bmax + 1
@@ -297,3 +306,108 @@ def truth_in_model(t: Truth, gamma) -> bool:
 
 def truth_value(t: Truth, table) -> Fraction:
     return sum((t.p[k] * table[k] for k in t.p), Q(0))
+
+
+# ---------------------------------------------------------------------------
+# Sign interpretation with endpoint attainment (added in the v2 correction)
+# ---------------------------------------------------------------------------
+
+def endpoint_attained(built: Built, table, value: Fraction) -> Optional[bool]:
+    """Is the endpoint `value` reached by a *valid* probability model?
+
+    Valid means rho_full > 0 (complete cases exist, so v is a conditional law).
+    In settings A/C rho_full is fixed by the data and every LP point is valid,
+    so None ("not applicable": attained) is returned.  Otherwise solve
+    max rho_full s.t. feasibility and objective == value; attained iff > 0.
+    """
+    if "rho_full" not in built.names:
+        return None
+    j = built.names.index("rho_full")
+    c = objective(built, table)
+    A = built.A + [c]
+    b = built.b + [Q(value)]
+    e = [Q(0)] * len(built.names)
+    e[j] = Q(1)
+    res = solve_lp(e, A, b, built.lower, built.upper, "max")
+    if res.status != "OPTIMAL" or not res.certificate_ok:
+        raise RuntimeError("attainment LP failed")
+    return res.value > 0
+
+
+def classify_sign(lo, hi, lo_attained=True, hi_attained=True) -> str:
+    """Interpretation of an identified interval for Delta = R_A - R_B.
+
+    STRICT_A / STRICT_B : every compatible law has the sign, with margin
+                          min(|lo|,|hi|) > 0 (A better means Delta < 0).
+    WEAK_A / WEAK_B     : one endpoint is exactly 0 and attained: the model
+                          is never worse, a tie is compatible with the data.
+    A_NO_MARGIN / B_NO_MARGIN : the 0 endpoint is reached only in the closure
+                          (e.g. rho_full -> 0): strict for every valid law,
+                          but without a uniform margin.
+    BOTH_ORDERS         : lo < 0 < hi; both strict orders are compatible
+                          (interior values are always attained).
+    TIE                 : lo = hi = 0.
+    """
+    if lo is None:
+        return "INFEASIBLE"
+    if hi < 0:
+        return "STRICT_A"
+    if lo > 0:
+        return "STRICT_B"
+    if lo == 0 and hi == 0:
+        return "TIE"
+    if hi == 0:
+        return "WEAK_A" if hi_attained is not False else "A_NO_MARGIN"
+    if lo == 0:
+        return "WEAK_B" if lo_attained is not False else "B_NO_MARGIN"
+    return "BOTH_ORDERS"
+
+
+def solve_endpoint(built: Built, table, sense: str):
+    """Exact LP endpoint together with its primal solution."""
+    res = solve_lp(objective(built, table), built.A, built.b, built.lower, built.upper, sense)
+    return res
+
+
+def recover_model(t: Truth, built: Built, x, gamma):
+    """Reverse map of the b_r reparametrisation for an LP point x.
+
+    Returns (status, info).  status is
+      "PROBABILITY_MODEL" : p is a joint law with rho_full > 0, v = p(.,full)/rho_full
+                            is the complete-case law, and for every incomplete
+                            mask with rho_r > 0, lambda_r = b_r/rho_r (b_r * s_full /
+                            rho_r when kappa = theta) satisfies the ratio bounds of
+                            M_cc(Gamma) including absolute continuity;
+      "CLOSURE_ONLY"      : rho_full = 0 (no complete cases): not a valid model,
+                            only a limit of valid models;
+      "VIOLATION"         : any check failed (would indicate a bug).
+    """
+    J = t.joint
+    p = {}
+    for key, expr in built.pexpr.items():
+        p[key] = sum((x[k] * v for k, v in expr.items()), Q(0))
+    if any(v < 0 for v in p.values()) or sum(p.values()) != 1:
+        return "VIOLATION", {"reason": "not a probability law"}
+    full = t.full
+    rho = {r: sum((p[(c, r)] for c in J.cells()), Q(0)) for r in J.patterns()}
+    if rho[full] == 0:
+        return "CLOSURE_ONLY", {"rho_full": "0"}
+    v = {c: p[(c, full)] / rho[full] for c in J.cells()}
+    if gamma in ("NO_MODEL",):
+        return "PROBABILITY_MODEL", {}
+    for r in J.patterns():
+        if r == full or rho[r] == 0:
+            continue
+        ratios = []
+        for c in J.cells():
+            cond = p[(c, r)] / rho[r]
+            if v[c] == 0:
+                if cond > 0:
+                    return "VIOLATION", {"reason": f"absolute continuity fails at {c},{r}"}
+                continue
+            ratios.append(cond / v[c])
+        if gamma == "SUPPORT_ONLY":
+            continue
+        if min(ratios) == 0 or max(ratios) / min(ratios) > Q(gamma) ** 2:
+            return "VIOLATION", {"reason": f"ratio spread exceeds Gamma^2 at mask {r}"}
+    return "PROBABILITY_MODEL", {"rho_full": str(rho[full])}
