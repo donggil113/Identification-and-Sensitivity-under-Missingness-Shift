@@ -1,0 +1,92 @@
+% P2 manuscript SKELETON (English). Not a submission draft.
+% Rule: every place without a verified result carries \todo{EXPERIMENT_ID}.
+% Numbers quoted here must match results/raw/ and RESEARCH_PACKET.md.
+\documentclass{article}
+\usepackage{amsmath,amssymb,amsthm,booktabs}
+\newcommand{\todo}[1]{\textbf{[TODO: #1]}}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\title{When Can Modality-Dropout Rankings Transfer?\\
+\large Partial identification of model comparisons under missingness-policy shift}
+\author{\todo{authors}}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Multimodal models are routinely compared by deleting modalities at random.
+We ask for which natural missingness policies such a ranking remains valid.
+For finite supports we show that the set of deployment risk differences
+compatible with a bounded-selection sensitivity model and the available
+marginal information is an interval with attainable endpoints (two linear
+programs), that only the cell-by-mask interaction of the loss difference can
+move it, and that unlabelled deployment data can refute small sensitivity
+parameters but never identify label-dependent missingness.
+\todo{P2-FR2: realistic complete-case source} \todo{P2-real: empirical study}
+\end{abstract}
+
+\section{Introduction}
+Random modality dropout (artificial mask $M \perp (X,Y)$) vs.\ natural
+missingness (mask $R \sim \pi(\cdot\mid x,y)$). Question: range of $\pi$ over
+which the sign of $\Delta(\pi)=R_A(\pi)-R_B(\pi)$ equals that of $\Delta(q)$.
+Contributions (to be confirmed against related work \todo{RELATED_WORK verification}):
+(i) exact sharp interval relative to stated assumptions;
+(ii) row-space characterisation of point identification (only the interaction matters);
+(iii) ranking-transfer threshold $\Gamma^*$ and a closed-form certificate;
+(iv) falsification of small $\Gamma$ from unlabelled deployment data.
+We make no claim about how often rankings reverse in practice.
+
+\section{Setting}
+Cells $c=(x,y)$, masks $r$, full-data law $w$, fixed predictors $f_A,f_B$,
+mask-specific losses $L_f(c,r)$, $D=L_A-L_B$,
+$\Delta(\pi)=\sum_{c,r} w_c\,\pi(r\mid c)\,D(c,r)$.
+Policy sets $\Pi(\Gamma;K)$: $\Gamma$-box around the dropout law $q$ plus
+$K\in\{\text{none},\text{feature},\text{pattern},\text{observed law}\}$.
+Assumptions A1--A4 (known full-data law, $\Gamma$-box, exact marginals, fixed models).
+Distinctions: natural $R$ vs.\ artificial $M$; population $w$ vs.\ complete sample
+$\hat w$ vs.\ complete-case law; exact constraints vs.\ plug-in; oracle vs.\ available.
+
+\section{Identification}
+\begin{proposition}[Attainability and sharpness relative to $\Pi$]
+\label{prop:sharp} \dots\ (proof in RESEARCH\_PACKET.md, Prop.~1)
+\end{proposition}
+\begin{proposition}[Row-space characterisation]
+$\Delta$ is constant on $\Pi$ iff $g\in\operatorname{rowspace}(A)$, given an interior point. \dots
+\end{proposition}
+\begin{corollary}[Brier loss]
+With unlabelled deployment data, $\Delta$ is identified iff $f_A-f_B$ is constant. \dots
+\end{corollary}
+\begin{proposition}[Closed-form certificate]
+$|\Delta(\pi)-\Delta(q)|\le(\Gamma-1)\,\mathbb{E}_{w\otimes q}|D_{\mathrm{int}}|$.
+\end{proposition}
+\begin{proposition}[Unlabelled data bound $\Gamma$ from below only] \dots \end{proposition}
+Example (hand-checkable, $d=1$): $\Delta(q)=-1/64$, identified set $[-5/64,3/64]$
+under the MCAR unlabelled law (existence example, not a frequency).
+
+\section{Estimation and inference}
+Plug-in intervals are estimates, not population sharp bounds (FR1 part F:
+population interval contained in 8/100 and 5/100 replications for $n=100,1000$).
+Valid confidence sets for partially identified parameters:
+\todo{P2-FR3: inference for interval endpoints}.
+
+\section{Experiments}
+\subsection{Exact synthetic population (P2-FR1)}
+Single hand-specified population; exact rational LPs with certificates.
+$\Delta(q)\approx-0.0253$; $\Gamma^*(\text{pattern})\in(1.4390,1.4391]$;
+$\Gamma^*(\text{observed law of MCAR})\in(2.0692,2.0693]$; $\Gamma_{cf}\approx1.269$.
+Scenario grid vs.\ sharp interval, joint vs.\ separate bounds: see Table~\todo{P2-FR1 table formatting}.
+\subsection{Realistic complete-case source}
+\todo{P2-FR2}
+\subsection{Real multimodal data with natural missingness}
+\todo{P2-real: dataset, license, approval}
+\subsection{Other losses (0--1, log loss)}
+\todo{P2-FR1-loss}
+
+\section{Related work}
+\todo{RELATED_WORK verification: missingness shift, MNAR sensitivity, partial
+identification, DRO evaluation, feature deletion, missing-modality robustness}
+
+\section{Limitations}
+Assumptions A1--A3 are untestable (A2 only partly); $\Gamma$ is not estimable;
+finite support only; no claim of reversal frequency.
+
+\end{document}

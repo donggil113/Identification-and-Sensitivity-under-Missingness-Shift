@@ -1,0 +1,76 @@
+{
+ "experiment_id": "P2-FR1",
+ "config": "configs/p2_first_run.json",
+ "config_sha256": "2f5eec79eb202ba134e7d8a55a913b78eee6ba4ce6128134d5e26f6798c28c33",
+ "git_commit_at_run": "a762fc3ee581111c20a771ad343d5a67b054fe3c",
+ "git_tracked_code_dirty_at_run": false,
+ "msid_version": "0.1.0",
+ "python": "3.11.15",
+ "implementation": "CPython",
+ "platform": "Linux-6.18.44-fc-v42-x86_64-with-glibc2.39",
+ "cpu_affinity_count": 2,
+ "start_utc": "2026-09-26T14:33:00.953408+00:00",
+ "end_utc": "2026-09-26T14:33:10.864931+00:00",
+ "wall_seconds": 9.914,
+ "budget_wall_seconds": 120,
+ "parts": {
+  "A": {
+   "status": "DONE",
+   "seconds": 0.012
+  },
+  "B": {
+   "status": "DONE",
+   "seconds": 2.056
+  },
+  "C": {
+   "status": "DONE",
+   "seconds": 0.739
+  },
+  "D": {
+   "status": "DONE",
+   "seconds": 0.86
+  },
+  "E": {
+   "status": "DONE",
+   "seconds": 1.447
+  },
+  "F": {
+   "status": "DONE",
+   "seconds": 4.788
+  }
+ },
+ "engineering_checks": {
+  "gamma_one_point_equals_dropout_delta": "PASS",
+  "nesting_gamma_and_constraint_strength": "PASS",
+  "membership_implies_containment": "PASS",
+  "support_violation_flagged_and_infeasible_reported": "PASS",
+  "prop2_rank_condition_matches_lp_width": "PASS",
+  "CX1_hand_values_reproduced": "PASS",
+  "all_lps_certified": "PASS"
+ },
+ "uncertified_lps": [],
+ "hypotheses": {
+  "H-ENG": "PASS",
+  "H1": "SUPPORTED",
+  "H2": "SUPPORTED",
+  "H3": "SUPPORTED",
+  "H4": "REPORTED (descriptive; see p2_fr1_F_plugin.json)"
+ },
+ "outputs": {
+  "results/raw/p2_fr1_A_scenario.json": "e2937c58f33fe9782408a093422c07d844dbbdbcbfb568fd2755ae38c7887274",
+  "results/raw/p2_fr1_B_intervals.json": "9211e99665eb3de1eea078969a4cd65f501162a827e3e63f895310a91b0fafb4",
+  "results/raw/p2_fr1_C_checks.json": "6dc37c27f8d02d11e2c2ba1ab867070718dbb1de6d654f9a20738ca1ce81104f",
+  "results/raw/p2_fr1_D_identification.json": "7c12e1806c28660cab438bac97195ee953818a9e2ca17dd5a7cc905b8e36ae70",
+  "results/raw/p2_fr1_E_gamma_star.json": "e6dce7cd68365c2c21aae0a424e9a398cc62a64e023451666ab2ebea45fca4aa",
+  "results/raw/p2_fr1_F_plugin.json": "7e6d2b36d0d48366ae3d180a7c6e1ef439424e3765f978c94f3a800b3a98fed6"
+ },
+ "data_sources": "Synthetic finite population hand-specified in the config; no external data, models or code were downloaded.",
+ "software": "Python standard library only (fractions, random, json); msid package in this repository.",
+ "rng": "random.Random (Mersenne Twister), seed = empirical.seed + n",
+ "not_run": [
+  "real data",
+  "GPU training",
+  "complete-case-source partial identification (w unknown)",
+  "empirical observed-law plug-in (infeasibility study)"
+ ]
+}
