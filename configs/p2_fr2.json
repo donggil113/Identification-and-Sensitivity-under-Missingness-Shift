@@ -1,0 +1,30 @@
+{
+  "experiment_id": "P2-FR2",
+  "title": "What the evaluator can identify when the full-data law is hidden: observation models A-D under one sensitivity model",
+  "status_label": "EXPLORATORY/DEVELOPMENT (same population, models and environments as P2-FR1, whose Gamma* was seen in a smoke test before FR1 pre-registration; no new population was searched)",
+  "preregistration": {
+    "fixed_before_run": true,
+    "disclosure": "A timing smoke (12 intervals, E0 truth, Gamma in {1,2,NO_MODEL}, all settings) was run before this config was committed; its numbers were seen. No population, model or environment parameter was changed.",
+    "questions": {
+      "Q1": "Which observable information (complete cases only; + mask frequencies and unlabelled observed law; conditionals without selection fractions; oracle full-data law) makes the natural-policy risk difference identified or sign-determined under M_cc(Gamma)?",
+      "Q2": "Is the direct-difference interval narrower than the separate-risk interval on the same feasible set?",
+      "Q3": "Does a sign determination that holds at population level survive sampling uncertainty (conservative outer confidence interval, setting C)?"
+    },
+    "engineering_checks": ["all LPs certified", "Gamma nesting", "information nesting A subset C subset D subset B", "truth contained when Gamma >= Gamma_cc(truth)", "SUPPORT_ONLY vs NO_MODEL differ under a structural zero", "outer CI contains the population interval whenever the box contains the truth (deterministic check)"],
+    "primary_metric": "Joint interval for Delta_nat and its sign decision per setting at Gamma in the grid, E0 (MCAR) truth; Gamma* bracket for settings A and C.",
+    "not_decision_rules": "Gamma* thresholds and improvement ratios are descriptive; they are not tests of novelty, significance or publishability.",
+    "independent_unit": "one hand-specified population (n_units = 1) for population parts; finite-sample part uses 2 independent draws per n only as illustration (no coverage estimation by Monte Carlo).",
+    "budget": {"cpu_threads": 2, "wall_seconds": 120, "installs": false, "downloads": false},
+    "stop_conditions": ["any uncertified LP -> FAIL, numbers not used", "truth outside interval while Gamma >= Gamma_cc(truth) -> FAIL (bug)", "wall time > 120 s -> remaining parts NOT_RUN"]
+  },
+  "reuse": "scenario, models and environments from configs/p2_first_run.json",
+  "label_availability": "L1: labels observed iff R = complete (S = 1[R = 1...1])",
+  "estimand": "Delta_nat = sum_{c,r} p(c,r) [L_A(c,r) - L_B(c,r)] (natural-missingness risk difference); separate risks R_A, R_B on the same feasible set",
+  "settings": ["A_oracle_w", "B_cc_only", "C_cc_plus_unlab", "D_conditionals"],
+  "gamma_grid": ["1", "5/4", "3/2", "2", "3", "SUPPORT_ONLY", "NO_MODEL"],
+  "truth_primary": "E0_MCAR",
+  "truth_secondary_settings": ["A_oracle_w", "C_cc_plus_unlab"],
+  "structural_zero_check": {"id": "Z_check", "base": "E0_MCAR", "cell_x": "11", "cell_y": 1, "move_full_mask_mass_to": "10", "note": "constructed support check, not an effect-size scenario"},
+  "gamma_star": {"settings": ["A_oracle_w", "C_cc_plus_unlab"], "cap": "64", "bisect_steps": 10},
+  "finite_sample": {"setting": "C_cc_plus_unlab", "n": [1000, 10000, 100000], "draws_per_n": 2, "seed": 20260927, "alpha": "0.05", "gammas": ["1", "2"], "region": "Hoeffding + Bonferroni box over the 13 observable cell probabilities, rounded outward to 1e-6"}
+}
