@@ -67,17 +67,31 @@ SET_NAMES = {"A_oracle_w": "A (oracle $w$)", "B_cc_only": "B (complete cases)",
              "C_cc_plus_unlab": "C (B + masks + unlabelled)", "D_conditionals": "D (conditionals, $\\rho$ unknown)"}
 
 
+CAT = {"STRICT_A": "A$^{s}$", "STRICT_B": "B$^{s}$", "WEAK_A": "A$^{w}$", "WEAK_B": "B$^{w}$",
+       "A_NO_MARGIN": "A$^{0}$", "B_NO_MARGIN": "B$^{0}$", "BOTH_ORDERS": "$\\pm$", "TIE": "=",
+       "INFEASIBLE": "$\\emptyset$"}
+
+
+def reclass():
+    path = os.path.join(ROOT, "results", "derived", "p2_sign_reclassification.json")
+    with open(path) as f:
+        return {(r["setting"], r["gamma_cc"]): r for r in json.load(f)["fr2_primary"]}
+
+
 def fr2_primary():
     B = load("p2_fr2_B_primary.json")
+    rc = reclass()
     rows = {(r["setting"], r["gamma"]): r for r in B["rows"]}
     gammas = ["1", "3/2", "2", "NO_MODEL"]
-    head = " & ".join(["setting"] + [("no model" if g == "NO_MODEL" else f"$\\Gamma={g}$") for g in gammas])
+    head = " & ".join(["setting"] + [("no model" if g == "NO_MODEL" else f"$\\Gamma_{{cc}}={g}$") for g in gammas])
     lines = [r"\begin{tabular}{l" + "l" * len(gammas) + "}", r"\toprule", head + r" \\", r"\midrule"]
     for s in ["A_oracle_w", "C_cc_plus_unlab", "D_conditionals", "B_cc_only"]:
         cells = []
         for g in gammas:
             j = rows[(s, g)]["joint"]
-            cells.append(f"{iv(j['lo'], j['hi'], 3)} {dec(j['decision'])}")
+            r = rc[(s, g)]
+            star = "$^{\\dagger}$" if (r["lo_attained"] is False or r["hi_attained"] is False) else ""
+            cells.append(f"{iv(j['lo'], j['hi'], 3)}{star} {CAT[r['category']]}")
         lines.append(SET_NAMES[s] + " & " + " & ".join(cells) + r" \\")
     lines += [r"\midrule"]
     for s in ["A_oracle_w", "C_cc_plus_unlab", "B_cc_only"]:
@@ -144,7 +158,38 @@ def audit_tables():
     write("tab_fr2_support.tex", "\n".join(lines) + "\n")
 
 
+def pilot():
+    path = os.path.join(RAW, "p2_pilot_results.json")
+    if not os.path.exists(path):
+        write("tab_pilot.tex", "% P2-PILOT1 NOT RUN\n")
+        return
+    d = json.load(open(path))
+    lines = [r"\begin{tabular}{lrrrrl}", r"\toprule",
+             r"mask rule & $n$ (complete) & held-out $\Dnat$ & complete-case dropout & realised $\Gamma_{cc}$ & agree? \\", r"\midrule"]
+    for m, r in d["results"].items():
+        h, c = r["held_out_delta_uses_hidden_labels"]["float"], r["complete_case_dropout_delta"]["float"]
+        g2 = r["gamma_cc_squared_of_realised_population"]
+        g = "$\\infty$" if g2 is None else f"{g2['float'] ** 0.5:.2f}"
+        lines.append(f"{m.replace('_', ' ')} & {r['n_eval_units']} ({r['n_complete']}) & {h:+.4f} & {c:+.4f} & {g} & {'yes' if (h < 0) == (c < 0) else 'no'} \\\\")
+    lines += [r"\bottomrule", r"\end{tabular}"]
+    write("tab_pilot_summary.tex", "\n".join(lines) + "\n")
+    gl = ["1", "5/4", "3/2", "2", "3", "NO_MODEL"]
+    lines = [r"\begin{tabular}{ll" + "l" * len(gl) + "}", r"\toprule",
+             "mask rule & set & " + " & ".join(("no model" if g == "NO_MODEL" else f"$\\Gamma_{{cc}}={g}$") for g in gl) + r" \\", r"\midrule"]
+    for m, r in d["results"].items():
+        for kind, rows in (("identified", r["identified"]), ("outer 95\\%", r["outer_ci"])):
+            byg = {x["gamma_cc"]: x for x in rows}
+            cells = []
+            for g in gl:
+                x = byg.get(g)
+                cells.append("--" if x is None else (f"{iv(x['lo'], x['hi'], 3)} {CAT[x['category']]}" if x["status"] == "OPTIMAL" else CAT["INFEASIBLE"]))
+            lines.append(f"{m.split('_')[1]} & {kind} & " + " & ".join(cells) + r" \\")
+    lines += [r"\bottomrule", r"\end{tabular}"]
+    write("tab_pilot_intervals.tex", "\n".join(lines) + "\n")
+
+
 if __name__ == "__main__":
+    pilot()
     fr1_table()
     fr2_primary()
     fr2_truths()

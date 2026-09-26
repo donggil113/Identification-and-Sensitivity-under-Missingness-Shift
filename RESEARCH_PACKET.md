@@ -392,3 +392,57 @@ MCAR truth (Δ_nat = −0.0253):
 Interpretation: engineering PASS ≠ scientific support. The statements above
 are exact for this one population; they show possibility, not prevalence.
 Novelty of the observation-model account remains UNVERIFIED.
+
+## 11. v2 corrections (estimand and sign interpretation) — before any new bound or loss
+Raw FR1/FR2 files unchanged; corrections are re-aggregations or documentation.
+
+1. **Sign categories.** For Δ = R_A − R_B with identified interval [ℓ, u]:
+   STRICT (u < 0 or ℓ > 0, margin min(|ℓ|,|u|)); WEAK (a zero endpoint attained
+   by a valid model: never worse, tie compatible); NO_MARGIN (zero endpoint only
+   in the closure); BOTH_ORDERS (ℓ < 0 < u; interior values always attained, the
+   valid set being convex); TIE. Attainment: max ρ_full s.t. objective = endpoint.
+   Re-aggregation (`results/derived/p2_sign_reclassification.json`): FR2 settings
+   B/D at Γ_cc ∈ {1, 5/4} are **WEAK_A** (0 attained at ρ_full = 1; lower end
+   closure-only), not "undetermined" as written in v1. Γ_cc ≥ 3/2: BOTH_ORDERS
+   with both endpoints closure-only. Settings A/C unchanged (STRICT_A / BOTH_ORDERS).
+2. **b_r reverse map / positivity.** From (p, b) with ρ_full > 0: v = p(·,1)/ρ_full,
+   λ_r = b_r/ρ_r (×ρ_full when κ = θ) for ρ_r > 0 gives a law in M_cc(Γ) incl.
+   absolute continuity. ρ_full = 0 points are CLOSURE_ONLY. Checked on all LP
+   endpoints of FR2-type systems (`recover_model`, tests): A/C endpoints are
+   probability models; B has closure-only endpoints; 0 violations.
+   The v1 definition of M_cc omitted absolute continuity (P(c|R=r) = 0 if v_c = 0),
+   which the LP always imposed — definition corrected.
+3. **Γ_box vs Γ_cc.** FR1: reference = dropout law q (with matched pattern rates,
+   P(c|R=r)/w_c ∈ [1/Γ_box, Γ_box], scale fixed at 1). FR2: reference = complete-case
+   law, free scale λ_r, spread ≤ Γ_cc². Different parameters; numbers not compared.
+4. **Coverage.** Restated as feasible-set inclusion for one confidence region R of
+   the common observed-data law: on {P_obs ∈ R}, I(Γ; P_obs) ⊆ O(Γ; R) for all Γ.
+   This covers identified sets only; it does not validate Γ. Emptiness of O(Γ; R)
+   rejects M_cc(Γ) at level α; non-emptiness is not evidence for Γ.
+5. **Zeros and stratum sizes.** The box uses joint cell probabilities with fixed n
+   (random stratum sizes need no conditioning). Empirical zeros keep κ_lo = 0 < κ_hi
+   and are not structural; all-zero κ_lo (incl. n_complete = 0) now reduces exactly
+   to the support restriction on κ_hi (v1 raised an error). Plug-in treats empirical
+   zeros as structural and is undefined when n_complete = 0 — reported as such.
+
+## 12. P2-PILOT1 (semi-synthetic, public data) — pre-registered at 1291cc4
+Data: UCI Adult (Becker & Kohavi 1996, DOI 10.24432/C5XW20, CC BY 4.0 verified on
+the UCI page; download approved by the user this session; adult.zip sha256
+7537312d…21bb; local only, git-ignored). 44,355 entities (all attributes except
+fnlwgt), hash split 22,080 / 22,275. Two binned "modalities" (education years,
+weekly hours; fixed thresholds, 3 levels). Predictors on binned inputs only →
+D(c, r) fixed (unit-level check PASS). Masks synthetic: M1 missing 0.15; M2 missing
+0.15 + 0.25·Y + 0.10·[hours > 45] (primary) or 0.30 (control); seed fixed.
+One run, 12.7 s, 0 uncertified LPs.
+
+| rule | held-out Δ_nat (hidden labels) | complete-case dropout | agree | identified (setting C) | outer 95% |
+|---|---|---|---|---|---|
+| MNAR | −0.0038 (A) | +0.0006 (B) | **no** | ∅ for Γ_cc ≤ 5/4; BOTH_ORDERS for Γ_cc ≥ 3/2 | BOTH_ORDERS at all Γ_cc incl. 1 |
+| MCAR control | −0.0025 (A) | −0.0020 (A) | yes | ∅ at Γ_cc = 1; BOTH_ORDERS otherwise | BOTH_ORDERS at all Γ_cc |
+
+Realised finite-population Γ_cc: 2.85 (MNAR) and 1.79 (MCAR control) — sampling
+variation of the masks inflates it; not a mechanism-strength measure.
+Held-out value contained in every non-empty identified set. Magnitudes are small.
+Interpretation: one real-covariate instance of dropout-vs-truth sign disagreement;
+the observable information did not determine the ranking at any Γ_cc considered.
+Not a frequency; not natural modality missingness.

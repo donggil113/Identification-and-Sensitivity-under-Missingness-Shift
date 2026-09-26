@@ -1,5 +1,31 @@
 # STATUS — P2: What Can Missing-Modality Evaluations Identify under Selective Observation?
 
+## Update (third session, 2026-09-26): corrections, pilot, manuscript v2
+* Corrections before any new bound/loss (RESEARCH_PACKET §11): sign categories with
+  endpoint attainment; FR2 B/D at Γ_cc ∈ {1,5/4} re-labelled **WEAK_A** (v1 said
+  "undetermined" — interpretation error, raw unchanged); b_r reverse map and
+  CLOSURE_ONLY points; M_cc absolute continuity added to the definition; Γ_box vs
+  Γ_cc separated; coverage restated as confidence-region feasible-set inclusion
+  (does not validate Γ); empirical zeros / n_complete = 0 handled.
+* P2-PILOT1 (UCI Adult, semi-synthetic masks) pre-registered at `1291cc4`, data
+  download approved by the user, run once (12.7 s): MNAR rule → complete-case
+  dropout +0.0006 vs held-out −0.0038 (sign disagreement); control agrees;
+  identified sets/outer CIs BOTH_ORDERS or empty everywhere (RESEARCH_PACKET §12).
+* No new bound or loss added. FR1/FR2 raw preserved; FR2 re-run bit-identical after
+  the `levels` generalisation.
+* Manuscript v2: `paper/main.tex` (COMPILE_NOT_RUN; page limit unverified — main
+  body ≈ 4.3k words + 5 tables + 1 figure may exceed 8 pages). 35 unit tests PASS.
+* Cost log additions: attainment re-aggregation 1.3 s; FR2 bit-repro check ~33 s;
+  pilot pipeline test on fake data 8.6 s; pilot run 12.7 s; download 0.6 MB.
+* Next decision experiment (single): P2-real — a dataset with *natural* modality
+  missingness where incomplete units also have labels (so Δ_nat is checkable);
+  needs dataset selection, license and download approval (and ethics approval if
+  clinical). Everything else about the pilot pipeline can be reused.
+
+---
+(Previous session status below, kept for the record.)
+
+
 Date: 2026-09-26 (second session). Branch: `claude/keen-franklin-ua0v00`.
 
 ## Starting state of this session (verified)

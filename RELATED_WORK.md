@@ -91,3 +91,7 @@ not the matched marginal (one population; not general).
   Li–Namkoong–Xia journal version; Kallus–Mao–Zhou venue; Sahoo–Lei–Wager final
   venue; De Loera–Kim venue; Robins–Rotnitzky–Scharfstein 2000 pages;
   Rockenschaub et al. status; all SEARCH_SNIPPET_ONLY rows.
+
+
+## Data used
+* Becker & Kohavi (1996), *Adult*, UCI Machine Learning Repository, DOI 10.24432/C5XW20, CC BY 4.0 — license and citation read on https://archive.ics.uci.edu/dataset/2/adult (lead-checked via summariser, 2026-09-26).
