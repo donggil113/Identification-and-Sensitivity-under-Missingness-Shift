@@ -1,5 +1,29 @@
 # STATUS — P2: What Can Missing-Modality Evaluations Identify under Selective Observation?
 
+## Update (fourth session, 2026-09-27): P2-PILOT2, D positivity, provenance, manuscript v3
+* Actual state read: branch `claude/keen-franklin-ua0v00` at ed75cfc (clean, = origin);
+  Adult files present locally with hashes equal to PILOT1's manifest.
+  Approvals: the user's explicit approval (previous session, AskUserQuestion answer
+  "Adult 다운로드 승인") covered downloading UCI Adult only. Nothing new was
+  downloaded or installed this session. No compiler exists; LaTeX install not approved.
+  The sandbox checkout was not moved to /nvmedata (not reachable from here).
+* P2-PILOT2 (post hoc, exploratory; code/config committed 43d5d97 before running;
+  16.5 s wall / 16.4 CPU-s): D endpoint η-LP (B WEAK_A kept; D corrected to
+  A_NO_MARGIN), provenance flow, frozen-predictor reproduction, expected-mask law
+  comparison, schema check. See RESEARCH_PACKET §13.
+* Corrected interpretations: D positivity (v2 wrong); "entity" → attribute-tuple
+  group (not persons; 956 near-duplicates cross the split); pilot "modalities" →
+  grouped tabular features; population = unweighted deduplicated records.
+* Preserved: FR1/FR2/PILOT1 raw, configs, exploratory labels; no STOP/FAIL existed.
+* Manuscript v3: `paper/main.tex` (title narrowed with "A Finite-Support Analysis";
+  COMPILE_NOT_RUN; source bundle + exact build command in `export_bundle/`).
+* Costs this session: tests ~7 s; PILOT2 16.5 s wall; provenance addendum 0.9 s;
+  table generation <1 s. No failed or repeated runs.
+* Next decision: whether a natural-missingness dataset meeting the admission
+  conditions (App. of the paper) exists — selection/licence/download need approval.
+
+---
+
 ## Update (third session, 2026-09-26): corrections, pilot, manuscript v2
 * Corrections before any new bound/loss (RESEARCH_PACKET §11): sign categories with
   endpoint attainment; FR2 B/D at Γ_cc ∈ {1,5/4} re-labelled **WEAK_A** (v1 said

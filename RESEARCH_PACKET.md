@@ -446,3 +446,41 @@ Held-out value contained in every non-empty identified set. Magnitudes are small
 Interpretation: one real-covariate instance of dropout-vs-truth sign disagreement;
 the observable information did not determine the ranking at any Γ_cc considered.
 Not a frequency; not natural modality missingness.
+
+## 13. P2-PILOT2-EXPECTED-MASK (exploratory analysis of the fixed PILOT1; commit 43d5d97)
+Post hoc: designed after PILOT1 results were seen. Same data, split, bins,
+predictors, mask rules, q and Γ_cc grid. No new masks, data, loss, CI or bins.
+Run: 16.5 s wall / 16.4 CPU-s (one Python process, 2-CPU affinity).
+
+**D endpoint (definition-based positivity).** B's information (complete-case
+law only) needs ρ_full > 0; D's information includes each incomplete stratum's
+conditional law μ_r, which is defined and sampled only if ρ_r > 0, so D needs
+ρ_full > 0 and ρ_r > 0 for every given stratum. max η LP (all required ρ ≥ η,
+objective = endpoint), FR2 E0 truth: B at Γ_cc ∈ {1,5/4}: η_hi = 1 → **WEAK_A**
+(tie at ρ_full = 1). D: η_hi = 0 → **A_NO_MARGIN** (strict for every valid law,
+no uniform margin). v2's WEAK_A for D (ρ_full-only check) was wrong. All lower
+endpoints η = 0 (closure-only). Γ_cc ≥ 3/2: BOTH_ORDERS in both.
+
+**Provenance.** 32,561 + 16,281 = 48,842 parsed records; 3,620 contain "?"
+(none in the two used columns); no exclusions. 44,355 attribute-tuple groups
+(excl. fnlwgt, incl. raw income string), 4,487 duplicates dropped, 2,788 groups
+of size > 1 (max 16). Hash split 22,080 / 22,275. Groups are not verified
+persons; person isolation UNVERIFIED. Read-only addendum: 956 tuples that differ
+only in the '.' income suffix cross the split (derived file). Unweighted record
+population after dedup (fnlwgt ignored).
+
+**Frozen predictors.** PILOT1 did not persist tables; re-derived
+deterministically and accepted because they reproduce PILOT1's held-out Δ and
+cc-dropout exactly; now saved (`results/raw/p2_pilot_models_frozen.json`).
+
+**Expected mask law** p̄(c,r) = n⁻¹ Σ_i 1{C_i=c} π_r(C_i) (exact rationals; conditional on the 22,275 eval records):
+| rule | expected true Δ | expected cc dropout | Γ_cc (free scale / fixed λ=1) | expected-law setting C | realised (PILOT1) |
+|---|---|---|---|---|---|
+| MNAR | −0.00332 | +0.00060 | 2.38 / 3.27 | ∅ Γ≤5/4; BOTH ≥3/2 | Δ −0.0038, cc +0.0006, ∅ ≤5/4, BOTH; outer BOTH |
+| MCAR | −0.00204 | −0.00204 | 1 / 1 | STRICT_A at 1; BOTH ≥5/4 | Δ −0.0025, cc −0.0020, ∅ at 1; outer BOTH |
+
+Interpretation (one dataset, exploratory): the MNAR sign disagreement is not a
+mask-draw artefact; the MNAR ambiguity is information-limited; the MCAR Γ=1
+ambiguity is noise-driven. Effects are small; no practical-importance claim.
+Schema check: setting-C intervals identical when hidden joint/full-data law are
+replaced by placeholders (evaluator sees only allowed observables).

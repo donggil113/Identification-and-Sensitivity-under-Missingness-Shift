@@ -73,9 +73,19 @@ CAT = {"STRICT_A": "A$^{s}$", "STRICT_B": "B$^{s}$", "WEAK_A": "A$^{w}$", "WEAK_
 
 
 def reclass():
+    """v3: A/C categories from the v2 re-aggregation; B/D categories from the
+    PILOT2 eta check (all definition-required rho > 0), which supersedes v2's
+    rho_full-only attainment check for D."""
     path = os.path.join(ROOT, "results", "derived", "p2_sign_reclassification.json")
     with open(path) as f:
-        return {(r["setting"], r["gamma_cc"]): r for r in json.load(f)["fr2_primary"]}
+        out = {(r["setting"], r["gamma_cc"]): r for r in json.load(f)["fr2_primary"]}
+    p2 = os.path.join(RAW, "p2_pilot2_results.json")
+    if os.path.exists(p2):
+        for r in json.load(open(p2))["D_endpoint"]["rows"]:
+            k = (r["setting"], r["gamma_cc"])
+            out[k] = dict(out[k], category=r["category"],
+                          lo_attained=r["eta_lo"]["float"] > 0, hi_attained=r["eta_hi"]["float"] > 0)
+    return out
 
 
 def fr2_primary():
@@ -188,7 +198,42 @@ def pilot():
     write("tab_pilot_intervals.tex", "\n".join(lines) + "\n")
 
 
+INF = "$\\infty$"
+
+
+def pilot_compare():
+    p2 = os.path.join(RAW, "p2_pilot2_results.json")
+    if not os.path.exists(p2):
+        return
+    d = json.load(open(p2))["expected_mask_comparison"]
+    gl = ["1", "5/4", "3/2", "2", "NO_MODEL"]
+    head = " & ".join(["mask rule", "law", "true $\\Dnat$", "cc dropout", "$\\Gamma_{cc}$"] +
+                      [("no model" if g == "NO_MODEL" else f"$\\Gamma_{{cc}}={g}$") for g in gl])
+    lines = [r"\begin{tabular}{lll" + "r" * 2 + "l" * len(gl) + "}", r"\toprule", head + r" \\", r"\midrule"]
+    for m, c in d.items():
+        name = "MNAR" if "mnar" in m else "MCAR"
+        byg = {x["gamma_cc"]: x for x in c["C_identified_from_expected_observables"]}
+        cells = [CAT[byg[g]["category"]] if byg[g]["status"] == "OPTIMAL" else CAT["INFEASIBLE"] for g in gl]
+        g = c["expected_gamma_cc_free_scale"]
+        gs = INF if g is None else f"{g:.2f}"
+        lines.append(f"{name} & expected & {v(c['A_expected_true_delta'])} & {v(c['B_expected_cc_dropout'])} & "
+                     f"{gs} & " + " & ".join(cells) + r" \\")
+        r = c["D_pilot1_realised"]
+        byg = {x["gamma_cc"]: x for x in r["identified"]}
+        cells = [CAT[byg[g]["category"]] if byg[g]["status"] == "OPTIMAL" else CAT["INFEASIBLE"] for g in gl]
+        g2 = r["realised_gamma_cc_squared"]
+        gs = INF if g2 is None else f"{g2['float'] ** 0.5:.2f}"
+        lines.append(f" & realised & {v(r['held_out_delta'])} & {v(r['cc_dropout'])} & "
+                     f"{gs} & " + " & ".join(cells) + r" \\")
+        byg = {x["gamma_cc"]: x for x in r["outer_ci"]}
+        cells = [(CAT[byg[g]["category"]] if byg[g]["status"] == "OPTIMAL" else CAT["INFEASIBLE"]) if g in byg else "--" for g in gl]
+        lines.append(" & outer 95\\% & & & & " + " & ".join(cells) + r" \\")
+    lines += [r"\bottomrule", r"\end{tabular}"]
+    write("tab_pilot_compare.tex", "\n".join(lines) + "\n")
+
+
 if __name__ == "__main__":
+    pilot_compare()
     pilot()
     fr1_table()
     fr2_primary()

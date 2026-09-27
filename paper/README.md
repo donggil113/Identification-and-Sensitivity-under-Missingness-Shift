@@ -1,4 +1,6 @@
-# paper/ — manuscript v2 (P2)
+# paper/ — manuscript v3 (P2)
+
+v3 = v2 + D positivity correction, pilot provenance, expected-mask comparison (P2-PILOT2), narrowed title.
 
 v2 = v1 + sign/closure/coverage/zero corrections + P2-PILOT1 (UCI Adult, semi-synthetic masks).
 
@@ -13,8 +15,7 @@ v2 = v1 + sign/closure/coverage/zero corrections + P2-PILOT1 (UCI Adult, semi-sy
   fonts and the style name were not modified.
 * **COMPILE_NOT_RUN**: no LaTeX compiler is available here. Static checks only
   (all citation keys resolve in `references.bib`; all `\ref`/`\cref` labels are
-  defined; braces and environments balance; main body ~4.3k words + 5 tables +
-  1 figure; may EXCEED ICML 2026's 8-page main-body limit — PAGE_LIMIT_UNVERIFIED).
+  defined; braces and environments balance; main body ~4.3k words + 2 full-width tables (figure moved to appendix); may still EXCEED ICML 2026's 8-page main-body limit — PAGE_LIMIT_UNVERIFIED).
 * Build (when the kit and a TeX distribution are available):
   `python3 ../scripts/make_paper_tables.py && latexmk -pdf main.tex`
 * `generated/` is produced from `results/raw/` by `scripts/make_paper_tables.py`;

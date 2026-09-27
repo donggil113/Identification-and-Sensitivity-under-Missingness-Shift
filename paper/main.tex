@@ -46,7 +46,8 @@
 \begin{document}
 
 \twocolumn[
-\icmltitle{What Can Missing-Modality Evaluations Identify\\ under Selective Observation?}
+\icmltitle{What Can Missing-Modality Evaluations Identify\\ under Selective Observation?
+A Finite-Support Analysis}
 \icmlsetsymbol{equal}{*}
 \begin{icmlauthorlist}
 \icmlauthor{Anonymous Authors}{anon}
@@ -60,34 +61,29 @@
 
 % ---------------------------------------------------------------------
 \begin{abstract}
-Multimodal models are usually compared by deleting modalities at random from
-complete test cases. We ask what such an evaluation, together with the data
-an evaluator can actually observe, identifies about the risk difference of
-two fixed models under the natural, possibly informative, missingness of
-deployment. We write the observable information of four observation models
-(an oracle that knows the full-data law; complete cases only; complete cases
-plus mask frequencies and the unlabelled law of incomplete units; and the
-same conditionals without selection fractions) as linear constraints on the
-joint law of cells and masks, and combine them with a pattern-mixture
-sensitivity model. For finite supports this yields exact linear programs,
-but the paper's claims are about identification, not about the programs. We
-show that (i) the general identification criterion is orthogonality of the
-loss contrast to the span of feasible differences, and the familiar
-additive-separability condition needs a relative-interior assumption that
-fails at the MCAR boundary; (ii) with complete cases and unlabelled
-incomplete units, the natural-missingness Brier-risk difference is
-identified only if the two models agree on every incomplete input; (iii)
-without mask frequencies the MCAR model yields at most weak dominance, with
-one endpoint reachable only in the closure (no complete cases); and (iv)
-a feasible but too small sensitivity parameter can certify the wrong sign.
-In one hand-specified binary population (exploratory), random dropout on
-complete cases ranks the models opposite to the natural-missingness truth in
-a label-dependent environment. In a pre-registered semi-synthetic pilot on a
-public census dataset (real covariates and labels, a fixed label-dependent
-masking rule), complete-case dropout again disagrees in sign with the
-held-out natural-missingness difference ($+0.0006$ vs.\ $-0.0038$), while
-every non-empty identified set and every outer confidence interval admits
-both orders. Results on real multimodal missingness are not reported.
+Models that consume several input groups (``modalities'') are usually
+compared by deleting groups at random from \emph{complete} test cases. We ask
+what such an evaluation, together with what an evaluator can actually
+observe, identifies about the risk difference of two fixed predictors under
+the natural, possibly informative, missingness of deployment. For finite
+supports we write each observation model as linear constraints on the joint
+law of cells and masks, and combine it with a pattern-mixture sensitivity
+model relative to the complete-case law. Three findings follow. First, with
+labels only on complete cases, the natural-missingness Brier difference is
+point-identified from complete cases plus the unlabelled law of incomplete
+units only if the two predictors agree on every incomplete input. Without
+mask frequencies the sign is not strictly identified even under MCAR: with
+complete cases alone A is only weakly better, and if the strata's conditional
+laws are also given, strictly better for every valid law but with no uniform
+margin. Second, random dropout on complete cases can rank the predictors
+opposite to the natural-missingness truth. Third, in a semi-synthetic pilot
+with two grouped tabular features of a public census dataset and fixed
+synthetic masks, this sign disagreement persists in the noise-free expected
+law ($+0.0006$ vs.\ $-0.0033$ Brier). Under the label-dependent rule, the
+identified sets admit both orders at every non-empty value of the
+sensitivity parameter, even without sampling noise; a conservative
+confidence interval admits both orders everywhere. The effects are small,
+the masks are synthetic, and natural modality missingness is not analysed.
 \end{abstract}
 
 % ---------------------------------------------------------------------
@@ -95,63 +91,52 @@ both orders. Results on real multimodal missingness are not reported.
 \label{sec:intro}
 
 Robustness to missing modalities is typically measured by \emph{artificial}
-deletion: a modality is dropped at random from complete test cases and the
-resulting risks of competing models are compared
-\cite{neverova2016moddrop,ma2022multimodal}. At deployment, however,
-modalities are missing for reasons, such as cost, device failure, or a
-clinician's judgement, that can depend on the missing values and on the
-outcome. The evaluation therefore conflates two different random masks: the
-artificial mask $M$, which the evaluator draws independently of the data,
-and the natural mask $R$, whose law is unknown. It also usually conflates two
-populations: complete cases, on which $M$ is applied, and the full population
-in which $R$ occurs. Under informative missingness the complete-case law
-$P(C\mid R=\one)$ differs from the full-data law $P(C)$.
+deletion: an input group is dropped at random from complete test cases and
+the risks of competing models are compared
+\cite{neverova2016moddrop,ma2022multimodal}. At deployment, groups are
+missing for reasons that can depend on the missing values and on the outcome.
+The usual evaluation conflates two masks, the artificial $M$ drawn by the
+evaluator independently of the data and the natural $R$ whose law is
+unknown. It also conflates two populations: the complete cases on which $M$ is
+applied, and the full population in which $R$ occurs. Under informative
+missingness $P(C\mid R=\one)\neq P(C)$.
 
-This paper studies a narrow question: \emph{given what an evaluator can
-observe, what does a missing-modality evaluation identify about the
-natural-missingness risk difference of two fixed models?} We do not propose
-a new estimator or a new optimisation method. Finite-support partial
-identification by linear programming is classical
-\cite{manski2003partial,balke1997bounds,horowitz2000nonparametric}, bounded
-likelihood-ratio sensitivity models are standard
-\cite{rosenbaum1987sensitivity,tan2006distributional,zhao2019sensitivity,dorn2023sharp},
-and bounding a performance \emph{difference} directly instead of two separate
-risks is known to exploit shared uncertainty \cite{guerdan2024predictive}. Our
-contribution is an explicit account of the observation model and of what it
-does and does not identify in this evaluation problem:
+We study one question: \emph{given what an evaluator can observe, what does a
+missing-modality evaluation identify about the natural-missingness risk
+difference of two fixed predictors?} We propose neither an estimator nor an
+optimisation method. Finite-support partial identification by linear
+programming is classical \cite{manski2003partial,balke1997bounds,horowitz2000nonparametric}.
+Bounded likelihood-ratio sensitivity models are standard
+\cite{rosenbaum1987sensitivity,tan2006distributional,zhao2019sensitivity,dorn2023sharp}.
+Bounding a performance difference directly, rather than two separate risks,
+is known to cancel shared uncertainty \cite{guerdan2024predictive}. The closest
+evaluation work \cite{subbaswamy2021evaluating} bounds each model's
+worst-case risk under a label-dependent measurement-policy shift, but not
+from the information available when features are partly missing.
 
+Our contribution is an account of what each observation model identifies in
+this problem:
 \begin{itemize}
-\item \textbf{Observation models.} We separate four information sets
-(A: full-data law known, as an oracle; B: complete cases only; C: complete
-cases plus mask frequencies and the unlabelled law of incomplete units; D:
-the conditionals of C without selection fractions) and derive each
-observable as a linear constraint on the joint mass $p(c,r)=P(C=c,R=r)$. We
-show that the pattern-mixture sensitivity model we use is exactly linear
-after a reparametrisation, and point out where a naive plug-in of unknown
-products would \emph{not} be (\cref{sec:setup}).
-\item \textbf{Identification limits.} We state the general criterion
-(orthogonality to feasible differences), show where additive separability
-fails (the MCAR boundary, structural zeros), and prove that in setting C the
-Brier-risk difference is identified only when the two models agree on all
-incomplete inputs, that in settings B and D its sign is undetermined even
-under MCAR, and that deleting a support restriction differs from letting the
-sensitivity parameter grow (\cref{sec:ident}).
-\item \textbf{Failure modes.} We exhibit an environment in which random
-dropout on complete cases ranks the models in the wrong order, and show that
-a sensitivity parameter below the truth can yield a non-empty set that
-certifies the wrong sign (\cref{sec:counter}).
-\item \textbf{Sampling.} Population identified sets are not confidence sets.
-We give an outer confidence interval with a short validity proof and show that
-the plug-in feasibility of the MCAR model is an unreliable diagnostic
-(\cref{sec:sampling}).
+\item \textbf{Observation models and identification.} We separate four
+information sets and derive each observable as a linear row. We give the
+exact linearisation of the sensitivity model and the positivity conditions
+under which a solution is a valid law rather than a limit. We characterise
+when the difference is identified: with complete cases and unlabelled
+incomplete units, the Brier difference is identified only when the predictors
+agree on incomplete inputs. We also show how the conclusion at the MCAR
+boundary depends on which strata are known to exist (\cref{sec:setup,sec:ident}).
+\item \textbf{Dropout versus truth.} Complete-case random dropout can reverse
+the natural-missingness ranking, and a sensitivity parameter below the truth
+can yield a non-empty set that certifies the wrong sign (\cref{sec:counter}).
+\item \textbf{Where the uncertainty comes from.} On a fixed semi-synthetic
+pilot we compare the realised sample with the noise-free expected law. This
+separates ambiguity caused by missing information from ambiguity caused by
+mask and sampling noise (\cref{sec:pilot}).
 \end{itemize}
-All numerical results come from one hand-specified finite population with
-two binary modalities; they are exact (rational arithmetic with certified
-linear programs) but they illustrate the statements rather than estimate how
-often rankings change in practice. Results on real multimodal data are not
-reported; a pre-registered semi-synthetic pilot with real covariates and
-labels but synthetic masks is in \cref{sec:pilot} \todo{P2-real: dataset with
-natural modality missingness, license, approval, pre-registered analysis}.
+The toy results are exact but come from one hand-specified population. The
+pilot uses two grouped tabular features (education years, weekly hours)
+treated as ``modalities'' and synthetic masks. Neither says how often
+rankings change in practice.
 
 % ---------------------------------------------------------------------
 \section{Related Work}
@@ -353,14 +338,18 @@ Under $\Mcc(1)$, $P(C\mid R=r)=v$ for every $r$ with $\rho_r>0$, so
 $\Dnat=\sum_r\rho_r\Delta^{\mathrm{cc}}_r$.
 (i) In C, $\Dnat$ is point-identified, and $\Mcc(1)$ is refutable: it is
 feasible iff $\omega(r,o)=\rho_r\sum_{c:x_r(c)=o}v_c$ for all $(r,o)$.
-(ii) In B and D, the identified set is
-$\{\sum_r\rho_r\Delta^{\mathrm{cc}}_r:\rho\in\Delta(\cR),\rho_{\one}>0\}$, whose
-closure is $[\min_r\Delta^{\mathrm{cc}}_r,\max_r\Delta^{\mathrm{cc}}_r]$. Endpoints
-that require $\rho_{\one}=0$ are not attained. Both strict orders are
-compatible iff the per-mask differences take both strict signs; if they are
-all $\le 0$ and $\Delta^{\mathrm{cc}}_{\one}=0$ (as when the models agree on
-complete inputs), A is weakly better: never worse, with a tie attained at
-$\rho_{\one}=1$.
+(ii) The valid laws differ between B and D. In B only the complete stratum
+must exist, so the identified set is
+$\{\sum_r\rho_r\Delta^{\mathrm{cc}}_r:\rho\in\Delta(\cR),\rho_{\one}>0\}$. In D the
+conditional law $\mu_r$ of every incomplete stratum is part of the information,
+which presupposes $\rho_r>0$ for each such stratum, so the set is
+$\{\sum_r\rho_r\Delta^{\mathrm{cc}}_r:\rho_r>0\ \text{for all given strata}\}$. Both
+sets have closure $[\min_r\Delta^{\mathrm{cc}}_r,\max_r\Delta^{\mathrm{cc}}_r]$, but
+different endpoints are attained. If all per-mask differences are $\le0$,
+$\Delta^{\mathrm{cc}}_{\one}=0$, and the others are $<0$, then in B A is
+\emph{weakly} better (the tie is attained at $\rho_{\one}=1$), while in D A is
+strictly better for every valid law but has no uniform margin (the tie is a
+closure point).
 (iii) $\Delta^{\mathrm{drop}}_{\mathrm{cc}}(q)=\Dnat$ at $\Gamma=1$ iff
 $\sum_r(\rho_r-q_r)\Delta^{\mathrm{cc}}_r=0$.
 \end{proposition}
@@ -515,11 +504,12 @@ on 2 CPU threads.
 \centering\small
 \caption{Setting-wise interval for $\Dnat$ under $\Mcc(\Gamma)$, MCAR truth
 ($\Dnat=-0.0253$). ``A'' means the interval lies below 0 (A better) and ``?''
-means undetermined in v1; see the category legend. The bottom rows give the width ratio of the separate-risk
+means undetermined. The bottom rows give the width ratio of the separate-risk
 interval $[\min R_A-\max R_B,\max R_A-\min R_B]$ to the direct-difference
 interval on the same feasible set (P2-FR2-B). Categories: A$^{s}$ strict,
 A$^{w}$ weak (0 attained), $\pm$ both orders; $^{\dagger}$ at least one
-endpoint is closure-only ($\rho_{\one}=0$).}
+endpoint is closure-only; A$^{0}$ strict for every valid law without a uniform
+margin. Attainment uses $\max\eta$ with every required $\rho\ge\eta$.}
 \label{tab:fr2}
 \input{generated/tab_fr2_primary.tex}
 \end{table*}
@@ -530,14 +520,12 @@ endpoint is closure-only ($\rho_{\one}=0$).}
 $\Gamma=1$. The MCAR sign is kept at $\Gamma=1.4463$ and lost by
 $\Gamma=1.4473$ (the bisection bracket), and without a sensitivity model the
 interval is $[-0.111,0.078]$.
-\item Settings B and D give $[-0.130,0]$ at $\Gamma_{cc}\in\{1,5/4\}$: A is
-\emph{weakly} better (never worse; the tie $0$ is attained when every unit is
-complete, $\rho_{\one}=1$), and the lower endpoint is closure-only
-($\rho_{\one}=0$). v1 called these cells ``undetermined''; that was an
-interpretation error, corrected by re-aggregating the unchanged raw output
-(\texttt{results/derived/p2\_sign\_reclassification.json}). From
-$\Gamma_{cc}=3/2$ both orders are compatible. D adds refutability but, in this
-population, narrows the interval only for large $\Gamma_{cc}$.
+\item Settings B and D give the same numbers, $[-0.130,0]$, at
+$\Gamma_{cc}\in\{1,5/4\}$, but different conclusions. In B, A is weakly better
+(the tie is attained at $\rho_{\one}=1$). In D, the tie needs the given
+incomplete strata to have zero mass, so A is strictly better for every valid
+law but without a uniform margin. From $\Gamma_{cc}=3/2$ both orders are
+compatible in B and D.
 \item The oracle A certifies ``A better'' even with no model, at
 $[-0.051,-0.002]$. Assuming the full-data law is known therefore changes the
 conclusion, which is why the FR1 results (\cref{app:fr1}) should be read as
@@ -547,48 +535,20 @@ The direct-difference interval is 1.6--3.5 times narrower than the
 separate-risk interval. This is consistent with \citet{guerdan2024predictive}
 and is not a new finding.
 
-\begin{figure}[t]
-\centering
-\begin{tikzpicture}
-\begin{axis}[width=\columnwidth,height=0.62\columnwidth,xlabel={$\Gamma$},
-  ylabel={$\Dnat$ bounds},xmin=1,xmax=3,ymin=-0.46,ymax=0.18,
-  legend style={font=\scriptsize,at={(0.02,0.02)},anchor=south west},
-  tick label style={font=\scriptsize},label style={font=\small}]
-\input{generated/fig_fr2_intervals_coords.tex}
-\addplot[gray,thin,forget plot] coordinates {(1,0) (3,0)};
-\end{axis}
-\end{tikzpicture}
-\caption{Lower and upper bounds of $\Dnat$ versus $\Gamma$ for settings A
-(dotted), C (solid) and B (dashed); MCAR truth (P2-FR2-B).}
-\label{fig:fr2}
-\end{figure}
 
-\begin{table}[t]
-\centering\scriptsize
-\caption{Oracle values (target labels, true policy; scoring only) versus the
-two dropout estimands, and the true $\Mcc$ parameter (P2-FR2-A). Z\_check is
-the constructed support violation.}
-\label{tab:truths}
-\resizebox{\columnwidth}{!}{\input{generated/tab_fr2_truths.tex}}
-\end{table}
 
-\textbf{Dropout estimands versus the truth (\cref{tab:truths}).} Random dropout
+
+
+\textbf{Dropout estimands versus the truth (\cref{tab:truths}, App.~\ref{app:extra}).} Random dropout
 on the population gives $-0.0253$ in every environment that preserves $P(C)$,
 because it does not depend on the policy. Random dropout on complete cases
 does depend on it, but it can move in the wrong direction: E2p has truth
 $-0.058$ and complete-case dropout $-0.007$, while E2m has truth $+0.0075$ and
 complete-case dropout $-0.044$.
 
-\begin{table}[t]
-\centering\scriptsize
-\caption{Finite samples in setting C, MCAR truth; 2 draws per $n$, shown as
-illustrations only (P2-FR2-F). ``infeas.'' means the plug-in program is
-empty.}
-\label{tab:finite}
-\resizebox{\columnwidth}{!}{\input{generated/tab_fr2_finite.tex}}
-\end{table}
 
-\textbf{Sampling (\cref{tab:finite}).} Under $\Gamma=1$ the plug-in program is
+
+\textbf{Sampling (\cref{tab:finite}, App.~\ref{app:extra}).} Under $\Gamma=1$ the plug-in program is
 infeasible in all six draws, although the population satisfies $\Gamma=1$:
 sampling noise alone makes the observed law inconsistent with the
 complete-case law. A plug-in feasibility check would therefore wrongly
@@ -608,80 +568,85 @@ $[-0.071,0.019]$. Details and all FR1 checks are in \cref{app:fr1}. FR1 and
 FR2 use different sensitivity models, so their $\Gamma$ values are not
 comparable.
 
-\subsection{Semi-synthetic pilot on public data (P2-PILOT1)}
+\subsection{Semi-synthetic pilot with grouped tabular features}
 \label{sec:pilot}
 
-\textbf{Design, fixed before the data were read.} We use the UCI Adult census
-data \cite{becker1996adult} (CC BY 4.0; 48{,}842 rows). The configuration was
-committed before download: the entity is the tuple of all attributes except
-the sampling weight (44{,}355 entities, so duplicates never cross the split),
-and entities are split 50/50 by a hash (22{,}080 train, 22{,}275 evaluation).
-There are two ``modalities'', each coarsened by fixed, a-priori thresholds to
-three levels: education years ($\le9$, $10$--$12$, $\ge13$) and weekly hours
-($\le34$, $35$--$45$, $>45$). $Y$ is income $>50$K. Models A and B are defined as
-in \cref{sec:exp}, fitted on the training split with Laplace smoothing and
-using the binned features only. Natural masks on the evaluation split follow
-two fixed rules: modality 1 is missing with probability $0.15$; modality 2 is
-missing with probability $0.15+0.25\,Y+0.10\,\mathbb{1}[\text{hours}>45]$
-(primary, label- and value-dependent) or $0.30$ (control, MCAR). The seed is
-fixed. The evaluator's dropout law is independent with rates $(0.15,0.30)$.
-Labels of incomplete units are hidden from every method and used only for the
-held-out difference. The masks are synthetic and the covariates and labels are
-real, so this is not an analysis of natural modality missingness.
+\textbf{Data and units (P2-PILOT1, pre-registered).} We use UCI Adult
+\cite{becker1996adult} (CC BY 4.0). There are 48{,}842 parsed records (32{,}561
+and 16{,}281); no record is excluded. 3{,}620 records contain a ``?'', none in
+the two features used. Records with identical attributes, excluding the survey
+weight but including the raw income string, form one \emph{group}. This gives
+44{,}355 groups; the 4{,}487 later duplicates are dropped, and 2{,}788 groups have
+size $>1$. Groups are split 50/50 by a hash: 22{,}080 train, 22{,}275 evaluation.
+Groups are not verified persons, and person-level isolation is unverified.
+Moreover, 956 attribute tuples that differ only in the trailing ``.'' of the
+test file's income string fall on both sides of the split. The population
+is the \emph{unweighted} empirical record population after deduplication, not
+the survey-weighted census population.
 
-\textbf{Is $D(c,r)$ a fixed loss after coarsening?} Only if the predictors
-depend on the data through the coarse cell and the mask. If they used the fine
-covariates, the loss inside a coarse cell would vary, and its average could
-depend on $R$ (missingness within a cell). $D$ would then not be fixed, and one
-would need either a different estimand or an explicit outer bound replacing
-$D$ by $[\min,\max]$ over the fine points in each cell. Our predictors use the
-binned inputs only. The run recomputes every unit's loss and checks that it
-equals $D(c,r)$ of its cell (PASS). The estimand is therefore the
-natural-missingness Brier difference of the \emph{binned} predictors.
+\textbf{Design.} The two ``modalities'' are two grouped tabular features,
+coarsened by fixed thresholds to three levels: education years ($\le9$,
+$10$--$12$, $\ge13$) and weekly hours ($\le34$, $35$--$45$, $>45$). $Y$ is income
+$>50$K. Predictors A and B are defined as in \cref{sec:exp}, fitted on the
+training split with Laplace smoothing, and use the binned inputs only. Because
+of this, $D(c,r)$ is a fixed loss on the coarse cells; a unit-level check
+passes. With fine inputs, $D$ would vary within cells and would need an
+explicit outer bound. Masks on the evaluation split are synthetic. Feature 1
+is missing with probability $0.15$. Feature 2 is missing with probability
+$0.15+0.25\,Y+0.10\,\mathbb{1}[\text{hours}>45]$ (MNAR rule) or $0.30$ (MCAR
+control). There is one fixed seed, and the evaluator's dropout rates are
+$(0.15,0.30)$. The setting-C evaluator receives only complete-case cells with
+labels and the masses of incomplete observed tuples. Recomputing its intervals
+from a copy in which the hidden joint and full-data law are replaced by
+placeholders gives identical results (schema check).
 
-\textbf{Two populations.} The evaluation split with its realised masks is
-treated as a finite population. Its observable law is known exactly, so the
-setting-C intervals are its exact identified sets. The outer confidence
-intervals instead treat the evaluation units as an i.i.d.\ sample. Note that
-the realised finite population has $\Gamma_{cc}=2.85$ under the MNAR rule but
-also $1.79$ under the MCAR control: random mask draws in small cells spread
-the ratios. A finite population's $\Gamma_{cc}$ therefore mixes mechanism and
-sampling variation, and $\Gamma_{cc}=1$ is empty even for the control.
-
-\begin{table}[t]
-\centering\scriptsize
-\caption{Pilot summary (P2-PILOT1; held-out values use hidden labels).}
-\label{tab:pilot}
-\resizebox{\columnwidth}{!}{\input{generated/tab_pilot_summary.tex}}
-\end{table}
+\textbf{Realised versus expected law (P2-PILOT2, exploratory).} The single
+pre-registered run gives one realised mask draw. To separate mask noise from
+missing information, we also integrate the fixed mask rule exactly over the
+evaluation records,
+$\bar p(c,r)=n^{-1}\sum_i\mathbb{1}\{C_i=c\}\pi_r(C_i)$. This law is
+conditional on the 22{,}275 records; it is not the super-population. It uses
+the labels inside $\pi$ only as an oracle comparator. This analysis was
+designed after seeing PILOT1 and is not confirmatory. The predictors were
+re-derived deterministically and reproduce PILOT1's recorded values exactly.
 
 \begin{table*}[t]
 \centering\small
-\caption{Pilot, setting C: finite-population identified sets and outer 95\%
-intervals by $\Gamma_{cc}$ ($\emptyset$ empty; $\pm$ both orders; -- not in the
-pre-registered outer grid).}
-\label{tab:pilotiv}
-\input{generated/tab_pilot_intervals.tex}
+\caption{Pilot comparison for the same predictors, data and $\Gamma_{cc}$
+grid. \emph{expected}: noise-free mask law; \emph{realised}: the one
+pre-registered mask draw (finite-population identified sets); \emph{outer}:
+conservative 95\% interval from the realised sample. The true $\Dnat$ uses
+hidden labels. $\emptyset$ empty; $\pm$ both orders; A$^{s}$ strict; -- not in
+the pre-registered outer grid. $\Gamma_{cc}$ column: smallest free-scale value
+containing the law (P2-PILOT1, P2-PILOT2).}
+\label{tab:pilotcmp}
+\input{generated/tab_pilot_compare.tex}
 \end{table*}
 
-\textbf{Results (\cref{tab:pilot,tab:pilotiv}).}
+\textbf{Results (\cref{tab:pilotcmp}).}
 \begin{itemize}
-\item Under the MNAR rule, complete-case dropout gives $+0.0006$ (B better)
-while the held-out natural-missingness difference is $-0.0038$ (A better).
-The ranking disagrees, although both magnitudes are small. Under the MCAR
-control the two agree ($-0.0020$ vs.\ $-0.0025$).
-\item The identified sets are empty up to $\Gamma_{cc}=5/4$ (MNAR) or
-$\Gamma_{cc}=1$ (control), and from there on admit both orders. They
-contain the held-out value whenever they are non-empty.
-\item The outer 95\% intervals admit both orders at every pre-registered
-$\Gamma_{cc}$, including $1$.
+\item Under the MNAR rule, complete-case dropout ranks B ahead ($+0.0006$)
+while the natural-missingness truth ranks A ahead. This holds both in the
+realised draw ($-0.0038$) and in the noise-free expected law ($-0.0033$). The
+disagreement is therefore not a mask-sampling artefact of this draw. It is
+small in Brier units, and we claim no practical importance.
+\item Under the MNAR rule, every non-empty identified set admits both orders
+in the expected law as well. The ambiguity at $\Gamma_{cc}\ge3/2$ comes from
+missing information, not from noise. The expected law needs
+$\Gamma_{cc}=2.38$ (free scale; with the scale fixed at 1 the value would be
+3.27), but sets are already non-empty at $3/2$ because other laws with the same
+observables fit.
+\item Under the MCAR control, the expected law has $\Gamma_{cc}=1$ exactly and
+identifies ``A strictly better'' ($-0.0020$, equal to complete-case dropout)
+at $\Gamma_{cc}=1$. The realised draw instead gives an empty set at $1$
+(realised $\Gamma_{cc}=1.79$), and the outer interval admits both orders.
+There the $\Gamma_{cc}=1$ ambiguity is due to mask and sampling noise. From
+$5/4$ on, both orders are admitted even without noise, because the effect is
+tiny.
 \end{itemize}
-The pilot therefore adds one real-covariate instance of a
-dropout-versus-truth sign disagreement. It also shows that, with realistic
-effect sizes and $n\approx2\times10^4$, the observable information does not
-determine the ranking at any $\Gamma_{cc}$ considered. We report this as
-observed. The rules were not changed after seeing the data, and only the one
-pre-registered run was made.
+Width differences between rows are not an additive decomposition of
+uncertainty. An empty realised set at small $\Gamma$ is a finite-sample
+feature of one draw, not a rejection of the population mechanism.
 
 % ---------------------------------------------------------------------
 \section{Limitations}
@@ -693,8 +658,11 @@ with two modalities, two fixed models and the Brier loss. They show that the
 stated phenomena can occur; they say nothing about how often they occur. The
 population was seen during development.
 \item \textbf{Real data.} The pilot uses real covariates and labels from one
-census dataset but synthetic masks, two coarse ``modalities'' and one split.
-Results on real multimodal missingness are not reported
+census dataset, but its masks are synthetic, its two ``modalities'' are
+grouped tabular features, and there is one split. The split does not isolate
+persons (956 near-duplicate tuples cross it). The population is the
+unweighted record population. The effects are small. Results on real
+multimodal missingness are not reported
 \todo{P2-real: natural-missingness dataset, labels only for complete cases,
 approval and license}. Continuous or high-dimensional features would require
 discretisation or smoothness assumptions. The resulting bounds would be
@@ -727,9 +695,10 @@ the incomplete units look like. Even then, with labels only on complete
 cases, the natural-missingness Brier difference is identified only when the
 two models agree on every incomplete input. Beyond that point, conclusions
 depend on an unverifiable sensitivity parameter, and in our population they
-are lost at modest values. In the public-data pilot, the observable
-information never determined the ranking, although complete-case dropout
-reported one. Treating complete cases as the population (the
+are lost at modest values. In the grouped-feature pilot, complete-case
+dropout reported a ranking opposite to the natural-missingness truth, and this
+survived removing mask noise. The observable information determined the
+ranking only in the noise-free MCAR control at $\Gamma_{cc}=1$. Treating complete cases as the population (the
 oracle setting) can make conclusions look far more robust than the observable
 information supports. Plug-in feasibility checks and plug-in intervals are
 not confidence statements. We recommend that missing-modality benchmarks
@@ -931,6 +900,88 @@ implies containment; support violation reported as infeasible (not a
 number); rank test against width, 36/36; hand values of \cref{ex:cx1}. In
 FR1 the plug-in containment frequencies were 8/100 and 5/100. These are not
 coverage.
+
+\section{Additional Toy Results}
+\label{app:extra}
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=\columnwidth,height=0.62\columnwidth,xlabel={$\Gamma$},
+  ylabel={$\Dnat$ bounds},xmin=1,xmax=3,ymin=-0.46,ymax=0.18,
+  legend style={font=\scriptsize,at={(0.02,0.02)},anchor=south west},
+  tick label style={font=\scriptsize},label style={font=\small}]
+\input{generated/fig_fr2_intervals_coords.tex}
+\addplot[gray,thin,forget plot] coordinates {(1,0) (3,0)};
+\end{axis}
+\end{tikzpicture}
+\caption{Lower and upper bounds of $\Dnat$ versus $\Gamma$ for settings A
+(dotted), C (solid) and B (dashed); MCAR truth (P2-FR2-B).}
+\label{fig:fr2}
+\end{figure}
+
+\begin{table}[t]
+\centering\scriptsize
+\caption{Oracle values (target labels, true policy; scoring only) versus the
+two dropout estimands, and the true $\Mcc$ parameter (P2-FR2-A). Z\_check is
+the constructed support violation.}
+\label{tab:truths}
+\resizebox{\columnwidth}{!}{\input{generated/tab_fr2_truths.tex}}
+\end{table}
+
+\begin{table}[t]
+\centering\scriptsize
+\caption{Finite samples in setting C, MCAR truth; 2 draws per $n$, shown as
+illustrations only (P2-FR2-F). ``infeas.'' means the plug-in program is
+empty.}
+\label{tab:finite}
+\resizebox{\columnwidth}{!}{\input{generated/tab_fr2_finite.tex}}
+\end{table}
+
+\begin{table*}[h]
+\centering\small
+\caption{Pilot, setting C: finite-population identified sets and outer 95\%
+intervals by $\Gamma_{cc}$ ($\emptyset$ empty; $\pm$ both orders; -- not in the
+pre-registered outer grid).}
+\label{tab:pilotiv}
+\input{generated/tab_pilot_intervals.tex}
+\end{table*}
+
+\section{Admission Conditions for Natural-Missingness Data}
+\label{app:admission}
+A natural-missingness follow-up needs:
+\begin{itemize}
+\item the original missingness record, not an imputed one;
+\item outcomes for incomplete units that are independent of the
+evaluator's input, so that $\Dnat$ can be checked;
+\item the complete-case raw variables, with common support between complete
+and incomplete units;
+\item evidence of the entity unit, i.e.\ person or visit identifiers for
+isolation;
+\item a licence or permission that allows local analysis;
+\item a binned estimand for which $D(c,r)$ is fixed, or an explicit outer bound.
+\end{itemize}
+No such dataset has been selected or downloaded.
+
+\section{Development Log and Corrections}
+\label{app:devlog}
+\begin{itemize}
+\item \textbf{v1.} B/D cells at $\Gamma_{cc}\in\{1,5/4\}$ were called
+``undetermined''.
+\item \textbf{v2.} These cells were re-labelled ``weak'' using a check of
+$\rho_{\one}>0$ only.
+\item \textbf{v3.} Checking every definition-required stratum
+($\max\eta$ LP, P2-PILOT2) keeps ``weak'' for B and changes D to ``strict
+without margin''.
+\item \textbf{$\Mcc$ definition.} v1 omitted absolute continuity, which the
+programs always imposed.
+\item \textbf{Parameters.} $\Gamma_{\mathrm{box}}$ (FR1) and $\Gamma_{cc}$ (FR2)
+use different references and are not compared.
+\item \textbf{Data unit.} v2 called attribute-tuple groups ``entities'';
+the v3 provenance check shows they are not verified persons.
+\end{itemize}
+All raw outputs are unchanged. Corrections are derived files
+(\texttt{results/derived/}) or new raw files of separately labelled
+analyses.
 
 \section{Reproducibility}
 Code: \texttt{src/msid}. Drivers: \texttt{scripts/run\_p2\_first\_run.py} and
