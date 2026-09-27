@@ -1,4 +1,4 @@
-# P2 manuscript v3 — source bundle and build instructions
+# P2 manuscript v4 — source bundle and build instructions
 
 Status: COMPILE_NOT_RUN. No PDF was produced in the authoring environment
 (no LaTeX compiler; installing one was not approved). Do NOT use an external
@@ -28,3 +28,13 @@ configs/, src/msid/, scripts/, tests/, results/raw/*.json, results/derived/*.jso
 run_manifest.json, STATUS.md, RESEARCH_PACKET.md, RELATED_WORK.md.
 Excluded: data/external (UCI Adult, CC BY 4.0 — re-download from
 https://archive.ics.uci.edu/dataset/2/adult; sha256 in results/raw/p2_pilot_results.json).
+
+## v4 packages
+* `p2_v4_internal.tar.gz` — internal evidence package: paper sources, claims.csv,
+  configs, code, tests, small raw/derived JSON (incl. CLEAN1 models + results),
+  manifests, STATUS/RESEARCH_PACKET/RELATED_WORK. No data files, no PDF.
+* `p2_v4_anon_source.tar.gz` — anonymous submission source only: main.tex,
+  references.bib, generated/*.tex, BUILD_ANON.md. Tar owner/group stripped; no git
+  remote, no claims/STATUS, no user names or local paths (grep-checked).
+  The ICML kit is not included.
+* `p2_v3_bundle.tar.gz` — previous bundle, kept unchanged.

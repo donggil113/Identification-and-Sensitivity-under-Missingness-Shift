@@ -232,7 +232,30 @@ def pilot_compare():
     write("tab_pilot_compare.tex", "\n".join(lines) + "\n")
 
 
+def clean1_table():
+    p = os.path.join(RAW, "p2_clean1_results.json")
+    if not os.path.exists(p):
+        return
+    d = json.load(open(p))["expected_mask"]
+    gl = ["1", "5/4", "3/2", "2", "NO_MODEL"]
+    head = " & ".join(["mask rule", "setting", "true $\\Delta$", "cc dropout"] +
+                      [("no model" if g == "NO_MODEL" else f"$\\Gamma_{{cc}}={g}$") for g in gl])
+    lines = [r"\begin{tabular}{llrr" + "l" * len(gl) + "}", r"\toprule", head + r" \\", r"\midrule"]
+    for m, c in d.items():
+        name = "MNAR" if "mnar" in m else "MCAR"
+        first = True
+        for st, lab in (("C_cc_plus_unlab", "C"), ("D_conditionals", "D"), ("B_cc_only", "B")):
+            byg = {x["gamma_cc"]: x for x in c["settings"][st]}
+            cells = [CAT[byg[g]["category"]] for g in gl]
+            lead = f"{name} & {lab} & {v(c['expected_true_delta_oracle'])} & {v(c['expected_cc_dropout_delta'])}" if first else f" & {lab} & & "
+            lines.append(lead + " & " + " & ".join(cells) + r" \\")
+            first = False
+    lines += [r"\bottomrule", r"\end{tabular}"]
+    write("tab_clean1.tex", "\n".join(lines) + "\n")
+
+
 if __name__ == "__main__":
+    clean1_table()
     pilot_compare()
     pilot()
     fr1_table()

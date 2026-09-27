@@ -1,0 +1,943 @@
+{
+ "experiment_id": "P2-PILOT-CLEAN1",
+ "label": "REPAIR_VALIDATION on already-seen UCI Adult data (not an independent confirmatory experiment). Fixed before running this repair; PILOT1/PILOT2 results were seen.",
+ "data_sha256": {
+  "adult.data": "5b00264637dbfec36bdeaab5676b0b309ff9eb788d63554ca0a249491c86603d",
+  "adult.test": "a2a9044bc167a35b2361efbabec64e89d69ce82d9790d2980119aac5fd7e9c05"
+ },
+ "checks": {
+  "membership_rows": 44355,
+  "unresolved_labels": 0,
+  "strict_label_equals_pilot1_label": true,
+  "canonical_groups": 41439,
+  "group_leakage_train_eval": 0,
+  "groups_with_multiple_rows": 2475,
+  "groups_with_conflicting_labels": 1029,
+  "rows_in_multi_row_groups": 5391,
+  "predictor_input_columns": [
+   "education-num",
+   "hours-per-week"
+  ],
+  "target_or_path_in_inputs": false,
+  "binning": "fixed thresholds from config (not estimated); mode imputation from train only",
+  "unit_note": "record-profile split (canonical covariate profile); not person identity",
+  "train_records": 22188,
+  "eval_records": 22167
+ },
+ "models_file": "results/raw/p2_clean1_models.json",
+ "models_sha256": "86596dc9efb2b45f56c03ed9c826a5e73028aa0b0e00c0ea9da8e46b326a3f8a",
+ "expected_mask": {
+  "primary_mnar": {
+   "expected_true_delta_oracle": {
+    "exact": "-61022057337845612651420625730952535983207492322713580341046397576081/21825798267669511465564915550120905297750232241256728441239364862590000",
+    "float": -0.0027958682926267765
+   },
+   "expected_cc_dropout_delta": {
+    "exact": "339249031741826678271290316965627090077546757729790618912054431063/798153081667570648488207563129888520331443023301838927949101113090000",
+    "float": 0.00042504256330507195
+   },
+   "sign_relation": "opposite",
+   "expected_gamma_cc": 2.3804761428476167,
+   "settings": {
+    "C_cc_plus_unlab": [
+     {
+      "gamma_cc": "1",
+      "status": "INFEASIBLE",
+      "lo": null,
+      "hi": null,
+      "certified": true,
+      "category": "INFEASIBLE"
+     },
+     {
+      "gamma_cc": "5/4",
+      "status": "INFEASIBLE",
+      "lo": null,
+      "hi": null,
+      "certified": true,
+      "category": "INFEASIBLE"
+     },
+     {
+      "gamma_cc": "3/2",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-461328404314956563668681720544729700826229265475034380450030427162375656153373/108815026313583604163272944886689584160965001609983410034787001517348318621220000",
+       "float": -0.00423956525071729
+      },
+      "hi": {
+       "exact": "446111293988975256044965988584447798956528581525341146032282235085404968773/106827948353849785296203488355624896391988382304963174925669987634005149010000",
+       "float": 0.004175979234491201
+      },
+      "certified": true,
+      "eta_lo": null,
+      "eta_hi": null,
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     },
+     {
+      "gamma_cc": "2",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-115195513127408518175100833788008477589276452682390835882066208594409667189544460687/12807082003372395652869580059783501297159068171689557175955301103523141803606082730000",
+       "float": -0.00899467287685633
+      },
+      "hi": {
+       "exact": "5960710980031736400155593450304279518797710997583235284652308618133437453/1017737752714224593550415782277693175494996820489524149241007342091316792500",
+       "float": 0.0058568240827610064
+      },
+      "certified": true,
+      "eta_lo": null,
+      "eta_hi": null,
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     },
+     {
+      "gamma_cc": "3",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-14526294518139270580309428091138527911328334917804120053487824915620627724073362849/954390646213755842363207105845506866935629091468208627112402035300414941401033510000",
+       "float": -0.015220491290194186
+      },
+      "hi": {
+       "exact": "5507867982446222515057505595195132454190466334779244765015291887133556113846335503/757543156790240381769265235830435751899636260900183801032699492379294699053073030000",
+       "float": 0.007270698617070765
+      },
+      "certified": true,
+      "eta_lo": null,
+      "eta_hi": null,
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     },
+     {
+      "gamma_cc": "SUPPORT_ONLY",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-591042928704439522972949739253707559719105528379202558632158302034211/21825798267669511465564915550120905297750232241256728441239364862590000",
+       "float": -0.027080014277413605
+      },
+      "hi": {
+       "exact": "196212207437324246952851950882265519893272515836262482494644665751159/21825798267669511465564915550120905297750232241256728441239364862590000",
+       "float": 0.008989921240496976
+      },
+      "certified": true,
+      "eta_lo": null,
+      "eta_hi": null,
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     },
+     {
+      "gamma_cc": "NO_MODEL",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-591042928704439522972949739253707559719105528379202558632158302034211/21825798267669511465564915550120905297750232241256728441239364862590000",
+       "float": -0.027080014277413605
+      },
+      "hi": {
+       "exact": "196212207437324246952851950882265519893272515836262482494644665751159/21825798267669511465564915550120905297750232241256728441239364862590000",
+       "float": 0.008989921240496976
+      },
+      "certified": true,
+      "eta_lo": null,
+      "eta_hi": null,
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     }
+    ],
+    "B_cc_only": [
+     {
+      "gamma_cc": "1",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "hi": {
+       "exact": "2959560796035349/1544672948775434100",
+       "float": 0.001915978912158455
+      },
+      "certified": true,
+      "eta_lo": {
+       "exact": "1",
+       "float": 1.0
+      },
+      "eta_hi": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "category": "WEAK_B",
+      "expected_true_delta_contained": false
+     },
+     {
+      "gamma_cc": "5/4",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-11053715484406133368343849079847096140943793/711672573581657505045589343619688878800608992",
+       "float": -0.01553202398790745
+      },
+      "hi": {
+       "exact": "106382266355584157/7223948527074873300",
+       "float": 0.014726332276160409
+      },
+      "certified": true,
+      "eta_lo": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "eta_hi": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     },
+     {
+      "gamma_cc": "3/2",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-22763048159909/710018680930650",
+       "float": -0.03205978768061787
+      },
+      "hi": {
+       "exact": "3359585194165304891537248483246325071773509/145326551917217711211447797829771541220674959",
+       "float": 0.02311749057446174
+      },
+      "certified": true,
+      "eta_lo": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "eta_hi": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     },
+     {
+      "gamma_cc": "2",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-149681209829643671/2377033310112596100",
+       "float": -0.06296975696253643
+      },
+      "hi": {
+       "exact": "3973836197625672977037704871379780575402877/117834810131288325619356785809089789921596442",
+       "float": 0.03372378835420648
+      },
+      "certified": true,
+      "eta_lo": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "eta_hi": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     },
+     {
+      "gamma_cc": "3",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-916286834933731/8535828977342100",
+       "float": -0.10734596925102005
+      },
+      "hi": {
+       "exact": "4492344119156771669611844853856178686922347/82906958035265829789849099781575615181973352",
+       "float": 0.0541853690645106
+      },
+      "certified": true,
+      "eta_lo": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "eta_hi": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     },
+     {
+      "gamma_cc": "SUPPORT_ONLY",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-20554879539311/93623389142724",
+       "float": -0.21954855221034728
+      },
+      "hi": {
+       "exact": "9803371241197/93623389142724",
+       "float": 0.1047107067044141
+      },
+      "certified": true,
+      "eta_lo": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "eta_hi": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     },
+     {
+      "gamma_cc": "NO_MODEL",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-20554879539311/93623389142724",
+       "float": -0.21954855221034728
+      },
+      "hi": {
+       "exact": "9803371241197/93623389142724",
+       "float": 0.1047107067044141
+      },
+      "certified": true,
+      "eta_lo": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "eta_hi": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     }
+    ],
+    "D_conditionals": [
+     {
+      "gamma_cc": "1",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "hi": {
+       "exact": "2959560796035349/1544672948775434100",
+       "float": 0.001915978912158455
+      },
+      "certified": true,
+      "eta_lo": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "eta_hi": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "category": "B_NO_MARGIN",
+      "expected_true_delta_contained": false
+     },
+     {
+      "gamma_cc": "5/4",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-14663190683588267/971851723729229700",
+       "float": -0.015087888744305628
+      },
+      "hi": {
+       "exact": "106382266355584157/7223948527074873300",
+       "float": 0.014726332276160409
+      },
+      "certified": true,
+      "eta_lo": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "eta_hi": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     },
+     {
+      "gamma_cc": "3/2",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-22763048159909/710018680930650",
+       "float": -0.03205978768061787
+      },
+      "hi": {
+       "exact": "40148190220064263/1787827038583376700",
+       "float": 0.02245641740147109
+      },
+      "certified": true,
+      "eta_lo": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "eta_hi": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     },
+     {
+      "gamma_cc": "2",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-149681209829643671/2377033310112596100",
+       "float": -0.06296975696253643
+      },
+      "hi": {
+       "exact": "840138800516/27308410805025",
+       "float": 0.030764836757231098
+      },
+      "certified": true,
+      "eta_lo": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "eta_hi": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     },
+     {
+      "gamma_cc": "3",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-916286834933731/8535828977342100",
+       "float": -0.10734596925102005
+      },
+      "hi": {
+       "exact": "10582197372931286272049161844817340563775542533/285007145039232861336824951816941000055265217560",
+       "float": 0.03712958624765209
+      },
+      "certified": true,
+      "eta_lo": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "eta_hi": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     },
+     {
+      "gamma_cc": "SUPPORT_ONLY",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-20031597194971/109233643220100",
+       "float": -0.18338303662186195
+      },
+      "hi": {
+       "exact": "1770289780756494878084522965083926039141191/40397894406694948453128979704740042530866792",
+       "float": 0.043821337887925
+      },
+      "certified": true,
+      "eta_lo": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "eta_hi": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     },
+     {
+      "gamma_cc": "NO_MODEL",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-20031597194971/109233643220100",
+       "float": -0.18338303662186195
+      },
+      "hi": {
+       "exact": "1770289780756494878084522965083926039141191/40397894406694948453128979704740042530866792",
+       "float": 0.043821337887925
+      },
+      "certified": true,
+      "eta_lo": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "eta_hi": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     }
+    ]
+   }
+  },
+  "control_mcar": {
+   "expected_true_delta_oracle": {
+    "exact": "-262309355737433412548031561903013422501813656065117437125011709246633/130954789606017068793389493300725431786501393447540370647436189175540000",
+    "float": -0.0020030527827703134
+   },
+   "expected_cc_dropout_delta": {
+    "exact": "-262309355737433412548031561903013422501813656065117437125011709246633/130954789606017068793389493300725431786501393447540370647436189175540000",
+    "float": -0.0020030527827703134
+   },
+   "sign_relation": "same",
+   "expected_gamma_cc": 1.0,
+   "settings": {
+    "C_cc_plus_unlab": [
+     {
+      "gamma_cc": "1",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-262309355737433412548031561903013422501813656065117437125011709246633/130954789606017068793389493300725431786501393447540370647436189175540000",
+       "float": -0.0020030527827703134
+      },
+      "hi": {
+       "exact": "-262309355737433412548031561903013422501813656065117437125011709246633/130954789606017068793389493300725431786501393447540370647436189175540000",
+       "float": -0.0020030527827703134
+      },
+      "certified": true,
+      "eta_lo": null,
+      "eta_hi": null,
+      "category": "STRICT_A",
+      "expected_true_delta_contained": true
+     },
+     {
+      "gamma_cc": "5/4",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-9833742580149861301345333399651184431504851384819279706557342326574160991273/1937447634591005901240237637069035751681621928407184691680524549459283588340000",
+       "float": -0.005075617221636939
+      },
+      "hi": {
+       "exact": "27271164721594459649845345657054085777756457104324255599477007532142667874037/36140414505058149807950101811713686259303522699956025613237295199116093611340000",
+       "float": 0.0007545891516484304
+      },
+      "certified": true,
+      "eta_lo": null,
+      "eta_hi": null,
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     },
+     {
+      "gamma_cc": "3/2",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-80617094304182573867347637812707201969549778535132729494488279724674832073103773/10212118626799705358421944647124156361193508830406255316511402868400888669844740000",
+       "float": -0.007894257523861777
+      },
+      "hi": {
+       "exact": "11134028577753384102250668314779039253197050897135852733674609415146613322992291/4179533397358654208724308195398122524847554753986920763837926987227590933174020000",
+       "float": 0.0026639405692486565
+      },
+      "certified": true,
+      "eta_lo": null,
+      "eta_hi": null,
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     },
+     {
+      "gamma_cc": "2",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-213060631504352285656466984298623430128875355267191235882665138926072745211/17003482159251239791297737585111753331496677967013016628823889458080147580000",
+       "float": -0.012530411683258092
+      },
+      "hi": {
+       "exact": "59837355905051136575371022836582112098469781996913041391725887381795177632013473/12021302529792358158618449892402044653609453742963730940366130268227079021306060000",
+       "float": 0.0049776100182785015
+      },
+      "certified": true,
+      "eta_lo": null,
+      "eta_hi": null,
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     },
+     {
+      "gamma_cc": "3",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-171923099501271124391661381605064394629309089370482022781842579154803263091310993/9380678498631327365307963422521258495528576641450898245702509516255904439659540000",
+       "float": -0.018327362943560563
+      },
+      "hi": {
+       "exact": "392563720040130903367690119344612197192740782173506158880941502220436792855449/55788705610690888804135306542234997927604413635063665134150122663670997328780000",
+       "float": 0.007036616385752876
+      },
+      "certified": true,
+      "eta_lo": null,
+      "eta_hi": null,
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     },
+     {
+      "gamma_cc": "SUPPORT_ONLY",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-3641751769707000568830815638152356750739937196402107036145252256289553/130954789606017068793389493300725431786501393447540370647436189175540000",
+       "float": -0.027809229281825904
+      },
+      "hi": {
+       "exact": "1245552036410627922259420915426526523381326352237256371612259812824227/130954789606017068793389493300725431786501393447540370647436189175540000",
+       "float": 0.00951131333308177
+      },
+      "certified": true,
+      "eta_lo": null,
+      "eta_hi": null,
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     },
+     {
+      "gamma_cc": "NO_MODEL",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-3641751769707000568830815638152356750739937196402107036145252256289553/130954789606017068793389493300725431786501393447540370647436189175540000",
+       "float": -0.027809229281825904
+      },
+      "hi": {
+       "exact": "1245552036410627922259420915426526523381326352237256371612259812824227/130954789606017068793389493300725431786501393447540370647436189175540000",
+       "float": 0.00951131333308177
+      },
+      "certified": true,
+      "eta_lo": null,
+      "eta_hi": null,
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     }
+    ],
+    "B_cc_only": [
+     {
+      "gamma_cc": "1",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-22995065685600168289048396103411052385777/1759069618904067216605202549550504291661214",
+       "float": -0.013072288577143706
+      },
+      "hi": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "certified": true,
+      "eta_lo": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "eta_hi": {
+       "exact": "1",
+       "float": 1.0
+      },
+      "category": "WEAK_A",
+      "expected_true_delta_contained": true
+     },
+     {
+      "gamma_cc": "5/4",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-164627980805777717/4898801197491824700",
+       "float": -0.0336057688746518
+      },
+      "hi": {
+       "exact": "2744739240131993/766492474475441700",
+       "float": 0.0035809082692043236
+      },
+      "certified": true,
+      "eta_lo": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "eta_hi": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     },
+     {
+      "gamma_cc": "3/2",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-223343521319159951/4218712534803482100",
+       "float": -0.052941156686222006
+      },
+      "hi": {
+       "exact": "3132587616387667113113646022750770600428/213426162315265429650367314341863188181659",
+       "float": 0.014677617694124685
+      },
+      "certified": true,
+      "eta_lo": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "eta_hi": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     },
+     {
+      "gamma_cc": "2",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-3316420286948173/38923588200762300",
+       "float": -0.08520335457878528
+      },
+      "hi": {
+       "exact": "5183485406058369788732488063977851184993/180709722858497654693531557184792135745310",
+       "float": 0.028684042696016026
+      },
+      "certified": true,
+      "eta_lo": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "eta_hi": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     },
+     {
+      "gamma_cc": "3",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-1911987419033084465079051132158666823826043/15081718693624517829091377279276491728384026",
+       "float": -0.12677516786209103
+      },
+      "hi": {
+       "exact": "74928859351705879504007687205787653072299/1563583429598331308768327189366131794542550",
+       "float": 0.04792124163848062
+      },
+      "certified": true,
+      "eta_lo": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "eta_hi": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     },
+     {
+      "gamma_cc": "SUPPORT_ONLY",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-20554879539311/93623389142724",
+       "float": -0.21954855221034728
+      },
+      "hi": {
+       "exact": "9803371241197/93623389142724",
+       "float": 0.1047107067044141
+      },
+      "certified": true,
+      "eta_lo": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "eta_hi": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     },
+     {
+      "gamma_cc": "NO_MODEL",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-20554879539311/93623389142724",
+       "float": -0.21954855221034728
+      },
+      "hi": {
+       "exact": "9803371241197/93623389142724",
+       "float": 0.1047107067044141
+      },
+      "certified": true,
+      "eta_lo": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "eta_hi": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     }
+    ],
+    "D_conditionals": [
+     {
+      "gamma_cc": "1",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-22995065685600168289048396103411052385777/1759069618904067216605202549550504291661214",
+       "float": -0.013072288577143706
+      },
+      "hi": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "certified": true,
+      "eta_lo": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "eta_hi": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "category": "A_NO_MARGIN",
+      "expected_true_delta_contained": true
+     },
+     {
+      "gamma_cc": "5/4",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-164627980805777717/4898801197491824700",
+       "float": -0.0336057688746518
+      },
+      "hi": {
+       "exact": "2744739240131993/766492474475441700",
+       "float": 0.0035809082692043236
+      },
+      "certified": true,
+      "eta_lo": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "eta_hi": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     },
+     {
+      "gamma_cc": "3/2",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-223343521319159951/4218712534803482100",
+       "float": -0.052941156686222006
+      },
+      "hi": {
+       "exact": "21908242473057371/1568485882997415900",
+       "float": 0.01396776516164122
+      },
+      "certified": true,
+      "eta_lo": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "eta_hi": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     },
+     {
+      "gamma_cc": "2",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-3316420286948173/38923588200762300",
+       "float": -0.08520335457878528
+      },
+      "hi": {
+       "exact": "22398254798899811/878129257846383900",
+       "float": 0.025506785702405173
+      },
+      "certified": true,
+      "eta_lo": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "eta_hi": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     },
+     {
+      "gamma_cc": "3",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-300977558902546343/2391452151017649300",
+       "float": -0.12585556385665903
+      },
+      "hi": {
+       "exact": "43845764245152108153711381927943874476087903/1211998967424902312240984556640297456954576446",
+       "float": 0.036176403960400956
+      },
+      "certified": true,
+      "eta_lo": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "eta_hi": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     },
+     {
+      "gamma_cc": "SUPPORT_ONLY",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-20031597194971/109233643220100",
+       "float": -0.18338303662186195
+      },
+      "hi": {
+       "exact": "82303712418662525444333682501014004819167/1759069618904067216605202549550504291661214",
+       "float": 0.0467882064098971
+      },
+      "certified": true,
+      "eta_lo": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "eta_hi": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     },
+     {
+      "gamma_cc": "NO_MODEL",
+      "status": "OPTIMAL",
+      "lo": {
+       "exact": "-20031597194971/109233643220100",
+       "float": -0.18338303662186195
+      },
+      "hi": {
+       "exact": "82303712418662525444333682501014004819167/1759069618904067216605202549550504291661214",
+       "float": 0.0467882064098971
+      },
+      "certified": true,
+      "eta_lo": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "eta_hi": {
+       "exact": "0",
+       "float": 0.0
+      },
+      "category": "BOTH_ORDERS",
+      "expected_true_delta_contained": true
+     }
+    ]
+   }
+  }
+ },
+ "note": "Conditional on the clean eval records; oracle quantities use labels inside pi and are for scoring only. Not comparable as the same population to PILOT1/PILOT2 (split and fitted predictors changed).",
+ "timing": {
+  "wall_s_total": 49.137,
+  "cpu_s_total": 49.124,
+  "wall_s_until_models_saved": 1.284,
+  "threads": "one Python process, 2-CPU affinity"
+ },
+ "utc": "2026-09-27T08:52:00.597004+00:00"
+}

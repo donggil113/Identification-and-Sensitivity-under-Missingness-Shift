@@ -1,5 +1,22 @@
 # STATUS — P2: What Can Missing-Modality Evaluations Identify under Selective Observation?
 
+## Update (fifth session, 2026-09-27): split repair (P2-PILOT-CLEAN1), manuscript v4
+* State read: HEAD 8bf9da8 = origin, clean; Adult hashes unchanged; no compiler.
+  No new download/install. Sandbox checkout (no /nvmedata).
+* PILOT1/PILOT2 → DEVELOPMENT_WITH_PROFILE_OVERLAP (split key contained the target
+  string; 956 profiles crossed). Raw preserved.
+* P2-PILOT-CLEAN1 (repair validation, not independent confirmation): config+script
+  committed c980ca2 before the single run (49.1 s wall / 49.1 CPU-s, one process on
+  2 CPUs). 0 unresolved labels, 0 profile leakage, predictors refit once and hashed.
+  MNAR: cc dropout +0.0004 vs true −0.0028 (opposite); MCAR agree. RESEARCH_PACKET §14.
+* Manuscript v4: pilot section rewritten on CLEAN1 (Table clean1); PILOT1/2 table
+  moved to the appendix dev log; abstract/limitations/conclusion updated.
+  COMPILE_NOT_RUN. Bundles in export_bundle/ (internal evidence vs anonymous source).
+* Next decision: whether to build the PDF on an approved TeX environment
+  (TeX Live + ICML 2026 kit) — needs approval; no new research started.
+
+---
+
 ## Update (fourth session, 2026-09-27): P2-PILOT2, D positivity, provenance, manuscript v3
 * Actual state read: branch `claude/keen-franklin-ua0v00` at ed75cfc (clean, = origin);
   Adult files present locally with hashes equal to PILOT1's manifest.

@@ -484,3 +484,26 @@ mask-draw artefact; the MNAR ambiguity is information-limited; the MCAR Γ=1
 ambiguity is noise-driven. Effects are small; no practical-importance claim.
 Schema check: setting-C intervals identical when hidden joint/full-data law are
 replaced by placeholders (evaluator sees only allowed observables).
+
+## 14. P2-PILOT-CLEAN1 (repair validation on already-seen Adult; config/script commit c980ca2; one run)
+Defect: PILOT1/2 split key contained the raw income string (target); 956 covariate
+profiles crossed train/eval. PILOT1/2 kept as DEVELOPMENT_WITH_PROFILE_OVERLAP
+(valid algebraic finite-population examples for their fixed predictors, not clean
+held-out evidence). Theory and LP certificates are unaffected.
+Repair: same 44,355 records (weight 1); strict label parser (only the trailing '.'
+of allowed tokens removed; 0 unresolved; equal to PILOT1 labels); split key =
+canonical non-label covariate profile (excl. fnlwgt, income; integers canonical);
+same SHA-256 mod 100 < 50 rule. 41,439 profile groups, **0 leakage**; 2,475
+multi-record groups, 1,029 with conflicting labels (kept). Train 22,188 / eval
+22,167. Predictors refit once on clean train, tables + hash saved before
+evaluation (`results/raw/p2_clean1_models.json`). Expected-mask law only (no new
+draw; no Hoeffding CI on fractional masses). Run: 49.1 s wall / 49.1 CPU-s.
+
+| rule | expected true Δ | expected cc dropout | sign | C (Γ_cc=1, 5/4, ≥3/2) | B / D at Γ_cc=1 |
+|---|---|---|---|---|---|
+| MNAR (law needs Γ_cc 2.38) | −0.0028 | +0.0004 | opposite | ∅, ∅, both orders | WEAK_B / B_NO_MARGIN (wrong sign under misspecified MCAR) |
+| MCAR | −0.0020 | −0.0020 | same | STRICT_A, both, both | WEAK_A / A_NO_MARGIN |
+
+Interpretation: the dropout-vs-truth sign disagreement survives the repair;
+MNAR ambiguity is information-limited. Small effects; one dataset; synthetic masks;
+not comparable as the same population to PILOT1/2 (split and predictors changed).

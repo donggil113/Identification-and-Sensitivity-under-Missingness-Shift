@@ -76,14 +76,14 @@ mask frequencies the sign is not strictly identified even under MCAR: with
 complete cases alone A is only weakly better, and if the strata's conditional
 laws are also given, strictly better for every valid law but with no uniform
 margin. Second, random dropout on complete cases can rank the predictors
-opposite to the natural-missingness truth. Third, in a semi-synthetic pilot
-with two grouped tabular features of a public census dataset and fixed
-synthetic masks, this sign disagreement persists in the noise-free expected
-law ($+0.0006$ vs.\ $-0.0033$ Brier). Under the label-dependent rule, the
-identified sets admit both orders at every non-empty value of the
-sensitivity parameter, even without sampling noise; a conservative
-confidence interval admits both orders everywhere. The effects are small,
-the masks are synthetic, and natural modality missingness is not analysed.
+opposite to the natural-missingness truth. Third, we ran a semi-synthetic repair-validation pilot: two grouped tabular
+features of a public census dataset, a covariate-profile split without
+train/evaluation overlap, and a fixed synthetic label-dependent mask rule
+integrated exactly. Complete-case dropout again ranks the predictors opposite
+to the risk difference under the mask rule ($+0.0004$ vs.\ $-0.0028$ Brier).
+The exact-observable identified sets admit both orders at every non-empty
+value of the sensitivity parameter. The effects are small, the masks are
+synthetic, and no real modality missingness is analysed.
 \end{abstract}
 
 % ---------------------------------------------------------------------
@@ -571,82 +571,74 @@ comparable.
 \subsection{Semi-synthetic pilot with grouped tabular features}
 \label{sec:pilot}
 
-\textbf{Data and units (P2-PILOT1, pre-registered).} We use UCI Adult
-\cite{becker1996adult} (CC BY 4.0). There are 48{,}842 parsed records (32{,}561
-and 16{,}281); no record is excluded. 3{,}620 records contain a ``?'', none in
-the two features used. Records with identical attributes, excluding the survey
-weight but including the raw income string, form one \emph{group}. This gives
-44{,}355 groups; the 4{,}487 later duplicates are dropped, and 2{,}788 groups have
-size $>1$. Groups are split 50/50 by a hash: 22{,}080 train, 22{,}275 evaluation.
-Groups are not verified persons, and person-level isolation is unverified.
-Moreover, 956 attribute tuples that differ only in the trailing ``.'' of the
-test file's income string fall on both sides of the split. The population
-is the \emph{unweighted} empirical record population after deduplication, not
-the survey-weighted census population.
+\textbf{Data, units and split (P2-PILOT-CLEAN1).} We use UCI Adult
+\cite{becker1996adult} (CC BY 4.0). Of 48{,}842 parsed records, 44{,}355 were
+selected in an earlier development run, each with weight 1. The population
+is therefore an unweighted record population, not the survey-weighted census
+population. The earlier development split hashed a key that contained the raw
+income string, i.e.\ the target; as a result, 956 covariate profiles fell on
+both sides (\cref{app:devlog}). The repair keeps the same 44{,}355 records. It
+parses labels strictly: the trailing ``.'' is removed only from the allowed
+tokens, and no token was unresolved. It then hashes the canonical non-label
+covariate profile, i.e.\ all attributes except the survey weight and income,
+with integers in canonical form. The hash rule and the 50/50 ratio are
+unchanged. This yields 41{,}439 profile groups, none in both splits
+(22{,}188 train and 22{,}167 evaluation records). 2{,}475 groups have several
+records, and 1{,}029 of them have conflicting labels. This is a
+record-profile split, not person isolation. The repair was run once on
+already-seen data; it is a repair validation, not an independent confirmation.
 
-\textbf{Design.} The two ``modalities'' are two grouped tabular features,
-coarsened by fixed thresholds to three levels: education years ($\le9$,
-$10$--$12$, $\ge13$) and weekly hours ($\le34$, $35$--$45$, $>45$). $Y$ is income
-$>50$K. Predictors A and B are defined as in \cref{sec:exp}, fitted on the
-training split with Laplace smoothing, and use the binned inputs only. Because
-of this, $D(c,r)$ is a fixed loss on the coarse cells; a unit-level check
-passes. With fine inputs, $D$ would vary within cells and would need an
-explicit outer bound. Masks on the evaluation split are synthetic. Feature 1
-is missing with probability $0.15$. Feature 2 is missing with probability
-$0.15+0.25\,Y+0.10\,\mathbb{1}[\text{hours}>45]$ (MNAR rule) or $0.30$ (MCAR
-control). There is one fixed seed, and the evaluator's dropout rates are
-$(0.15,0.30)$. The setting-C evaluator receives only complete-case cells with
-labels and the masses of incomplete observed tuples. Recomputing its intervals
-from a copy in which the hidden joint and full-data law are replaced by
-placeholders gives identical results (schema check).
-
-\textbf{Realised versus expected law (P2-PILOT2, exploratory).} The single
-pre-registered run gives one realised mask draw. To separate mask noise from
-missing information, we also integrate the fixed mask rule exactly over the
-evaluation records,
-$\bar p(c,r)=n^{-1}\sum_i\mathbb{1}\{C_i=c\}\pi_r(C_i)$. This law is
-conditional on the 22{,}275 records; it is not the super-population. It uses
-the labels inside $\pi$ only as an oracle comparator. This analysis was
-designed after seeing PILOT1 and is not confirmatory. The predictors were
-re-derived deterministically and reproduce PILOT1's recorded values exactly.
+\textbf{Design (unchanged rules).} The two ``modalities'' are two grouped
+tabular features, coarsened by fixed thresholds to three levels: education
+years ($\le9$, $10$--$12$, $\ge13$) and weekly hours ($\le34$, $35$--$45$, $>45$).
+$Y$ is income $>50$K. Predictors A and B are defined as in \cref{sec:exp} and
+use the binned inputs only, so $D(c,r)$ is a fixed loss on the coarse cells.
+Both were refitted once on the clean training records, with the imputation
+mode computed on training data only; their tables and hash were stored
+before evaluation. Feature 1 is missing with probability $0.15$. Feature 2 is
+missing with probability $0.15+0.25\,Y+0.10\,\mathbb{1}[\text{hours}>45]$ (MNAR
+rule) or $0.30$ (MCAR control). Instead of drawing masks, we integrate the rule
+exactly over the evaluation records:
+$\bar p(c,r)=n^{-1}\sum_i\mathbb{1}\{C_i=c\}\pi_r(C_i)$. This law is conditional on
+these records and is not the super-population. The labels inside $\pi$ serve
+only the oracle comparator. The setting-C evaluator receives only
+complete-case cells with labels and the masses of incomplete observed tuples
+(schema check in \cref{app:devlog}). No confidence interval is reported for
+$\bar p$: its masses are expected fractions, not multinomial counts, so the
+Hoeffding box of \cref{prop:outer} does not apply as stated.
 
 \begin{table*}[t]
 \centering\small
-\caption{Pilot comparison for the same predictors, data and $\Gamma_{cc}$
-grid. \emph{expected}: noise-free mask law; \emph{realised}: the one
-pre-registered mask draw (finite-population identified sets); \emph{outer}:
-conservative 95\% interval from the realised sample. The true $\Dnat$ uses
-hidden labels. $\emptyset$ empty; $\pm$ both orders; A$^{s}$ strict; -- not in
-the pre-registered outer grid. $\Gamma_{cc}$ column: smallest free-scale value
-containing the law (P2-PILOT1, P2-PILOT2).}
-\label{tab:pilotcmp}
-\input{generated/tab_pilot_compare.tex}
+\caption{Repaired pilot (P2-PILOT-CLEAN1): expected-mask law on the clean
+evaluation records. ``true $\Delta$'' is the risk difference under the mask
+rule (oracle, hidden labels); ``cc dropout'' is random dropout on complete
+cases. Categories of the exact-observable identified set: $\emptyset$ empty;
+$\pm$ both orders; A$^{s}$ strict; A$^{w}$/B$^{w}$ weak (tie attained);
+A$^{0}$/B$^{0}$ strict for every valid law without a uniform margin.}
+\label{tab:clean1}
+\input{generated/tab_clean1.tex}
 \end{table*}
 
-\textbf{Results (\cref{tab:pilotcmp}).}
+\textbf{Results (\cref{tab:clean1}).}
 \begin{itemize}
-\item Under the MNAR rule, complete-case dropout ranks B ahead ($+0.0006$)
-while the natural-missingness truth ranks A ahead. This holds both in the
-realised draw ($-0.0038$) and in the noise-free expected law ($-0.0033$). The
-disagreement is therefore not a mask-sampling artefact of this draw. It is
-small in Brier units, and we claim no practical importance.
-\item Under the MNAR rule, every non-empty identified set admits both orders
-in the expected law as well. The ambiguity at $\Gamma_{cc}\ge3/2$ comes from
-missing information, not from noise. The expected law needs
-$\Gamma_{cc}=2.38$ (free scale; with the scale fixed at 1 the value would be
-3.27), but sets are already non-empty at $3/2$ because other laws with the same
-observables fit.
-\item Under the MCAR control, the expected law has $\Gamma_{cc}=1$ exactly and
-identifies ``A strictly better'' ($-0.0020$, equal to complete-case dropout)
-at $\Gamma_{cc}=1$. The realised draw instead gives an empty set at $1$
-(realised $\Gamma_{cc}=1.79$), and the outer interval admits both orders.
-There the $\Gamma_{cc}=1$ ambiguity is due to mask and sampling noise. From
-$5/4$ on, both orders are admitted even without noise, because the effect is
-tiny.
+\item Under the MNAR rule, complete-case dropout ranks B ahead ($+0.0004$),
+while the risk difference under the rule ranks A ahead ($-0.0028$). The
+disagreement survives the split repair. It is small in Brier units, and we
+claim no practical importance. The MCAR control agrees ($-0.0020$ for both).
+\item With the observables of setting C, the MNAR identified sets are empty
+for $\Gamma_{cc}\le5/4$ and admit both orders from $3/2$ on. The law itself
+needs $\Gamma_{cc}=2.38$. An empty set here is an exact statement about this
+conditional law under a too-small $\Gamma_{cc}$; it is neither a confidence-set
+rejection nor evidence that any $\Gamma_{cc}$ is correct.
+\item B and D at $\Gamma_{cc}=1$ show the misspecification risk. Assuming
+MCAR, the MNAR case yields ``B weakly better'' (B) or ``B strictly better
+without margin'' (D), the wrong sign. The MCAR control yields A$^{w}$ (B) and
+A$^{0}$ (D). From $5/4$ on, both orders are admitted.
 \end{itemize}
-Width differences between rows are not an additive decomposition of
-uncertainty. An empty realised set at small $\Gamma$ is a finite-sample
-feature of one draw, not a rejection of the population mechanism.
+The development runs on the contaminated split (App.~\ref{app:devlog})
+showed the same qualitative pattern with different numbers. They used
+different predictors and a different split, so we do not compare them as
+estimates of one quantity.
 
 % ---------------------------------------------------------------------
 \section{Limitations}
@@ -659,9 +651,9 @@ stated phenomena can occur; they say nothing about how often they occur. The
 population was seen during development.
 \item \textbf{Real data.} The pilot uses real covariates and labels from one
 census dataset, but its masks are synthetic, its two ``modalities'' are
-grouped tabular features, and there is one split. The split does not isolate
-persons (956 near-duplicate tuples cross it). The population is the
-unweighted record population. The effects are small. Results on real
+grouped tabular features, and there is one repaired record-profile split on
+already-seen data. Profiles are not persons. The population is the unweighted
+record population. The effects are small. Results on real
 multimodal missingness are not reported
 \todo{P2-real: natural-missingness dataset, labels only for complete cases,
 approval and license}. Continuous or high-dimensional features would require
@@ -695,10 +687,10 @@ the incomplete units look like. Even then, with labels only on complete
 cases, the natural-missingness Brier difference is identified only when the
 two models agree on every incomplete input. Beyond that point, conclusions
 depend on an unverifiable sensitivity parameter, and in our population they
-are lost at modest values. In the grouped-feature pilot, complete-case
-dropout reported a ranking opposite to the natural-missingness truth, and this
-survived removing mask noise. The observable information determined the
-ranking only in the noise-free MCAR control at $\Gamma_{cc}=1$. Treating complete cases as the population (the
+are lost at modest values. In the repaired grouped-feature pilot,
+complete-case dropout reported a ranking opposite to the risk difference under
+a label-dependent mask rule. The observable information determined the
+ranking only in the MCAR control at $\Gamma_{cc}=1$. Treating complete cases as the population (the
 oracle setting) can make conclusions look far more robust than the observable
 information supports. Plug-in feasibility checks and plug-in intervals are
 not confidence statements. We recommend that missing-modality benchmarks
@@ -978,7 +970,27 @@ programs always imposed.
 use different references and are not compared.
 \item \textbf{Data unit.} v2 called attribute-tuple groups ``entities'';
 the v3 provenance check shows they are not verified persons.
+\item \textbf{v4: split repair.} The PILOT1/2 split key contained the raw
+income string, and 956 covariate profiles crossed the split. Those runs are
+kept as DEVELOPMENT\_WITH\_PROFILE\_OVERLAP (\cref{tab:pilotcmp}). They are valid
+algebraic finite-population examples for their fixed predictors, but they are
+not clean held-out evidence. P2-PILOT-CLEAN1 repairs label parsing and group
+allocation and refits the predictors once. It found 0 unresolved labels and
+0 profile leakage, and the evaluator schema check still holds.
 \end{itemize}
+
+\begin{table*}[h]
+\centering\small
+\caption{DEVELOPMENT\_WITH\_PROFILE\_OVERLAP (P2-PILOT1/2, superseded split). Pilot comparison for the same predictors, data and $\Gamma_{cc}$
+grid. \emph{expected}: noise-free mask law; \emph{realised}: the one
+pre-registered mask draw (finite-population identified sets); \emph{outer}:
+conservative 95\% interval from the realised sample. The true $\Dnat$ uses
+hidden labels. $\emptyset$ empty; $\pm$ both orders; A$^{s}$ strict; -- not in
+the pre-registered outer grid. $\Gamma_{cc}$ column: smallest free-scale value
+containing the law (P2-PILOT1, P2-PILOT2).}
+\label{tab:pilotcmp}
+\input{generated/tab_pilot_compare.tex}
+\end{table*}
 All raw outputs are unchanged. Corrections are derived files
 (\texttt{results/derived/}) or new raw files of separately labelled
 analyses.

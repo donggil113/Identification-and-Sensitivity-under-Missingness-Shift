@@ -1,4 +1,6 @@
-# paper/ — manuscript v3 (P2)
+# paper/ — manuscript v4 (P2)
+
+v4 = v3 + split repair: empirical pilot table replaced by P2-PILOT-CLEAN1; PILOT1/2 moved to appendix as DEVELOPMENT_WITH_PROFILE_OVERLAP.
 
 v3 = v2 + D positivity correction, pilot provenance, expected-mask comparison (P2-PILOT2), narrowed title.
 
