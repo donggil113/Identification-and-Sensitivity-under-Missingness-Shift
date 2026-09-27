@@ -411,3 +411,51 @@ def recover_model(t: Truth, built: Built, x, gamma):
         if min(ratios) == 0 or max(ratios) / min(ratios) > Q(gamma) ** 2:
             return "VIOLATION", {"reason": f"ratio spread exceeds Gamma^2 at mask {r}"}
     return "PROBABILITY_MODEL", {"rho_full": str(rho[full])}
+
+
+def required_positive_rhos(built: Built, setting: str) -> List[str]:
+    """Variables that must be strictly positive for an LP point to be a valid
+    model of the setting's information (definition, not data-driven):
+      B: rho_full (v is a conditional law of the complete stratum);
+      D: rho_full and rho_r for every incomplete stratum whose conditional law
+         mu_r is part of the information (a conditional law of a stratum is
+         only defined, and only sampled, if that stratum has positive mass);
+      A, C: none (all rho are fixed by the data).
+    """
+    if setting == "B_cc_only":
+        return ["rho_full"]
+    if setting == "D_conditionals":
+        return [n for n in built.names if n == "rho_full" or n.startswith("rho(")]
+    return []
+
+
+def endpoint_eta(built: Built, table, value: Fraction, required: List[str]):
+    """max eta s.t. every required rho >= eta, the LP constraints, and
+    objective == value.  eta* > 0: the endpoint is attained by a valid model;
+    eta* == 0: it is reached only in the closure.  Returns (eta*, certified)."""
+    if not required:
+        return None, True
+    n = len(built.names)
+    idx = [built.names.index(v) for v in required]
+    # variables: original n, eta, one slack per required rho
+    m_new = len(idx)
+    A = [row + [Q(0)] * (1 + m_new) for row in built.A]
+    b = list(built.b)
+    c = objective(built, table)
+    A.append(c + [Q(0)] * (1 + m_new))
+    b.append(Q(value))
+    for k, j in enumerate(idx):
+        row = [Q(0)] * (n + 1 + m_new)
+        row[j] = Q(1)          # rho_j - eta - s_k = 0
+        row[n] = Q(-1)
+        row[n + 1 + k] = Q(-1)
+        A.append(row)
+        b.append(Q(0))
+    lower = list(built.lower) + [Q(0)] + [Q(0)] * m_new
+    upper = list(built.upper) + [Q(1)] + [Q(1)] * m_new
+    obj = [Q(0)] * (n + 1 + m_new)
+    obj[n] = Q(1)
+    res = solve_lp(obj, A, b, lower, upper, "max")
+    if res.status != "OPTIMAL":
+        raise RuntimeError("eta LP infeasible at a reported endpoint")
+    return res.value, res.certificate_ok

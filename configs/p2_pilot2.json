@@ -1,0 +1,16 @@
+{
+  "experiment_id": "P2-PILOT2-EXPECTED-MASK",
+  "status_label": "EXPLORATORY_ANALYSIS_OF_FIXED_PILOT (post hoc: written after P2-PILOT1 results were seen; same data, split, binning, predictors, mask rules, evaluator q and Gamma grid; not a confirmatory experiment)",
+  "reuses": {"pilot_config": "configs/p2_pilot.json", "pilot_raw": "results/raw/p2_pilot_results.json", "fr1_config": "configs/p2_first_run.json", "fr2_raw": "results/raw/p2_fr2_B_primary.json"},
+  "parts": {
+    "D_endpoint": "For FR2 E0 truth, settings B and D, every Gamma_cc in the FR2 grid: max eta s.t. all definition-required rho >= eta and objective == reported endpoint (B: rho_full; D: rho_full and every incomplete stratum with a given conditional law).",
+    "provenance": "raw line -> parsed row -> dedup group (attribute tuple excl. fnlwgt, incl. raw income string) -> hash split; counts only, no preprocessing change.",
+    "frozen_predictors": "PILOT1 did not persist the predictor tables; they are re-derived deterministically from the same code, config and data and accepted only if PILOT1's recorded held-out Delta and complete-case dropout contrast are reproduced exactly (Fraction equality); the tables are then saved.",
+    "expected_mask_law": "p_bar(c,r) = (1/n) sum_i 1{C_i=c} pi_r(C_i) on the eval records, exact rationals, for primary_mnar and control_mcar; no new masks are drawn.",
+    "comparison": "A: expected-joint true Delta; B: expected complete-case dropout contrast; C: setting-C identified intervals from the expected observable laws only (Gamma grid of PILOT1); D: PILOT1 realised values (raw, unchanged).",
+    "schema_check": "setting-C intervals recomputed from a blinded Truth whose hidden joint mass and full-data law are replaced by uniform placeholders must be identical."
+  },
+  "gamma_grid": ["1", "5/4", "3/2", "2", "3", "SUPPORT_ONLY", "NO_MODEL"],
+  "budget": {"cpu_threads": 2, "wall_seconds": 120},
+  "not_done_by_design": ["new sensitivity model", "less conservative CI", "new loss", "new bins", "new mask seeds", "larger n", "new data download"]
+}
