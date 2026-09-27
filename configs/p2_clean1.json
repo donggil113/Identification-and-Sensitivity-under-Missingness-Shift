@@ -1,0 +1,14 @@
+{
+  "experiment_id": "P2-PILOT-CLEAN1",
+  "status_label": "REPAIR_VALIDATION on already-seen UCI Adult data (not an independent confirmatory experiment). Fixed before running this repair; PILOT1/PILOT2 results were seen.",
+  "defect_repaired": "PILOT1 split key included the raw income string (target, with the adult.test '.' suffix); 956 canonical covariate profiles fell on both sides of the split.",
+  "membership": "the 44,355 rows selected by PILOT1 (first occurrence per PILOT1 key, adult.data before adult.test), each with weight 1; no further deduplication",
+  "label_parsing": {"allowed": ["<=50K", ">50K", "<=50K.", ">50K."], "rule": "strip only the trailing '.' of an allowed token; any other token -> UNRESOLVED (excluded and counted)", "positive": ">50K"},
+  "split_key": {"columns": "all attributes except fnlwgt and income", "canonical": "strip whitespace; numeric columns (age, education-num, capital-gain, capital-loss, hours-per-week) as base-10 integer strings; categorical columns as stripped strings; joined with '|'", "hash": "SHA-256(canonical key) mod 100", "train_if_below": 50, "excluded_from_key": ["fnlwgt", "income", "file name", "train/test origin"]},
+  "reused_fixed": ["binning thresholds (configs/p2_pilot.json)", "predictor structure A/B and Laplace smoothing", "mode imputation computed on the train split only", "MNAR and MCAR mask probability rules", "evaluator dropout q", "Gamma_cc grid", "settings B/C/D definitions and eta endpoint positivity (B: rho_full; D: rho_full and every given stratum)"],
+  "refit": "predictors refit once on the clean train split; tables and their SHA-256 written before evaluation",
+  "evaluation": "expected-mask law on clean eval records (exact rationals); A: expected true Delta; B: expected complete-case dropout Delta; C/B/D: exact-observable identified intervals on the Gamma_cc grid",
+  "not_done": ["new mask draw", "Hoeffding/outer CI on expected fractional masses (would be invalid)", "new loss, bins, Gamma, sensitivity model", "hash seed or split ratio changes", "new dataset"],
+  "gamma_grid": ["1", "5/4", "3/2", "2", "3", "SUPPORT_ONLY", "NO_MODEL"],
+  "budget": {"cpu_threads": 2, "wall_seconds": 120, "runs": 1}
+}
