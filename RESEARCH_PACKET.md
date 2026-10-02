@@ -575,6 +575,11 @@ No new experiment, mask draw, Γ grid, training or data. CLEAN1 raw unchanged.
    with zero mass in the truth no longer receives μ = 0 rows in D (which would force
    structural zero); `classify_sign` gained `valid`; `endpoint_attained` deprecated;
    future runs store η_max. Frozen raw/derived values unchanged (η rows identical).
+   Refutation stage: 22 of 36 planned verdicts were obtained before the run was
+   stopped (the related-work table was produced by a separate run); all 22 were
+   "refuted" in the sense that the working tree already contained the fix, i.e.
+   none of the 18 findings stood against the corrected manuscript, and none was
+   rejected as wrong. This is an AI cross-check only.
    Third reviewer (outer coverage): proposition sound; fixed the proof's
    Σκ_lo = 0 branch, the Zeros paragraph (Hoeffding box has κ_hi ≥ ε > 0, so the
    all-zero branch coincides with No-model on incomplete masks; plug-in with
