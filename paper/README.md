@@ -14,9 +14,10 @@ PILOT1/2 moved to appendix as DEVELOPMENT_WITH_PROFILE_OVERLAP.
   `fancyhdr.sty` vendored here **unmodified**, sha256 of icml2026.zip
   8b29290f5828e176debb57ea9cc00252502973d55ea561a2f18a7f0a326bfc6c).
   `latexmk -pdf -interaction=nonstopmode main.tex`: 0 errors, 0 undefined
-  references/citations, 0 overfull boxes, 14 pages. Last sentence of the
+  references/citations, 0 overfull boxes, 15 pages. Last sentence of the
   Conclusion (label `end:main`) is on **page 8**; Impact Statement and
-  references follow; appendices pp. 10–14. Fonts embedded (Nimbus/Times + CM
+  references follow; appendices pp. 10–15 (two-paper comparison table
+  `tab_relatedwork.tex`, App. E, floats to p. 15). Fonts embedded (Nimbus/Times + CM
   subsets). PDF metadata: Author "Anonymous Authors" (template review mode).
 * Page rasterisation NOT_RUN: no rasteriser is available within the approved
   install scope (TeX Live + ICML kit only); checks were made from the .aux page

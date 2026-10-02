@@ -169,7 +169,9 @@ shifts, as the expected loss on the worst $(1-\alpha)$ subsample, and
 estimate it by a conditional-quantile (CVaR-type) dual. Their sepsis case
 study shifts $P(\text{test order}\mid \text{demographics, disease status})$,
 i.e.\ a label-dependent measurement policy, and reports the worst-case
-accuracy of two models separately. Our setting can be written in their
+accuracy of two models separately (a baseline score is also evaluated on one
+model's worst subsamples, a same-subsample comparison, but no difference is
+bounded under a common shift). Our setting can be written in their
 notation with $W=R$ and $Z=(X,Y)$; we differ by (i) conditioning the
 information on what is observable when $X$ is partly missing, (ii) using a
 two-sided pattern-mixture ratio instead of a one-sided subsample bound, and
@@ -1057,15 +1059,17 @@ five aspects that matter for our question. Entries for this paper are tagged
 [KNOWN] (ingredient taken from prior work), [ADAPTED] (prior idea in a new
 observation model) or [UNVERIFIED novelty] (no forward-citation search has
 been done). The prior-work entries were checked against the original texts as
-recorded in the repository's related-work notes; equation and definition
-numbers refer to the arXiv versions.
+recorded in the repository's related-work notes (main bodies and the cited
+appendix parts read from the arXiv/ar5iv text, key sentences grep-checked
+against the PMLR PDFs); equation and definition numbers refer to the arXiv
+versions.
 \begin{table*}[h]
 \centering\scriptsize
 \caption{Observation, estimand, sensitivity model, sharpness and sampling
 uncertainty in \citet{subbaswamy2021evaluating}, \citet{guerdan2024predictive}
 and this paper.}
 \label{tab:rw}
-\IfFileExists{generated/tab_relatedwork.tex}{\input{generated/tab_relatedwork.tex}}{\todo{RW table pending}}
+\IfFileExists{tab_relatedwork.tex}{\input{tab_relatedwork.tex}}{\todo{RW table pending}}
 \end{table*}
 
 \section{Admission Conditions for Natural-Missingness Data}

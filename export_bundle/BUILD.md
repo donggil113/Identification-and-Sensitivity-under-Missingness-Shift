@@ -26,11 +26,20 @@ no `[accepted]`). The kit is not included (not downloaded here).
    (repository root) — already done for this bundle.
 
 ## Contents
-paper/ (main.tex, references.bib, generated/*.tex, claims.csv, README.md),
+paper/ (main.tex, main.pdf, references.bib, generated/*.tex, tab_relatedwork.tex,
+icml2026 kit files unmodified, claims.csv, README.md),
 configs/, src/msid/, scripts/, tests/, results/raw/*.json, results/derived/*.json,
 run_manifest.json, STATUS.md, RESEARCH_PACKET.md, RELATED_WORK.md.
 Excluded: data/external (UCI Adult, CC BY 4.0 — re-download from
 https://archive.ics.uci.edu/dataset/2/adult; sha256 in results/raw/p2_pilot_results.json).
+
+## v4.1 packages (2026-10-02)
+* `p2_v4_1_internal.tar.gz` — internal evidence package incl. the built PDF,
+  derived validity/threshold JSON, read log of the related-work pass.
+* `p2_v4_1_anon_source.tar.gz` — anonymous source + PDF (main.tex, main.pdf,
+  references.bib, generated/*.tex, tab_relatedwork.tex, icml2026 kit files,
+  BUILD_ANON.md); tar owner stripped; identity-string grep = 0 hits (a string
+  check, not a proof of anonymity).
 
 ## v4 packages
 * `p2_v4_internal.tar.gz` — internal evidence package: paper sources, claims.csv,

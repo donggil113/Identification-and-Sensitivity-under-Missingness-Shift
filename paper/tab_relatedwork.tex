@@ -1,0 +1,36 @@
+% Two-paper comparison table written for v4.1 from the read log recorded in RELATED_WORK.md (v4.1 pass); not generated from results/raw.
+\begin{tabular}{p{0.12\textwidth} p{0.25\textwidth} p{0.25\textwidth} p{0.28\textwidth}}
+\toprule
+Aspect & \citet{subbaswamy2021evaluating} & \citet{guerdan2024predictive} & This paper \\
+\midrule
+Observed information &
+One i.i.d.\ test sample with $X,Y$ fully observed; analyst splits variables into immutable $Z$, mutable $W$, dependent $V$; the shift replaces $P(W\mid Z)$ by $Q(W\mid Z)$ with $P(Z)$ and $P(V\mid W,Z)$ fixed (Sec.~2.1). &
+Selective labels: $Y$ observed only when the status-quo decision $D^{\pi_0}=1$; data $(X,T^{\pi},D^{\pi_0},Y)$ from the status-quo policy; proposed policy $\pi$ known (Sec.~3). &
+[ADAPTED] Complete cases with labels ($\theta_c$) plus unlabelled incomplete tuples $\omega(r,o)=P(R=r,X_r=o)$ (setting~C); less in B/D; full-data law only in oracle~A. Their $(W,Z)$-shift with $W=R$, $Z=(X,Y)$, but conditioned on what is observable under masking. \\
+\midrule
+Comparison estimand &
+Worst-case risk $R_{\alpha,0}$ of \emph{one} fixed model: expected loss on the worst $(1-\alpha)$-subsample (Eq.~1--2); two models are compared by their separate worst-case curves (Fig.~4a). &
+Regret $m^*(\pi)-m^*(\pi_0)$; Def.~4.1 baseline interval subtracts separate bounds, Def.~4.2 $\delta$-regret optimises the difference jointly over $\mathcal{V}(p)$; Thm.~4.3 quantifies the gain. &
+[KNOWN] Risk difference $\Delta_{\mathrm{nat}}=\sum_{c,r}p(c,r)D(c,r)$ of two fixed predictors under the same unknown natural-mask law, optimised jointly over $p$ by two LPs; the cancellation is an instance of their Def.~4.2 and is not claimed as new. \\
+\midrule
+Sensitivity / uncertainty model &
+One-sided likelihood-ratio ball on $P(W\mid Z)$: $dQ/dP\le 1/(1-\alpha)$ a.e.\ (App.\ Eq.~11--12; $D_\infty$ ball, Remark~3); $Q\ll P$ by construction; $\alpha$ user-chosen. &
+Pointwise bounding functions $\underline{\tau}(x)\le\mathbb{E}[Y(1)\mid D=0,X=x]\le\overline{\tau}(x)$ (Asm.~5.1), implied by MSM/Rosenbaum/IV/proximal; e.g.\ MSM gives $\Lambda^{-1}\mu_1\le\mu_0\le\Lambda\mu_1$ (Lemma~B.4); yields the box $\mathcal{V}(p;\tau)$. &
+[ADAPTED] Pattern-mixture bounded ratio $\lambda_r/\Gamma\le P(C=c\mid R=r)/v_c\le\lambda_r\Gamma$ relative to the complete-case law, free scale $\lambda_r$ per mask, absolute continuity ($\mathcal{M}_{cc}(\Gamma)$, two-sided); $\Gamma$ analyst-chosen, not estimable. \\
+\midrule
+Sharpness claim &
+$R_{\alpha,0}$ is point-identified; the sup in Eq.~1 equals the conditional-quantile (CVaR-type) dual, Eq.~3--4; no partial-identification sharpness question arises. &
+Lemma~5.2 bounds are sharp given $\tau$ (App.~B.6.1); Thm.~5.3: $\mathcal{V}(p;\tau)$ is minimal given $\tau$; App.~B.1/B.6.2 state this does \emph{not} guarantee the tightest regret interval under the causal assumption itself. &
+[UNVERIFIED novelty] LP interval is the closure of the identified set of $\Delta_{\mathrm{nat}}$ under the stated assumptions when a valid law exists; attained vs closure-only endpoints separated by one extra LP; exact observable threshold $\Gamma_{\min}(o)$ in closed form (C, D) with $\Gamma_{\min}(o)\le\Gamma_{\mathrm{true}}$. \\
+\midrule
+Sampling uncertainty &
+Cross-fitted debiased estimator (Alg.~1, Eq.~5); Thm.~1: $\sqrt{N}$-consistent and asymptotically normal; Wald CIs from Eq.~7; variance scales as $1/(1-\alpha)^2$; discrete $W$ needs noise augmentation (Remark~6). &
+Cross-fitted plug-in (Alg.~1; Thm.~6.1: error inherits nuisance rates $+O_P(n^{-1/2})$); doubly robust variant for the MSM (Eq.~2, App.~C); 95\% bootstrap CIs around interval endpoints in experiments. &
+[ADAPTED] Conservative outer interval: Hoeffding/Bonferroni box on the observable multinomial, relaxed LP; on one event it covers the identified interval for all $\Gamma$ simultaneously and covers $\Delta_{\mathrm{nat}}$ for $\Gamma\ge\Gamma_{\mathrm{true}}$; it does not validate $\Gamma$; not sharp, no width analysis. \\
+\midrule
+Not claimed here &
+Outside their scope: a bound on the \emph{difference} between two models under a common shift; a two-sided ratio; partially observed features. &
+Outside their scope: feature masks; constraints from unlabelled incomplete observations; attained-vs-closure endpoint distinction. &
+[KNOWN] LP bounds, the direct-difference bound, joint-versus-separate cancellation, bounded-ratio sensitivity models and tipping-point $\Gamma^*$ summaries are prior art; no $\sqrt{n}$ or doubly robust inference, no data-based validation of $\Gamma$, no forward-citation novelty check. \\
+\bottomrule
+\end{tabular}
