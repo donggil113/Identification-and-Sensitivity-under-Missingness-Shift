@@ -229,8 +229,15 @@ def build(t: Truth, setting: str, gamma, theta_box=None, obs_box=None) -> Built:
                 row[e] = row.get(e, Q(0)) - 1
                 B.row(row, 0)
     elif setting == "D_conditionals":
-        rho_r = {r: B.var(f"rho{r}", 0, 1) for r in inc}
+        # A stratum's conditional law is part of the information only if the
+        # stratum was sampled (rho_r > 0 in the truth, i.e. sum_o mu_r(o) = 1).
+        # Strata with no sample get no mu rows and no rho variable (their mass
+        # is free), instead of being forced to structural zero.
+        given = [r for r in inc if sum((t.mu[(rr, o)] for (rr, o) in t.mu if rr == r), Q(0)) == 1]
+        rho_r = {r: B.var(f"rho{r}", 0, 1) for r in given}
         for (r, o), cs in groups.items():
+            if r not in given:
+                continue
             row = {}
             for c in cs:
                 _add(row, pexpr[(c, r)])
@@ -313,7 +320,10 @@ def truth_value(t: Truth, table) -> Fraction:
 # ---------------------------------------------------------------------------
 
 def endpoint_attained(built: Built, table, value: Fraction) -> Optional[bool]:
-    """Is the endpoint `value` reached by a *valid* probability model?
+    """DEPRECATED (v2 check, rho_full only): use endpoint_eta with
+    required_positive_rhos, which also requires every given stratum in D.
+
+    Is the endpoint `value` reached by a *valid* probability model?
 
     Valid means rho_full > 0 (complete cases exist, so v is a conditional law).
     In settings A/C rho_full is fixed by the data and every LP point is valid,
@@ -334,8 +344,12 @@ def endpoint_attained(built: Built, table, value: Fraction) -> Optional[bool]:
     return res.value > 0
 
 
-def classify_sign(lo, hi, lo_attained=True, hi_attained=True) -> str:
+def classify_sign(lo, hi, lo_attained=True, hi_attained=True, valid=True) -> str:
     """Interpretation of an identified interval for Delta = R_A - R_B.
+
+    EMPTY_VALID         : the LP set is non-empty but contains no valid law
+                          (valid_set_eta == 0 in settings B/D); every other
+                          category presupposes that a valid law exists.
 
     STRICT_A / STRICT_B : every compatible law has the sign, with margin
                           min(|lo|,|hi|) > 0 (A better means Delta < 0).
@@ -350,6 +364,8 @@ def classify_sign(lo, hi, lo_attained=True, hi_attained=True) -> str:
     """
     if lo is None:
         return "INFEASIBLE"
+    if not valid:
+        return "EMPTY_VALID"
     if hi < 0:
         return "STRICT_A"
     if lo > 0:
@@ -459,3 +475,66 @@ def endpoint_eta(built: Built, table, value: Fraction, required: List[str]):
     if res.status != "OPTIMAL":
         raise RuntimeError("eta LP infeasible at a reported endpoint")
     return res.value, res.certificate_ok
+
+
+def valid_set_eta(built: Built, required: List[str]):
+    """max eta s.t. every required rho >= eta over the WHOLE LP set (no
+    objective constraint).  eta* > 0: a valid law exists, so the LP interval is
+    the closure of the identified set; eta* == 0: no valid law exists (the
+    information refutes the model) although the LP closure is non-empty.
+    Returns (eta*, certified); (None, True) when nothing is required (A, C)."""
+    if not required:
+        return None, True
+    n = len(built.names)
+    idx = [built.names.index(v) for v in required]
+    m = len(idx)
+    A = [row + [Q(0)] * (1 + m) for row in built.A]
+    b = list(built.b)
+    for k, j in enumerate(idx):
+        row = [Q(0)] * (n + 1 + m)
+        row[j] = Q(1)
+        row[n] = Q(-1)
+        row[n + 1 + k] = Q(-1)
+        A.append(row)
+        b.append(Q(0))
+    lower = list(built.lower) + [Q(0)] * (1 + m)
+    upper = list(built.upper) + [Q(1)] * (1 + m)
+    obj = [Q(0)] * (n + 1 + m)
+    obj[n] = Q(1)
+    res = solve_lp(obj, A, b, lower, upper, "max")
+    if res.status != "OPTIMAL":
+        return Q(0), res.certificate_ok  # LP set itself empty
+    return res.value, res.certificate_ok
+
+
+def gamma_min_closed_form(t: Truth):
+    """Exact smallest Gamma_cc for which SOME joint in M_cc(Gamma) matches the
+    observables of settings C and D (the same value for both):
+        Gamma_min(o)^2 = max_r  max_o r_r(o) / min_o r_r(o),
+        r_r(o) = mu_r(o) / V_r(o),  V_r(o) = sum_{c in G(r,o)} v_c,
+    over incomplete masks with rho_r > 0 and groups with V_r(o) > 0.
+    Necessity: group sums of a law with cell ratios in [lambda/Gamma, lambda Gamma]
+    have ratios r_r(o) in the same band.  Sufficiency: p(c,r) = rho_r v_c r_r(o(c))
+    is a joint in M_cc(Gamma) matching all rows.  Returns (Gamma_min^2, None) or
+    (None, reason) when absolute continuity fails (mu_r(o) > 0 with V_r(o) = 0).
+    """
+    worst = Q(1)
+    for r in t.joint.patterns():
+        if r == t.full or t.rho[r] == 0:
+            continue
+        ratios = []
+        for (rr, o), mu in t.mu.items():
+            if rr != r:
+                continue
+            V = sum((t.v[c] for c in t.joint.cells() if observe(c[0], r) == o), Q(0))
+            if V == 0:
+                if mu > 0:
+                    return None, f"mu{r}{o} > 0 but complete-case group mass is 0"
+                continue
+            ratios.append(mu / V)
+        pos = [x for x in ratios if x > 0]
+        if any(x == 0 for x in ratios) and pos:
+            return None, f"stratum {r}: some observed tuple has zero mass but positive complete-case mass (ratio 0)"
+        if pos:
+            worst = max(worst, max(pos) / min(pos))
+    return worst, None

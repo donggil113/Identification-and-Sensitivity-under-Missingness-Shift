@@ -1,0 +1,513 @@
+{
+ "what": "max eta over the whole LP feasible set with every definition-required rho >= eta (B: rho_full; D: rho_full and every given stratum)",
+ "rows": [
+  {
+   "source": "P2-FR2:E0_MCAR",
+   "setting": "B_cc_only",
+   "gamma_cc": "1",
+   "eta_max": {
+    "exact": "1",
+    "float": 1.0
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-FR2:E0_MCAR",
+   "setting": "B_cc_only",
+   "gamma_cc": "5/4",
+   "eta_max": {
+    "exact": "1",
+    "float": 1.0
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-FR2:E0_MCAR",
+   "setting": "B_cc_only",
+   "gamma_cc": "3/2",
+   "eta_max": {
+    "exact": "1",
+    "float": 1.0
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-FR2:E0_MCAR",
+   "setting": "B_cc_only",
+   "gamma_cc": "2",
+   "eta_max": {
+    "exact": "1",
+    "float": 1.0
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-FR2:E0_MCAR",
+   "setting": "B_cc_only",
+   "gamma_cc": "3",
+   "eta_max": {
+    "exact": "1",
+    "float": 1.0
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-FR2:E0_MCAR",
+   "setting": "B_cc_only",
+   "gamma_cc": "SUPPORT_ONLY",
+   "eta_max": {
+    "exact": "1",
+    "float": 1.0
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-FR2:E0_MCAR",
+   "setting": "B_cc_only",
+   "gamma_cc": "NO_MODEL",
+   "eta_max": {
+    "exact": "1",
+    "float": 1.0
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-FR2:E0_MCAR",
+   "setting": "D_conditionals",
+   "gamma_cc": "1",
+   "eta_max": {
+    "exact": "1/4",
+    "float": 0.25
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-FR2:E0_MCAR",
+   "setting": "D_conditionals",
+   "gamma_cc": "5/4",
+   "eta_max": {
+    "exact": "1/4",
+    "float": 0.25
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-FR2:E0_MCAR",
+   "setting": "D_conditionals",
+   "gamma_cc": "3/2",
+   "eta_max": {
+    "exact": "1/4",
+    "float": 0.25
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-FR2:E0_MCAR",
+   "setting": "D_conditionals",
+   "gamma_cc": "2",
+   "eta_max": {
+    "exact": "1/4",
+    "float": 0.25
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-FR2:E0_MCAR",
+   "setting": "D_conditionals",
+   "gamma_cc": "3",
+   "eta_max": {
+    "exact": "1/4",
+    "float": 0.25
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-FR2:E0_MCAR",
+   "setting": "D_conditionals",
+   "gamma_cc": "SUPPORT_ONLY",
+   "eta_max": {
+    "exact": "1/4",
+    "float": 0.25
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-FR2:E0_MCAR",
+   "setting": "D_conditionals",
+   "gamma_cc": "NO_MODEL",
+   "eta_max": {
+    "exact": "1/4",
+    "float": 0.25
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-PILOT-CLEAN1:primary_mnar",
+   "setting": "B_cc_only",
+   "gamma_cc": "1",
+   "eta_max": {
+    "exact": "1",
+    "float": 1.0
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-PILOT-CLEAN1:primary_mnar",
+   "setting": "B_cc_only",
+   "gamma_cc": "5/4",
+   "eta_max": {
+    "exact": "1",
+    "float": 1.0
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-PILOT-CLEAN1:primary_mnar",
+   "setting": "B_cc_only",
+   "gamma_cc": "3/2",
+   "eta_max": {
+    "exact": "1",
+    "float": 1.0
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-PILOT-CLEAN1:primary_mnar",
+   "setting": "B_cc_only",
+   "gamma_cc": "2",
+   "eta_max": {
+    "exact": "1",
+    "float": 1.0
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-PILOT-CLEAN1:primary_mnar",
+   "setting": "B_cc_only",
+   "gamma_cc": "3",
+   "eta_max": {
+    "exact": "1",
+    "float": 1.0
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-PILOT-CLEAN1:primary_mnar",
+   "setting": "B_cc_only",
+   "gamma_cc": "SUPPORT_ONLY",
+   "eta_max": {
+    "exact": "1",
+    "float": 1.0
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-PILOT-CLEAN1:primary_mnar",
+   "setting": "B_cc_only",
+   "gamma_cc": "NO_MODEL",
+   "eta_max": {
+    "exact": "1",
+    "float": 1.0
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-PILOT-CLEAN1:primary_mnar",
+   "setting": "D_conditionals",
+   "gamma_cc": "1",
+   "eta_max": {
+    "exact": "0",
+    "float": 0.0
+   },
+   "certified": true,
+   "valid_set": "EMPTY"
+  },
+  {
+   "source": "P2-PILOT-CLEAN1:primary_mnar",
+   "setting": "D_conditionals",
+   "gamma_cc": "5/4",
+   "eta_max": {
+    "exact": "0",
+    "float": 0.0
+   },
+   "certified": true,
+   "valid_set": "EMPTY"
+  },
+  {
+   "source": "P2-PILOT-CLEAN1:primary_mnar",
+   "setting": "D_conditionals",
+   "gamma_cc": "3/2",
+   "eta_max": {
+    "exact": "1/4",
+    "float": 0.25
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-PILOT-CLEAN1:primary_mnar",
+   "setting": "D_conditionals",
+   "gamma_cc": "2",
+   "eta_max": {
+    "exact": "1/4",
+    "float": 0.25
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-PILOT-CLEAN1:primary_mnar",
+   "setting": "D_conditionals",
+   "gamma_cc": "3",
+   "eta_max": {
+    "exact": "1/4",
+    "float": 0.25
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-PILOT-CLEAN1:primary_mnar",
+   "setting": "D_conditionals",
+   "gamma_cc": "SUPPORT_ONLY",
+   "eta_max": {
+    "exact": "1/4",
+    "float": 0.25
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-PILOT-CLEAN1:primary_mnar",
+   "setting": "D_conditionals",
+   "gamma_cc": "NO_MODEL",
+   "eta_max": {
+    "exact": "1/4",
+    "float": 0.25
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-PILOT-CLEAN1:control_mcar",
+   "setting": "B_cc_only",
+   "gamma_cc": "1",
+   "eta_max": {
+    "exact": "1",
+    "float": 1.0
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-PILOT-CLEAN1:control_mcar",
+   "setting": "B_cc_only",
+   "gamma_cc": "5/4",
+   "eta_max": {
+    "exact": "1",
+    "float": 1.0
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-PILOT-CLEAN1:control_mcar",
+   "setting": "B_cc_only",
+   "gamma_cc": "3/2",
+   "eta_max": {
+    "exact": "1",
+    "float": 1.0
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-PILOT-CLEAN1:control_mcar",
+   "setting": "B_cc_only",
+   "gamma_cc": "2",
+   "eta_max": {
+    "exact": "1",
+    "float": 1.0
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-PILOT-CLEAN1:control_mcar",
+   "setting": "B_cc_only",
+   "gamma_cc": "3",
+   "eta_max": {
+    "exact": "1",
+    "float": 1.0
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-PILOT-CLEAN1:control_mcar",
+   "setting": "B_cc_only",
+   "gamma_cc": "SUPPORT_ONLY",
+   "eta_max": {
+    "exact": "1",
+    "float": 1.0
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-PILOT-CLEAN1:control_mcar",
+   "setting": "B_cc_only",
+   "gamma_cc": "NO_MODEL",
+   "eta_max": {
+    "exact": "1",
+    "float": 1.0
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-PILOT-CLEAN1:control_mcar",
+   "setting": "D_conditionals",
+   "gamma_cc": "1",
+   "eta_max": {
+    "exact": "1/4",
+    "float": 0.25
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-PILOT-CLEAN1:control_mcar",
+   "setting": "D_conditionals",
+   "gamma_cc": "5/4",
+   "eta_max": {
+    "exact": "1/4",
+    "float": 0.25
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-PILOT-CLEAN1:control_mcar",
+   "setting": "D_conditionals",
+   "gamma_cc": "3/2",
+   "eta_max": {
+    "exact": "1/4",
+    "float": 0.25
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-PILOT-CLEAN1:control_mcar",
+   "setting": "D_conditionals",
+   "gamma_cc": "2",
+   "eta_max": {
+    "exact": "1/4",
+    "float": 0.25
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-PILOT-CLEAN1:control_mcar",
+   "setting": "D_conditionals",
+   "gamma_cc": "3",
+   "eta_max": {
+    "exact": "1/4",
+    "float": 0.25
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-PILOT-CLEAN1:control_mcar",
+   "setting": "D_conditionals",
+   "gamma_cc": "SUPPORT_ONLY",
+   "eta_max": {
+    "exact": "1/4",
+    "float": 0.25
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  },
+  {
+   "source": "P2-PILOT-CLEAN1:control_mcar",
+   "setting": "D_conditionals",
+   "gamma_cc": "NO_MODEL",
+   "eta_max": {
+    "exact": "1/4",
+    "float": 0.25
+   },
+   "certified": true,
+   "valid_set": "NONEMPTY"
+  }
+ ],
+ "gamma_thresholds": {
+  "P2-FR2:E0_MCAR": {
+   "gamma_min_obs_squared": {
+    "exact": "1",
+    "float": 1.0
+   },
+   "gamma_min_obs": 1.0,
+   "gamma_true_squared": {
+    "exact": "1",
+    "float": 1.0
+   },
+   "gamma_true": 1.0,
+   "note": "closed form for settings C and D (same value); Gamma_min(o) <= Gamma_true"
+  },
+  "P2-PILOT-CLEAN1:primary_mnar": {
+   "gamma_min_obs_squared": {
+    "exact": "181181891/105442197",
+    "float": 1.71830534790545
+   },
+   "gamma_min_obs": 1.3108414655882115,
+   "gamma_true_squared": {
+    "exact": "17/3",
+    "float": 5.666666666666667
+   },
+   "gamma_true": 2.3804761428476167,
+   "note": "closed form for settings C and D (same value); Gamma_min(o) <= Gamma_true"
+  },
+  "P2-PILOT-CLEAN1:control_mcar": {
+   "gamma_min_obs_squared": {
+    "exact": "1",
+    "float": 1.0
+   },
+   "gamma_min_obs": 1.0,
+   "gamma_true_squared": {
+    "exact": "1",
+    "float": 1.0
+   },
+   "gamma_true": 1.0,
+   "note": "closed form for settings C and D (same value); Gamma_min(o) <= Gamma_true"
+  }
+ },
+ "timing": {
+  "wall_s": 5.57,
+  "cpu_s": 5.57,
+  "threads": "one process"
+ }
+}

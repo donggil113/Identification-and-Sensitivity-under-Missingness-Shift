@@ -11,7 +11,9 @@ rational numbers without shrinking the box.  Optimising Delta over the outer
 relaxation in observation.build(..., theta_box, obs_box) then gives an outer
 confidence interval: on the event that the box contains the true
 probabilities, every point of the population identified set is feasible
-(RESEARCH_PACKET.md, Prop. FR2-4).  The plug-in interval (theta_hat treated as
+(paper/main.tex, Proposition "Outer confidence interval", label prop:outer;
+``eps`` is increased by 1e-9 before the outward rounding to absorb
+floating-point error in the float products, which only enlarges the box).  The plug-in interval (theta_hat treated as
 exact) is an estimate, not a confidence set, and may be infeasible.
 """
 

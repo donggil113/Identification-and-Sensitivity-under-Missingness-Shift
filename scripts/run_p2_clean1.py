@@ -24,7 +24,7 @@ from msid.finite_model import FiniteJoint, all_x  # noqa: E402
 from msid.io_utils import frac, key  # noqa: E402
 from msid.observation import (build, classify_sign, endpoint_eta, gamma_cc_squared,  # noqa: E402
                               interval, required_positive_rhos, truth_from_policy,
-                              truth_value)
+                              truth_value, valid_set_eta)
 from msid.pilot import (ADULT_COLUMNS, TableModels, coarse_x, entity_key, label,  # noqa: E402
                         loss_tables, mask_probability, parse_adult)
 
@@ -160,10 +160,12 @@ def main():
                 if iv.status == "OPTIMAL":
                     req = required_positive_rhos(b, s)
                     elo, ehi = endpoint_eta(b, D, iv.lo, req), endpoint_eta(b, D, iv.hi, req)
+                    emax, _ = valid_set_eta(b, req)  # v4.1: existence of a valid law
+                    valid = True if emax is None else emax > 0
                     la = None if elo[0] is None else elo[0] > 0
                     ha = None if ehi[0] is None else ehi[0] > 0
-                    row.update({"eta_lo": frac(elo[0]), "eta_hi": frac(ehi[0]),
-                                "category": classify_sign(iv.lo, iv.hi, la, ha),
+                    row.update({"eta_lo": frac(elo[0]), "eta_hi": frac(ehi[0]), "eta_max": frac(emax),
+                                "category": classify_sign(iv.lo, iv.hi, la, ha, valid),
                                 "expected_true_delta_contained": iv.contains(true_d)})
                 else:
                     row["category"] = "INFEASIBLE"

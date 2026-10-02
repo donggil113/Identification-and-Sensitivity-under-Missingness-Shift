@@ -69,7 +69,17 @@ SET_NAMES = {"A_oracle_w": "A (oracle $w$)", "B_cc_only": "B (complete cases)",
 
 CAT = {"STRICT_A": "A$^{s}$", "STRICT_B": "B$^{s}$", "WEAK_A": "A$^{w}$", "WEAK_B": "B$^{w}$",
        "A_NO_MARGIN": "A$^{0}$", "B_NO_MARGIN": "B$^{0}$", "BOTH_ORDERS": "$\\pm$", "TIE": "=",
-       "INFEASIBLE": "$\\emptyset$"}
+       "INFEASIBLE": "$\\emptyset$", "EMPTY_VALID": "$\\emptyset^{c}$"}
+
+
+def validity():
+    """v4.1: rows of settings B/D whose VALID set is empty (eta_max = 0 over the
+    whole LP set; results/derived/p2_validity_eta.json).  For them the LP
+    interval is only a closure artefact and the category is EMPTY_VALID."""
+    path = os.path.join(ROOT, "results", "derived", "p2_validity_eta.json")
+    if not os.path.exists(path):
+        return {}
+    return {(r["source"], r["setting"], r["gamma_cc"]): r["valid_set"] for r in json.load(open(path))["rows"]}
 
 
 def reclass():
@@ -85,6 +95,9 @@ def reclass():
             k = (r["setting"], r["gamma_cc"])
             out[k] = dict(out[k], category=r["category"],
                           lo_attained=r["eta_lo"]["float"] > 0, hi_attained=r["eta_hi"]["float"] > 0)
+    for (src, st, g), vv in validity().items():
+        if src == "P2-FR2:E0_MCAR" and vv == "EMPTY" and (st, g) in out:
+            out[(st, g)] = dict(out[(st, g)], category="EMPTY_VALID")
     return out
 
 
@@ -156,7 +169,7 @@ def audit_tables():
     lines = [r"\begin{tabular}{lllll}", r"\toprule",
              r"set & $\Gamma$ & width $=0$ & explicit row space & general criterion \\", r"\midrule"]
     for r in G:
-        lines.append(f"{r['set']} & {r['gamma']} & {r['width_zero']} & {r['explicit_rowspace_test']} & {r['general_test']} \\\\")
+        lines.append(f"{r['set'].replace('_', chr(92) + '_')} & {r['gamma']} & {r['width_zero']} & {r['explicit_rowspace_test']} & {r['general_test']} \\\\")
     lines += [r"\bottomrule", r"\end{tabular}"]
     write("tab_fr2_audit.tex", "\n".join(lines) + "\n")
     Z = load("p2_fr2_E_structural_zero.json")["rows"]
@@ -237,6 +250,7 @@ def clean1_table():
     if not os.path.exists(p):
         return
     d = json.load(open(p))["expected_mask"]
+    val = validity()
     gl = ["1", "5/4", "3/2", "2", "NO_MODEL"]
     head = " & ".join(["mask rule", "setting", "true $\\Delta$", "cc dropout"] +
                       [("no model" if g == "NO_MODEL" else f"$\\Gamma_{{cc}}={g}$") for g in gl])
@@ -246,7 +260,7 @@ def clean1_table():
         first = True
         for st, lab in (("C_cc_plus_unlab", "C"), ("D_conditionals", "D"), ("B_cc_only", "B")):
             byg = {x["gamma_cc"]: x for x in c["settings"][st]}
-            cells = [CAT[byg[g]["category"]] for g in gl]
+            cells = [CAT["EMPTY_VALID"] if val.get((f"P2-PILOT-CLEAN1:{m}", st, g)) == "EMPTY" else CAT[byg[g]["category"]] for g in gl]
             lead = f"{name} & {lab} & {v(c['expected_true_delta_oracle'])} & {v(c['expected_cc_dropout_delta'])}" if first else f" & {lab} & & "
             lines.append(lead + " & " + " & ".join(cells) + r" \\")
             first = False

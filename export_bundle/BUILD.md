@@ -1,18 +1,21 @@
 # P2 manuscript v4 — source bundle and build instructions
 
-Status: COMPILE_NOT_RUN. No PDF was produced in the authoring environment
-(no LaTeX compiler; installing one was not approved). Do NOT use an external
-web compilation service for this anonymous manuscript.
+Status (v4.1): PDF BUILT LOCALLY on 2026-10-02 with a user-directory TeX Live 2026
+(scheme-basic + required packages) and the official ICML 2026 kit; see
+paper/README.md for the checks. Do NOT use an external web compilation service
+for this anonymous manuscript.
 
 TARGET_YEAR = 2027, TEMPLATE_YEAR = 2026, SUBMISSION_READY = false.
 Style: official ICML 2026 kit in anonymous review mode (`\usepackage{icml2026}`,
 no `[accepted]`). The kit is not included (not downloaded here).
 
 ## Build on an approved machine with TeX Live (pgfplots, cleveref, mathtools, microtype)
-1. Obtain the official kit: https://media.icml.cc/Conferences/ICML2026/Styles/icml2026.zip
-   and copy `icml2026.sty`, `icml2026.bst` (and any other kit files it needs, e.g.
-   `algorithm.sty`, `algorithmic.sty`, `fancyhdr.sty` if shipped) next to `paper/main.tex`.
-   Do not edit them.
+1. The official kit files (`icml2026.sty`, `icml2026.bst`, `algorithm.sty`,
+   `algorithmic.sty`, `fancyhdr.sty`) are vendored unmodified in `paper/`
+   (source: https://media.icml.cc/Conferences/ICML2026/Styles/icml2026.zip). Do not edit them.
+   Extra TeX packages needed beyond scheme-basic: pgf pgfplots cleveref mathtools
+   microtype booktabs xcolor natbib url fancyhdr algorithms latexmk psnfss times
+   collection-fontsrecommended etoolbox caption float eso-pic forloop.
 2. `cd paper && latexmk -pdf -interaction=nonstopmode main.tex`
 3. Checks to run on the PDF: main text ends by page 8 (Impact Statement,
    references and appendix may follow); no `??` references or `[?]` citations

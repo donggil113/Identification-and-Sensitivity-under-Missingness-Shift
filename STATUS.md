@@ -1,5 +1,38 @@
 # STATUS — P2: What Can Missing-Modality Evaluations Identify under Selective Observation?
 
+## Update (sixth session, 2026-10-02): CLEAN1 frozen; math/statistics corrections; manuscript v4.1 PDF built
+* State read: HEAD 2517b32 = origin, clean tree; Adult hashes unchanged. CLEAN1 is
+  frozen as the empirical result (no new training, mask draw, Γ grid or data).
+* Corrections (RESEARCH_PACKET §15): Γ_true (hidden joint, 2.38 for CLEAN1 MNAR)
+  vs Γ_min(o) (observable threshold; closed form, 1.311; grid 5/4 infeasible, 3/2
+  feasible); Hoeffding wording (integrality is not the issue; no sampling model is);
+  **setting D has no valid law at Γ_cc ≤ 5/4 for the CLEAN1 MNAR law** (η_max = 0;
+  table category ∅ᶜ; D refutes MCAR like C; B never can); setting-C proposition
+  hypotheses (ρ_r > 0, hidden Γ_true, interiority construction); outer-coverage
+  proposition scope (Δ_nat covered only for Γ ≥ Γ_true; Σκ_lo = 0 branch); 1,029
+  conflicting-label groups not asserted to be errors. Human statistical reviewer
+  UNASSIGNED.
+* Review method: three read-only reviewer agents (one per proposition) with partial
+  adversarial refutation (see packet §15.9); this is an AI cross-check, not an
+  independent human review.
+* Derived (no raw change): `results/derived/p2_validity_eta.json` (η_max per B/D row,
+  Γ_min(o) and Γ_true per law; 5.6 s). Code: `valid_set_eta`, `gamma_min_closed_form`,
+  D build no longer forces structural zero for unsampled strata, `classify_sign(valid=)`;
+  39 unit tests PASS (8 s). Frozen results reproduced identically.
+* Build (approved limited scope): user-dir TeX Live 2026 scheme-basic + packages
+  (install 210 s + 3 s; ≈107 MiB container downloads + 5 MB installer + 0.2 MB ICML
+  kit; 302 MB disk) and the official icml2026 kit vendored unmodified. `paper/main.pdf`:
+  14 pages, 0 errors, 0 undefined refs/cites, 0 overfull; last Conclusion sentence
+  on **page 8** (label end:main); fonts embedded; Author metadata "Anonymous Authors";
+  no identity strings. Page rasterisation NOT_RUN (no rasteriser within the approved
+  scope). Each latexmk run 2–4 s.
+* SUBMISSION_READY = false (TARGET_YEAR 2027 / TEMPLATE_YEAR 2026; proofs self-checked;
+  novelty UNVERIFIED).
+* Next decision (one): whether to commission an independent human statistical review
+  of the three propositions (App. A) before any submission step.
+
+---
+
 ## Update (fifth session, 2026-09-27): split repair (P2-PILOT-CLEAN1), manuscript v4
 * State read: HEAD 8bf9da8 = origin, clean; Adult hashes unchanged; no compiler.
   No new download/install. Sandbox checkout (no /nvmedata).

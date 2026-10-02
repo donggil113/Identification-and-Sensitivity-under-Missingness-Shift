@@ -1,12 +1,16 @@
 % =====================================================================
-% Manuscript v2 (P2): v1 plus sign/closure/coverage corrections and the
-% first semi-synthetic public-data pilot (P2-PILOT1).
+% Manuscript v4.1 (P2): mathematical/editorial corrections on the frozen
+% CLEAN1 result (Gamma_true vs Gamma_min(o); Hoeffding wording; empty valid
+% sets in setting D; hypotheses of prop:C; scope of prop:outer); no new
+% experiment.  v4 = split repair (P2-PILOT-CLEAN1).  v3 = D positivity,
+% provenance, expected-mask comparison.  v2 = sign/closure/coverage
+% corrections and the first semi-synthetic pilot (P2-PILOT1).
 % Manuscript v1 (P2) header notes follow.  TARGET_YEAR = 2027, TEMPLATE_YEAR = 2026,
 % SUBMISSION_READY = false.  No official ICML 2027 kit was found
 % (icml.cc 2027 pages returned 404 on 2026-09-26), so the official ICML 2026
-% anonymous/review style is used provisionally.  icml2026.sty / .bst are NOT
-% vendored (downloading them was not approved); see paper/README.md.
-% COMPILE_NOT_RUN: no LaTeX compiler in this environment.
+% anonymous/review style is used provisionally (official kit icml2026.zip,
+% files vendored unmodified in this directory); see paper/README.md for the
+% build status of this version.
 % All numbers come from results/raw via scripts/make_paper_tables.py or are
 % quoted from RESEARCH_PACKET.md; see paper/claims.csv.
 % =====================================================================
@@ -21,6 +25,8 @@
 \usepackage{icml2026}   % review (anonymous) mode; [accepted] is NOT used
 \usepackage{amsmath,amssymb,amsthm,mathtools}
 \usepackage[capitalize,noabbrev]{cleveref}
+\crefname{assumption}{Assumption}{Assumptions}
+\Crefname{assumption}{Assumption}{Assumptions}
 
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}
@@ -69,9 +75,11 @@ the natural, possibly informative, missingness of deployment. For finite
 supports we write each observation model as linear constraints on the joint
 law of cells and masks, and combine it with a pattern-mixture sensitivity
 model relative to the complete-case law. Three findings follow. First, with
-labels only on complete cases, the natural-missingness Brier difference is
-point-identified from complete cases plus the unlabelled law of incomplete
-units only if the two predictors agree on every incomplete input. Without
+labels only on complete cases and a sensitivity parameter above the true
+one (so away from the MCAR boundary), the natural-missingness Brier
+difference is point-identified from complete cases plus the unlabelled law
+of incomplete units only if the two predictors agree on every incomplete
+input that occurs. Without
 mask frequencies the sign is not strictly identified even under MCAR: with
 complete cases alone A is only weakly better, and if the strata's conditional
 laws are also given, strictly better for every valid law but with no uniform
@@ -122,8 +130,9 @@ information sets and derive each observable as a linear row. We give the
 exact linearisation of the sensitivity model and the positivity conditions
 under which a solution is a valid law rather than a limit. We characterise
 when the difference is identified: with complete cases and unlabelled
-incomplete units, the Brier difference is identified only when the predictors
-agree on incomplete inputs. We also show how the conclusion at the MCAR
+incomplete units, and a sensitivity parameter above the true one, the Brier
+difference is identified only when the predictors agree on the incomplete
+inputs that occur. We also show how the conclusion at the MCAR
 boundary depends on which strata are known to exist (\cref{sec:setup,sec:ident}).
 \item \textbf{Dropout versus truth.} Complete-case random dropout can reverse
 the natural-missingness ranking, and a sensitivity parameter below the truth
@@ -172,7 +181,9 @@ both policies cancel; their minimal uncertainty set is stated given the
 bounding functions and they note that the resulting interval need not be the
 tightest implied by the causal assumption. The joint-versus-separate
 comparison in our experiments is an instance of their observation and is not
-claimed as new.
+claimed as new. \Cref{app:rw} tabulates, for these two papers and ours, what
+is observed, what is compared, the sensitivity model, the sharpness claim and
+the treatment of sampling uncertainty.
 
 \textbf{Partial identification and sensitivity analysis.} Sharp bounds with
 missing outcomes and covariates go back to Manski
@@ -203,9 +214,13 @@ features.
 $x\in\{0,1\}^d$ and $y\in\{0,1\}$, a natural mask $R\in\cR=\{0,1\}^d$ ($r_j=1$
 means modality $j$ is observed, $\one$ is the complete mask), and a label
 indicator $S\in\{0,1\}$. The unknown joint mass is
-\[
-p(c,r)=P(C=c,R=r),\qquad w_c=\textstyle\sum_r p(c,r),\quad \rho_r=\sum_c p(c,r).
-\]
+\begin{equation*}
+\begin{aligned}
+p(c,r)&=P(C=c,R=r),\\
+w_c&=\textstyle\sum_r p(c,r),\qquad \rho_r=\textstyle\sum_c p(c,r),
+\end{aligned}
+\end{equation*}
+where $w$ is the full-data law and $\rho$ the mask law.
 The evaluator's artificial mask $M\sim q$ is drawn independently of $(C,R)$.
 Two fixed predictors $f_A,f_B$ see $x_r$ (the observed coordinates) and $r$;
 $L_f(c,r)=\ell(f(x_r,r),y)$ and $D(c,r)=L_A(c,r)-L_B(c,r)$. We use the Brier
@@ -253,9 +268,11 @@ without justification; our experiments show the change is material.
 among units with mask $r$ may differ from the complete-case law by a bounded
 likelihood ratio:
 \begin{equation}\label{eq:mcc}
-\frac{\lambda_r}{\Gamma}\le\frac{P(C=c\mid R=r)}{v_c}\le\lambda_r\Gamma
-\quad\text{for all }c\text{ with }v_c>0,
-\qquad P(C=c\mid R=r)=0\text{ if }v_c=0,
+\begin{aligned}
+&\frac{\lambda_r}{\Gamma}\le\frac{P(C=c\mid R=r)}{v_c}\le\lambda_r\Gamma
+\quad\text{for all }c\text{ with }v_c>0,\\
+&P(C=c\mid R=r)=0\quad\text{if }v_c=0,
+\end{aligned}
 \end{equation}
 for some unknown $\lambda_r>0$; equivalently $P(\cdot\mid R=r)$ is absolutely
 continuous with respect to the complete-case law and the ratio varies across
@@ -307,8 +324,22 @@ with the data); \emph{no-margin} (the zero endpoint is reached only in the
 closure: strict for every valid model but without a uniform margin);
 \emph{both orders} ($\ell<0<u$; interior values are always attained by valid
 models because the valid set is convex); and \emph{tie}. Attainment is
-checked by one extra linear program that maximises $\rho_{\one}$ subject to the
-objective equal to the endpoint. v1 labelled weak cases as ``undetermined''.
+checked by one extra linear program that maximises the smallest
+definition-required stratum mass ($\rho_{\one}$ in B; $\rho_{\one}$ and every
+given stratum in D) subject to the objective equal to the endpoint. The same
+program without the objective constraint checks whether a valid law exists
+at all; if its value is $0$ the valid set is empty, the LP interval is only a
+closure artefact, and we write $\emptyset^{c}$.
+
+\textbf{Two thresholds.} For a hidden joint $p^*$ let
+$\Gamma_{\mathrm{true}}=\inf\{\Gamma:p^*\in\Mcc(\Gamma)\}$. For an observable law
+$o$ let $\Gamma_{\min}(o)=\inf\{\Gamma:\Mcc(\Gamma)\text{ contains a joint
+consistent with }o\}$. If $p^*$ generated $o$ then
+$\Gamma_{\min}(o)\le\Gamma_{\mathrm{true}}$; the gap consists of other hidden
+joints that explain the same observables. Feasibility at some
+$\Gamma\ge\Gamma_{\min}(o)$ says nothing about $\Gamma_{\mathrm{true}}$, and
+infeasibility at $\Gamma$ is an exact refutation of $\Mcc(\Gamma)$ for the
+law $o$, which is not a level-$\alpha$ rejection (\cref{sec:sampling}).
 
 % ---------------------------------------------------------------------
 \section{Identification}
@@ -340,29 +371,56 @@ $\Dnat=\sum_r\rho_r\Delta^{\mathrm{cc}}_r$.
 feasible iff $\omega(r,o)=\rho_r\sum_{c:x_r(c)=o}v_c$ for all $(r,o)$.
 (ii) The valid laws differ between B and D. In B only the complete stratum
 must exist, so the identified set is
-$\{\sum_r\rho_r\Delta^{\mathrm{cc}}_r:\rho\in\Delta(\cR),\rho_{\one}>0\}$. In D the
-conditional law $\mu_r$ of every incomplete stratum is part of the information,
-which presupposes $\rho_r>0$ for each such stratum, so the set is
-$\{\sum_r\rho_r\Delta^{\mathrm{cc}}_r:\rho_r>0\ \text{for all given strata}\}$. Both
-sets have closure $[\min_r\Delta^{\mathrm{cc}}_r,\max_r\Delta^{\mathrm{cc}}_r]$, but
-different endpoints are attained. If all per-mask differences are $\le0$,
-$\Delta^{\mathrm{cc}}_{\one}=0$, and the others are $<0$, then in B A is
-\emph{weakly} better (the tie is attained at $\rho_{\one}=1$), while in D A is
-strictly better for every valid law but has no uniform margin (the tie is a
-closure point).
+$\{\sum_r\rho_r\Delta^{\mathrm{cc}}_r:\rho\in\Delta(\cR),\rho_{\one}>0\}$, and
+$\Mcc(1)$ is never refuted. In D the conditional law $\mu_r$ of every
+incomplete stratum is part of the information, which presupposes $\rho_r>0$
+for each such stratum. Under $\Mcc(1)$ the D rows force
+$b_r\,(\sum_{c\in G(r,o)}v_c-\mu_r(o))=0$, so a valid law exists iff every given
+$\mu_r$ equals the complete-case marginal of $x_r$; otherwise D refutes
+$\Mcc(1)$ although the LP closure is non-empty. When valid laws exist, the
+set is $\{\sum_r\rho_r\Delta^{\mathrm{cc}}_r:\rho_r>0\ \text{for all given
+strata}\}$. Both sets have closure
+$[\min_r\Delta^{\mathrm{cc}}_r,\max_r\Delta^{\mathrm{cc}}_r]$, but different
+endpoints are attained. If $\Delta^{\mathrm{cc}}_{\one}=0$ and
+$\Delta^{\mathrm{cc}}_r<0$ for every incomplete $r$, then in B A is
+\emph{weakly} better (the tie is attained at $\rho_{\one}=1$), while in D, when
+valid laws exist, A is strictly better for every valid law but has no uniform
+margin (the tie is a closure point). The mirror statement holds with the
+signs reversed.
 (iii) $\Delta^{\mathrm{drop}}_{\mathrm{cc}}(q)=\Dnat$ at $\Gamma=1$ iff
 $\sum_r(\rho_r-q_r)\Delta^{\mathrm{cc}}_r=0$.
 \end{proposition}
 
+\begin{remark}[Feasibility in B and D; the observable threshold]\label{rem:gmin}
+The programs of B and D are feasible for every $\Gamma$ (take $\rho=e_{\one}$,
+$p(\cdot,\one)=v$, no incomplete mass), so LP feasibility there carries no
+information; only the valid-set check does. For settings C and D the
+smallest sensitivity parameter compatible with the observables has a closed
+form. With $V_r(o)=\sum_{c\in G(r,o)}v_c$ and $r_r(o)=\mu_r(o)/V_r(o)$,
+\[
+\Gamma_{\min}(o)^2=\max_{r:\rho_r>0}\ \frac{\max_o r_r(o)}{\min_o r_r(o)},
+\]
+provided $\mu_r(o)>0$ only where $V_r(o)>0$ (otherwise no $\Gamma$ fits). The
+infimum is attained, and $\Gamma_{\min}(o)\le\Gamma_{\mathrm{true}}$
+(\cref{app:proofs}).
+\end{remark}
+
 \begin{proposition}[Setting C: identification requires agreement on incomplete inputs]\label{prop:C}
-In setting C, assume $\theta_c>0$ for all $c$ and $\Gamma^2$ strictly larger
-than the true cross-cell ratio in \eqref{eq:mcc}, so that the true $p^*$ is
-interior. Then $\Dnat$ is identified iff, for every incomplete mask $r$ and
-observed value $o$, $D(\cdot,r)$ is constant on the group
-$G(r,o)=\{c:x_r(c)=o\}$. Under the Brier loss, if every group contains cells
-with both labels, this holds iff $f_A(o,r)=f_B(o,r)$ for every incomplete
-input $(o,r)$. In that case $\Dnat=\sum_c\theta_c D(c,\one)$ is a
-complete-case quantity.
+In setting C, assume $\theta_c>0$ for all $c$, $\rho_r>0$ for every
+incomplete mask $r$, and $\Gamma^2$ strictly larger than the true cross-cell
+spread $\max_r\big(\max_c e_r(c)/\min_c e_r(c)\big)$ with
+$e_r(c)=p^*(c,r)/\theta_c$; then $p^*$ lies strictly inside the box
+\eqref{eq:mcc-lin} for suitable scales $b^*_r$. Then $\Dnat$ is identified iff,
+for every incomplete mask $r$ and observed value $o$, $D(\cdot,r)$ is
+constant on the group $G(r,o)=\{c:x_r(c)=o\}$. Under the Brier loss every
+group contains both labels (because $\theta_c>0$), and the condition holds
+iff $f_A(o,r)=f_B(o,r)$ for every incomplete input $(o,r)$. In that case
+$\Dnat=\sum_c\theta_c D(c,\one)$ is a complete-case quantity. The spread
+hypothesis says $\Gamma>\Gamma_{\mathrm{true}}$; it concerns the hidden law and
+cannot be checked from the observables. Masks with $\rho_r=0$ carry no mass
+and impose no condition. For $\Gamma\in[\Gamma_{\min}(o),\Gamma_{\mathrm{true}}]$,
+at $\Gamma=1$, or with empirical zeros, the interiority fails: zero width then
+does not imply agreement, and only \cref{thm:general} applies.
 \end{proposition}
 
 \begin{remark}[Oracle A]
@@ -445,23 +503,35 @@ coverage argument. It concerns identified sets: it does \emph{not} validate
 the sensitivity assumption. If $\Mcc(\Gamma)$ is false, $\mathcal{I}$ may omit
 the truth or be empty, and the interval can miss $\Dnat$ with any
 probability. The only data-based statement about $\Gamma$ is one-sided:
-if $\mathcal{O}(\Gamma;\mathcal{R})=\emptyset$, then $\Mcc(\Gamma)$ is rejected
-at level $\alpha$ (under a correct $\Mcc(\Gamma)$ and $P_{\mathrm{obs}}\in\mathcal{R}$
-the true law is feasible). Non-emptiness is not evidence for $\Gamma$.
+if $\mathcal{O}(\Gamma;\mathcal{R})=\emptyset$, the hypothesis
+$p^*\in\Mcc(\Gamma)$ (i.e.\ $\Gamma\ge\Gamma_{\mathrm{true}}$) is rejected at
+level $\alpha$ (under that hypothesis and $P_{\mathrm{obs}}\in\mathcal{R}$ the
+true law is feasible). Non-emptiness is not evidence for $\Gamma$. This
+level-$\alpha$ rejection is distinct from the exact infeasibility of
+$\Mcc(\Gamma)$ for the known law of a finite population (exact:
+$\Gamma<\Gamma_{\min}(o)$, \cref{sec:pilot}), which is a statement about that
+population only, and from the plug-in infeasibility of a single sample,
+which is neither.
 
 \begin{proposition}[Outer confidence interval]\label{prop:outer}
-In setting C, let the $K$ observable cell probabilities
-$(\theta_c,\omega(r,o))$ be estimated from $n$ i.i.d.\ units, and let
-$B_\alpha$ be the box $|\hat\vartheta_k-\vartheta_k|\le\varepsilon$ with
-$\varepsilon=\sqrt{\log(2K/\alpha)/(2n)}$ (Hoeffding with a Bonferroni
-split), rounded outward. Relax \eqref{eq:mcc-lin} to
+In setting C, assume $n$ i.i.d.\ units with \cref{ass:labels}, so that the
+observable law is a multinomial over the $K$ cells $\{(c,\one)\}$ and
+$\{(r,o):r\ \text{incomplete}\}$, $K$ counting every cell including those
+with zero count, and $\sum_c\theta_c>0$. Let $B_\alpha$ be the box
+$|\hat\vartheta_k-\vartheta_k|\le\varepsilon$ with
+$\varepsilon=\sqrt{\log(2K/\alpha)/(2n)}$, so that each of the $K$ Hoeffding
+events has probability at most $2\exp(-2n\varepsilon^2)=\alpha/K$, rounded
+outward to a $10^{-6}$ grid (the implementation first adds $10^{-9}$ to
+$\varepsilon$, which only enlarges the box). Relax \eqref{eq:mcc-lin} to
 $b_r\kappa^{\mathrm{lo}}_c/\Gamma\le p(c,r)\le\Gamma b_r\kappa^{\mathrm{hi}}_c$
 and bound $b_r\le\Gamma/\sum_c\kappa^{\mathrm{lo}}_c$. On the event that
 $B_\alpha$ contains the true probabilities, which has probability at least
 $1-\alpha$, the relaxed program contains every point of the population
-identified set. Its interval therefore covers the identified interval, and
-hence $\Dnat$, with probability at least $1-\alpha$, simultaneously for all
-$\Gamma$.
+identified set. Its interval therefore covers the identified interval
+$\mathcal{I}(\Gamma;P_{\mathrm{obs}})$ with probability at least $1-\alpha$,
+simultaneously for all $\Gamma$. On the same event it covers $\Dnat$ for every
+$\Gamma\ge\Gamma_{\mathrm{true}}$, i.e.\ whenever the true joint satisfies
+$\Mcc(\Gamma)$; for $\Gamma<\Gamma_{\mathrm{true}}$ nothing is claimed.
 \end{proposition}
 
 \textbf{Zeros and stratum sizes.} The box is built on \emph{joint} cell
@@ -469,11 +539,13 @@ probabilities with the fixed total $n$, so the random numbers of complete and
 incomplete units (random stratum sizes) need no conditioning. An empirical
 zero ($\hat\theta_c=0$) gets $\kappa^{\mathrm{lo}}_c=0<\kappa^{\mathrm{hi}}_c$ and is
 \emph{not} turned into a structural zero; if all $\kappa^{\mathrm{lo}}_c=0$
-(e.g.\ $n_{\mathrm{complete}}=0$) the relaxed set reduces exactly to the support
-restriction $\{p(c,r)=0:\kappa^{\mathrm{hi}}_c=0\}$ (v1 code raised an error
-here). The \emph{plug-in} program, by contrast, treats $\hat\theta_c=0$ as
-structural and is undefined when $n_{\mathrm{complete}}=0$; it is an estimate,
-never a confidence statement.
+(e.g.\ $n_{\mathrm{complete}}=0$) the relaxed set keeps only
+$\{p(c,r)=0:\kappa^{\mathrm{hi}}_c=0\}$, and since the Hoeffding box has every
+$\kappa^{\mathrm{hi}}_c\ge\varepsilon>0$, the outer program then coincides with
+\textsc{No-model} on the incomplete masks (v1 code raised an error here). The
+\emph{plug-in} program, by contrast, treats $\hat\theta_c=0$ as structural and
+is infeasible by construction when $n_{\mathrm{complete}}=0$; it is an
+estimate, never a confidence statement.
 
 The construction is conservative. It is not sharp, and we have not analysed
 its width or compared it with the procedures of
@@ -584,8 +656,9 @@ covariate profile, i.e.\ all attributes except the survey weight and income,
 with integers in canonical form. The hash rule and the 50/50 ratio are
 unchanged. This yields 41{,}439 profile groups, none in both splits
 (22{,}188 train and 22{,}167 evaluation records). 2{,}475 groups have several
-records, and 1{,}029 of them have conflicting labels. This is a
-record-profile split, not person isolation. The repair was run once on
+records, and 1{,}029 of them have conflicting labels; these need not be
+errors, since distinct records can share an observed covariate profile. This
+is a record-profile split, not person isolation. The repair was run once on
 already-seen data; it is a repair validation, not an independent confirmation.
 
 \textbf{Design (unchanged rules).} The two ``modalities'' are two grouped
@@ -603,9 +676,13 @@ $\bar p(c,r)=n^{-1}\sum_i\mathbb{1}\{C_i=c\}\pi_r(C_i)$. This law is conditional
 these records and is not the super-population. The labels inside $\pi$ serve
 only the oracle comparator. The setting-C evaluator receives only
 complete-case cells with labels and the masses of incomplete observed tuples
-(schema check in \cref{app:devlog}). No confidence interval is reported for
-$\bar p$: its masses are expected fractions, not multinomial counts, so the
-Hoeffding box of \cref{prop:outer} does not apply as stated.
+(schema check in \cref{app:devlog}). We report the exact expected-mask
+analysis conditional on the selected evaluation records. We do not attach a
+population confidence interval because an appropriate sampling model is not
+specified for this repaired, development-reused sample. (Hoeffding's
+inequality itself applies to bounded summands such as
+$\mathbb{1}\{C_i=c\}\pi_r(C_i)$ whether or not they are integers; the missing
+ingredient is the sampling model, not integrality.)
 
 \begin{table*}[t]
 \centering\small
@@ -613,8 +690,9 @@ Hoeffding box of \cref{prop:outer} does not apply as stated.
 evaluation records. ``true $\Delta$'' is the risk difference under the mask
 rule (oracle, hidden labels); ``cc dropout'' is random dropout on complete
 cases. Categories of the exact-observable identified set: $\emptyset$ empty;
-$\pm$ both orders; A$^{s}$ strict; A$^{w}$/B$^{w}$ weak (tie attained);
-A$^{0}$/B$^{0}$ strict for every valid law without a uniform margin.}
+$\emptyset^{c}$ no valid law (LP closure non-empty); $\pm$ both orders;
+A$^{s}$ strict; A$^{w}$/B$^{w}$ weak (tie attained); A$^{0}$/B$^{0}$ strict for
+every valid law without a uniform margin.}
 \label{tab:clean1}
 \input{generated/tab_clean1.tex}
 \end{table*}
@@ -626,14 +704,20 @@ while the risk difference under the rule ranks A ahead ($-0.0028$). The
 disagreement survives the split repair. It is small in Brier units, and we
 claim no practical importance. The MCAR control agrees ($-0.0020$ for both).
 \item With the observables of setting C, the MNAR identified sets are empty
-for $\Gamma_{cc}\le5/4$ and admit both orders from $3/2$ on. The law itself
-needs $\Gamma_{cc}=2.38$. An empty set here is an exact statement about this
-conditional law under a too-small $\Gamma_{cc}$; it is neither a confidence-set
-rejection nor evidence that any $\Gamma_{cc}$ is correct.
-\item B and D at $\Gamma_{cc}=1$ show the misspecification risk. Assuming
-MCAR, the MNAR case yields ``B weakly better'' (B) or ``B strictly better
-without margin'' (D), the wrong sign. The MCAR control yields A$^{w}$ (B) and
-A$^{0}$ (D). From $5/4$ on, both orders are admitted.
+at $\Gamma_{cc}=1$ and $5/4$ and admit both orders from $3/2$ on. This agrees
+with the closed form of \cref{rem:gmin}, $\Gamma_{\min}(o)=1.311$ for this
+law, whereas the hidden expected joint has $\Gamma_{\mathrm{true}}=2.38$. This
+is no contradiction: other joints with the same observables fit from $1.311$
+on. An empty set is an exact statement about this conditional law under
+a too-small $\Gamma_{cc}$; it is neither a confidence-set rejection nor
+evidence that any $\Gamma_{cc}$ is correct.
+\item B and D at $\Gamma_{cc}=1$ behave differently. B cannot refute MCAR and,
+for the MNAR law, returns ``B weakly better'', the wrong sign. D, whose
+information includes the strata's conditional laws, has an empty valid set
+at $\Gamma_{cc}\le5/4$ ($\emptyset^{c}$): the only LP points give zero mass to a
+given stratum, so D refutes $\Mcc(1)$ and $\Mcc(5/4)$ like C does. For the
+MCAR control, B gives A$^{w}$ and D gives A$^{0}$ at $\Gamma_{cc}=1$. From
+$3/2$ on (MNAR) or $5/4$ on (MCAR), both orders are admitted.
 \end{itemize}
 The development runs on the contaminated split (App.~\ref{app:devlog})
 showed the same qualitative pattern with different numbers. They used
@@ -684,8 +768,9 @@ not run \todo{P2-FR1-loss}.
 A missing-modality evaluation identifies little about deployment rankings
 unless the evaluator also knows how often each modality is missing and what
 the incomplete units look like. Even then, with labels only on complete
-cases, the natural-missingness Brier difference is identified only when the
-two models agree on every incomplete input. Beyond that point, conclusions
+cases and a sensitivity parameter above the true one, the natural-missingness
+Brier difference is identified only when the two models agree on every
+incomplete input that occurs. Beyond that point, conclusions
 depend on an unverifiable sensitivity parameter, and in our population they
 are lost at modest values. In the repaired grouped-feature pilot,
 complete-case dropout reported a ranking opposite to the risk difference under
@@ -696,7 +781,7 @@ information supports. Plug-in feasibility checks and plug-in intervals are
 not confidence statements. We recommend that missing-modality benchmarks
 report the mask frequencies and the unlabelled law of incomplete units, and
 present robustness as a function of an explicit sensitivity parameter
-rather than as a single dropout score.
+rather than as a single dropout score.\label{end:main}
 
 % ---------------------------------------------------------------------
 \section*{Impact Statement}
@@ -730,11 +815,15 @@ $\rho_r=\sum_c p(c,r)>0$, set $\lambda_r=b_r/\rho_r$ (resp.\
 $b_r\rho_{\one}/\rho_r$). If $\rho_r=0$ both descriptions force $p(\cdot,r)=0$.
 $\lambda_r$ enters no other row. In B and D the rows
 $p(c,\one)=\rho_{\one}v_c$ allow $\rho_{\one}=0$, under which $v$ is not the
-complete-case law of any population. Any such feasible point is a limit of
-valid points: set $\rho_{\one}=\epsilon$, scale all incomplete masses by
-$1-\epsilon$, and scale $b$ accordingly. The LP interval is therefore the
-closure of the identified interval. The endpoint
-$\min_r\Delta^{\mathrm{cc}}_r$ in \cref{prop:gamma1}(ii) is of this kind when
+complete-case law of any population, and in D the $\mu$-rows allow
+$\rho_r=0$ for a stratum whose conditional law is given. The LP set is
+convex, so if it contains one point $z^+$ with every required mass positive,
+every LP point $z$ is the limit of the valid points $(1-\epsilon)z+\epsilon z^+$,
+and the LP interval is the closure of the identified interval. If no such
+$z^+$ exists (the value of the $\eta$ program without objective constraint is
+$0$), the valid set is empty and the LP interval is a closure artefact. In B,
+$z^+$ always exists ($\rho_{\one}=1$, no incomplete mass). The endpoint
+$\min_r\Delta^{\mathrm{cc}}_r$ in \cref{prop:gamma1}(ii) is closure-only when
 it requires $\rho_{\one}=0$. $\square$
 
 \textbf{\Cref{thm:general}.} If $g\perp(z-z')$ for all $z,z'\in F$, then
@@ -751,15 +840,21 @@ $p(c,r)=b_r\kappa_c$, so $P(C\mid R=r)\propto\kappa\propto v$. Then
 $\Dnat=\sum_r\rho_r\sum_c v_cD(c,r)$. In C, $\rho$ is fixed by the rows, so
 $\Dnat$ is identified. Feasibility requires the stated equality of the
 observed and implied unlabelled laws. In B there is no row on $\rho$ other than
-the simplex. In D the $\mu$-rows are satisfied by $\rho_r=b_r$ whenever the
-implied conditionals match, and add no restriction on $\rho$. The range over
-the simplex with $\rho_{\one}>0$ is the stated set, and its closure is the
-hull of the $\Delta^{\mathrm{cc}}_r$. (iii) is immediate. $\square$
+the simplex. In D, with $p(c,r)=b_rv_c$ and $\rho_r=b_r$, the $\mu$-rows read
+$b_r(\sum_{c\in G(r,o)}v_c-\mu_r(o))=0$: if the conditional of stratum $r$
+matches the complete-case marginal they hold for every $b_r$ and add no
+restriction; otherwise they force $b_r=\rho_r=0$, which is not a valid D law.
+The range over the simplex with the required positivity is the stated set,
+and its closure is the hull of the $\Delta^{\mathrm{cc}}_r$. The attainment
+claims follow by evaluating at $\rho_{\one}=1$ (valid in B, not in D) and by
+convexity of the valid set. (iii) is immediate. $\square$
 
 \textbf{\Cref{prop:C}.} Take the lifted polytope in $(p,b)$; in C the rows
 fix $p(c,\one)$, the group sums $\sum_{c\in G(r,o)}p(c,r)$, and hence the
-total mass. Because $p^*$ satisfies \eqref{eq:mcc-lin} strictly for some
-$b^*$ (the true ratio spread is strictly below $\Gamma^2$ and $\theta_c>0$),
+total mass. Interiority: for an incomplete mask with $\rho_r>0$ let
+$m_r=\min_ce_r(c)>0$ and $M_r=\max_ce_r(c)$; since $M_r/m_r<\Gamma^2$, any
+$b^*_r\in(M_r/\Gamma,\,m_r\Gamma)$ gives
+$b^*_r\theta_c/\Gamma<p^*(c,r)<\Gamma b^*_r\theta_c$ for every $c$. Hence
 every direction $h$ with $h(c,\one)=0$ and
 $\sum_{c\in G(r,o)}h(c,r)=0$, together with $\Delta b=0$, keeps
 $p^*\pm th$ feasible for small $t$. Directions that move only $b$ leave $p$,
@@ -777,6 +872,19 @@ mask present, $\delta(\varnothing)=\alpha(x)$ for every $x$, so $\delta$ is
 constant on incomplete inputs. The converse holds with $a(x,y)=-2\kappa y$.
 $\square$
 
+\textbf{\Cref{rem:gmin}.} Feasibility: $\rho=e_{\one}$ with $p(c,\one)=v_c$ and
+$b=0$ satisfies every row of B and D. Necessity: if a stratum law $P_r$ has
+$P_r(c)/v_c\in[\lambda/\Gamma,\lambda\Gamma]$ for all $c$, then its group sums
+satisfy $r_r(o)=\mu_r(o)/V_r(o)\in[\lambda/\Gamma,\lambda\Gamma]$, so
+$\max_o r_r(o)/\min_o r_r(o)\le\Gamma^2$, and $\mu_r(o)>0$ forces $V_r(o)>0$.
+Sufficiency: $P_r(c)=v_c\,r_r(o(c))$ is a law ($\sum_cP_r(c)=\sum_o\mu_r(o)=1$)
+with cell ratio $r_r(o(c))$, so with $\lambda_r=\sqrt{\max_or_r\min_or_r}$ it
+lies in $\Mcc(\Gamma)$ exactly when $\Gamma^2\ge\max_or_r/\min_or_r$; then
+$p(c,r)=\rho_rP_r(c)$ with the observed (C) or any positive (D) $\rho$
+matches every row. Hence the infimum is a minimum, the same for C and D, and
+$\Gamma_{\min}(o)\le\Gamma_{\mathrm{true}}$ because the true joint is one such
+law. $\square$
+
 \textbf{\Cref{prop:support}.} Every $\Mcc(\Gamma)$ and \textsc{Support-only}
 impose $p(c,r)\le\Gamma b_r\kappa_c=0$ when $\kappa_c=0$. $\square$
 
@@ -789,12 +897,16 @@ sums inside the box. With $b_r$ its population scale,
 $p(c,r)\ge b_r\theta_c/\Gamma\ge b_r\kappa^{\mathrm{lo}}_c/\Gamma$ and
 $p(c,r)\le\Gamma b_r\kappa^{\mathrm{hi}}_c$. Summing the lower inequality over
 $c$ gives $b_r\le\Gamma/\sum_c\theta_c\le\Gamma/\sum_c\kappa^{\mathrm{lo}}_c$,
-so the auxiliary bounds are not active. Hence $p$ is feasible for the relaxed
-program. The event does not involve $\Gamma$, so the statement holds for all
-$\Gamma$ simultaneously. $\square$
+so the auxiliary bounds are not active. If $\sum_c\kappa^{\mathrm{lo}}_c=0$ the
+bound on $b_r$ is dropped and the incomplete-mask rows reduce to $p(c,r)=0$
+where $\kappa^{\mathrm{hi}}_c=0$; on the event $\theta_c\le\kappa^{\mathrm{hi}}_c=0$
+then forces $p(c,r)\le\Gamma b_r\theta_c=0$, so $p$ satisfies them. Hence $p$ is
+feasible for the relaxed program. The event does not involve $\Gamma$, so the
+statement holds for all $\Gamma$ simultaneously; $\Dnat$ is covered when, in
+addition, $p^*\in\Mcc(\Gamma)$. $\square$
 
 \textbf{Status.} All proofs above are complete as written but have only been
-self-checked. Open: whether the closure caveat can be removed by a
+self-checked; an independent statistical reviewer is UNASSIGNED. Open: whether the closure caveat can be removed by a
 constraint $\rho_{\one}\ge\underline\rho$ that is known in practice (UNPROVED);
 width guarantees for \cref{prop:outer} (UNPROVED); extension to label
 availability independent of the mask (NOT STARTED).
@@ -930,12 +1042,30 @@ empty.}
 \end{table}
 
 \begin{table*}[h]
-\centering\small
+\centering\scriptsize\setlength{\tabcolsep}{3pt}
 \caption{Pilot, setting C: finite-population identified sets and outer 95\%
 intervals by $\Gamma_{cc}$ ($\emptyset$ empty; $\pm$ both orders; -- not in the
 pre-registered outer grid).}
 \label{tab:pilotiv}
 \input{generated/tab_pilot_intervals.tex}
+\end{table*}
+
+\section{Comparison with the Two Closest Works}
+\label{app:rw}
+\Cref{tab:rw} compares the two closest prior works with this paper along the
+five aspects that matter for our question. Entries for this paper are tagged
+[KNOWN] (ingredient taken from prior work), [ADAPTED] (prior idea in a new
+observation model) or [UNVERIFIED novelty] (no forward-citation search has
+been done). The prior-work entries were checked against the original texts as
+recorded in the repository's related-work notes; equation and definition
+numbers refer to the arXiv versions.
+\begin{table*}[h]
+\centering\scriptsize
+\caption{Observation, estimand, sensitivity model, sharpness and sampling
+uncertainty in \citet{subbaswamy2021evaluating}, \citet{guerdan2024predictive}
+and this paper.}
+\label{tab:rw}
+\IfFileExists{generated/tab_relatedwork.tex}{\input{generated/tab_relatedwork.tex}}{\todo{RW table pending}}
 \end{table*}
 
 \section{Admission Conditions for Natural-Missingness Data}

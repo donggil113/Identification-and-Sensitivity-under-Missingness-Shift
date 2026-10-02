@@ -236,7 +236,7 @@ def main():
                               "plug_in": ivj(plug), "outer_ci": ivj(outer), "population": ivj(pop)})
     checks["outer_ci_contains_population_when_box_holds"] = "PASS" if box_ok else "FAIL"
     dump("p2_fr2_F_finite_sample.json", {"experiment_id": "P2-FR2-F", "config": fs, "rows": frows,
-                                         "note": "Two draws per n are illustrations; coverage is argued (Prop. FR2-4), not estimated."})
+                                         "note": "Two draws per n are illustrations; coverage is argued (paper prop:outer, Outer confidence interval), not estimated."})
     parts["F"] = {"status": fstatus, "seconds": round(time.time() - t0, 3)}
 
     # ---------------------------------------------------------------- G criterion audit on FR1 systems
