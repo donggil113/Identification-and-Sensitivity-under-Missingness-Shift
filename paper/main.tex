@@ -1,4 +1,6 @@
 % =====================================================================
+% Manuscript v4.2 (P2): validity-first order (valid set non-empty -> bounds ->
+% endpoints) made explicit; scoped Gamma_min(o); plug-in/coverage wording.
 % Manuscript v4.1 (P2): mathematical/editorial corrections on the frozen
 % CLEAN1 result (Gamma_true vs Gamma_min(o); Hoeffding wording; empty valid
 % sets in setting D; hypotheses of prop:C; scope of prop:outer); no new
@@ -325,13 +327,21 @@ attained by a valid model: one model is never worse and a tie is compatible
 with the data); \emph{no-margin} (the zero endpoint is reached only in the
 closure: strict for every valid model but without a uniform margin);
 \emph{both orders} ($\ell<0<u$; interior values are always attained by valid
-models because the valid set is convex); and \emph{tie}. Attainment is
-checked by one extra linear program that maximises the smallest
-definition-required stratum mass ($\rho_{\one}$ in B; $\rho_{\one}$ and every
-given stratum in D) subject to the objective equal to the endpoint. The same
-program without the objective constraint checks whether a valid law exists
-at all; if its value is $0$ the valid set is empty, the LP interval is only a
-closure artefact, and we write $\emptyset^{c}$.
+models because the valid set is convex); and \emph{tie}. Write $P_\Gamma$ for
+the closed relaxed polytope, $R_+$ for the strata whose positive mass the
+setting's information presupposes ($\rho_{\one}$ in B; $\rho_{\one}$ and every
+given stratum in D; none in A and C), and
+$F_\Gamma=\{x\in P_\Gamma:\rho_r(x)>0\ \forall r\in R_+\}$ for the valid laws. The
+order of the analysis is fixed: (1) a linear program maximises
+$\min_{r\in R_+}\rho_r$ over $P_\Gamma$; if the value is $0$ the valid set is
+empty, no interval is reported, and we write $\emptyset^{c}$ (the relaxed
+program is feasible but no point of it is a valid law); (2) only otherwise are
+the extrema of $\Delta$ computed, and by the standard convexity argument
+($x_\epsilon=(1-\epsilon)x+\epsilon x_+$) they are the infimum and supremum over
+$F_\Gamma$; (3) each endpoint is then classified as attained or closure-only by
+the same maximisation with the objective fixed at the endpoint. All three
+steps are exact rational programs with certificates; only the Hoeffding boxes
+of \cref{sec:sampling} carry floating-point inputs.
 
 \textbf{Two thresholds.} For a hidden joint $p^*$ let
 $\Gamma_{\mathrm{true}}=\inf\{\Gamma:p^*\in\Mcc(\Gamma)\}$. For an observable law
@@ -398,13 +408,20 @@ The programs of B and D are feasible for every $\Gamma$ (take $\rho=e_{\one}$,
 $p(\cdot,\one)=v$, no incomplete mass), so LP feasibility there carries no
 information; only the valid-set check does. For settings C and D the
 smallest sensitivity parameter compatible with the observables has a closed
-form. With $V_r(o)=\sum_{c\in G(r,o)}v_c$ and $r_r(o)=\mu_r(o)/V_r(o)$,
+form. Here $\mu_r(o)=P(X_r=o\mid R=r)$ and $V_r(o)=\sum_{c\in G(r,o)}v_c$ are
+conditional quantities, the maximum runs over incomplete strata with
+$\rho_r>0$ (unsampled strata impose nothing), the scale $\lambda_r>0$ is free,
+$\Gamma\ge1$, and $\sum_cP_r(c)=1$. With $r_r(o)=\mu_r(o)/V_r(o)$ over the groups
+with $V_r(o)>0$ and $\mu_r(o)>0$,
 \[
-\Gamma_{\min}(o)^2=\max_{r:\rho_r>0}\ \frac{\max_o r_r(o)}{\min_o r_r(o)},
+\Gamma_{\min}(o)^2=\max_{r:\rho_r>0}\ \frac{\max_o r_r(o)}{\min_o r_r(o)}.
 \]
-provided $\mu_r(o)>0$ only where $V_r(o)>0$ (otherwise no $\Gamma$ fits). The
-infimum is attained, and $\Gamma_{\min}(o)\le\Gamma_{\mathrm{true}}$
-(\cref{app:proofs}).
+If some group has $V_r(o)=0<\mu_r(o)$ the supports are incompatible and no
+finite $\Gamma$ fits; if $V_r(o)>0=\mu_r(o)$ inside a sampled stratum, the lower
+density bound $P_r(c)\ge\lambda_rv_c/\Gamma>0$ makes the group mass positive, so
+again no finite $\Gamma$ fits; groups with $V_r(o)=\mu_r(o)=0$ are outside the
+relevant support and form no ratio. In the remaining case the infimum is
+attained and $\Gamma_{\min}(o)\le\Gamma_{\mathrm{true}}$ (\cref{app:proofs}).
 \end{remark}
 
 \begin{proposition}[Setting C: identification requires agreement on incomplete inputs]\label{prop:C}
@@ -546,8 +563,10 @@ $\{p(c,r)=0:\kappa^{\mathrm{hi}}_c=0\}$, and since the Hoeffding box has every
 $\kappa^{\mathrm{hi}}_c\ge\varepsilon>0$, the outer program then coincides with
 \textsc{No-model} on the incomplete masks (v1 code raised an error here). The
 \emph{plug-in} program, by contrast, treats $\hat\theta_c=0$ as structural and
-is infeasible by construction when $n_{\mathrm{complete}}=0$; it is an
-estimate, never a confidence statement.
+is infeasible by construction when $n_{\mathrm{complete}}=0$; that outcome is a
+property of the implementation, not evidence that the data refute MCAR, and
+no estimand is defined there. The plug-in interval is an estimate, never a
+confidence statement.
 
 The construction is conservative. It is not sharp, and we have not analysed
 its width or compared it with the procedures of
@@ -1104,6 +1123,12 @@ programs always imposed.
 use different references and are not compared.
 \item \textbf{Data unit.} v2 called attribute-tuple groups ``entities'';
 the v3 provenance check shows they are not verified persons.
+\item \textbf{v4.2: order of checks.} v3 computed relaxed bounds first and
+checked endpoints afterwards, which can report an interval for an empty set
+of valid laws (the CLEAN1 D rows at $\Gamma_{cc}\le5/4$). The analysis now
+runs valid-set check, then bounds, then endpoints, with per-setting required
+strata and exact rational certificates; the related-work table and the
+development runs were not changed.
 \item \textbf{v4: split repair.} The PILOT1/2 split key contained the raw
 income string, and 956 covariate profiles crossed the split. Those runs are
 kept as DEVELOPMENT\_WITH\_PROFILE\_OVERLAP (\cref{tab:pilotcmp}). They are valid

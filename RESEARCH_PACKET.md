@@ -575,11 +575,14 @@ No new experiment, mask draw, Γ grid, training or data. CLEAN1 raw unchanged.
    with zero mass in the truth no longer receives μ = 0 rows in D (which would force
    structural zero); `classify_sign` gained `valid`; `endpoint_attained` deprecated;
    future runs store η_max. Frozen raw/derived values unchanged (η rows identical).
-   Refutation stage: 22 of 36 planned verdicts were obtained before the run was
-   stopped (the related-work table was produced by a separate run); all 22 were
-   "refuted" in the sense that the working tree already contained the fix, i.e.
-   none of the 18 findings stood against the corrected manuscript, and none was
-   rejected as wrong. This is an AI cross-check only.
+   Check stage (corrected wording, v4.2): of the 18 findings, 11 received both
+   planned confirmations and are VALID_FIXED (the original defect was real and
+   is now corrected; "already fixed in the working tree" is a resolved state,
+   not a rejection of the finding); the remaining 7 findings (T2-F8, T3-F1–F6)
+   are PENDING — their confirmations were not run (22 of 36 verdicts obtained
+   before the run was stopped) and they are not counted as defect-free. My own
+   fixes for them are recorded in §15 items 3–5 and 9. This is an AI
+   cross-check only; a human reviewer is UNASSIGNED.
    Third reviewer (outer coverage): proposition sound; fixed the proof's
    Σκ_lo = 0 branch, the Zeros paragraph (Hoeffding box has κ_hi ≥ ε > 0, so the
    all-zero branch coincides with No-model on incomplete masks; plug-in with
@@ -590,3 +593,46 @@ No new experiment, mask draw, Γ grid, training or data. CLEAN1 raw unchanged.
    p2_fr2_F_finite_sample.json keeps the old note text).
    §9's wording "whose group has both labels" is superseded by "every group has
    both labels because θ_c > 0".
+
+
+## 16. v4.2 (2026-10-05): order of validity, bounds and endpoints fixed in code
+Standard fact (no new result): with P_Γ the closed relaxed polytope, R_plus the
+strata whose positive mass the setting's information presupposes, and
+F_Γ = {x ∈ P_Γ : ρ_r(x) > 0 ∀ r ∈ R_plus}: if F_Γ ≠ ∅ then cl(F_Γ) = P_Γ
+(segment to a point x_plus with all required ρ > 0; P_Γ closed convex, ρ linear);
+if F_Γ = ∅ then cl(F_Γ) = ∅ and no point/interval of P_Γ is a closure bound of
+any valid model. The v3 practice (relaxed bounds → endpoint check) could report
+such phantom intervals; v4.1 found the CLEAN1-MNAR D rows, v4.2 fixes the order.
+* `observation.analyse(built, table, setting)`: (1) R_plus spelled out per setting
+  (`required_strata`: A/C none; B {ρ_full}; D {ρ_full} ∪ given strata — no sharing),
+  (2) global max-η over P_Γ → EMPTY_VALID_MODEL (LP feasible, no valid point) or
+  LP_INFEASIBLE, and STOP; (3) inf/sup of the objective over F_Γ (= over P_Γ);
+  (4) per-endpoint max-η → VALID_ENDPOINT_ATTAINED / VALID_ENDPOINT_CLOSURE_ONLY;
+  exactness EXACT (rational) vs NUMERIC_BOX (box from float data; the 1e-9 slack
+  is a numeric safety margin, not part of any exact statement); NUMERIC_UNRESOLVED
+  when a certificate fails. The reparametrisation has no further strict
+  inequality: b_r ≥ 0 is the only auxiliary and λ_r = b_r/ρ_r is recovered
+  whenever ρ_r > 0 (Lemma, exact linearisation).
+* `observation.gamma_min_scoped`: μ_r(o) = P(X_r=o | R=r) and V_r(o) = Σ_{G(r,o)} v_c
+  are conditional quantities; strata with ρ_r = 0 excluded; cases V=0,μ>0 →
+  SUPPORT_INCOMPATIBLE; V=μ=0 → excluded; V>0,μ=0 → NO_FINITE_GAMMA (required-positive
+  stratum, lower density bound); V>0,μ>0 → ratio. Positive-support case: necessity
+  by group sums, sufficiency by P_r(c) = v_c r_r(o(c)) (normalisation Σ_o μ_r(o) = 1,
+  reverse map λ_r = √(max r · min r)). Γ_true = 2.38 and Γ_min(o) = 1.3108 remain
+  distinct quantities; no new grid.
+* Six boundary fixtures (tests/test_ordered_analysis.py): B Γ=1 (weak, closure
+  lower end); D Γ=1 MCAR (valid non-empty, no margin); D Γ=1 label-dependent
+  (EMPTY_VALID_MODEL while the relaxed LP is feasible; B cannot refute); C (no
+  required strata); V>0,μ=0 (NO_FINITE_GAMMA and LP_INFEASIBLE at Γ=1000);
+  zero-mass stratum excluded from R_plus. 45 tests, 9 s wall on 1 thread.
+* Re-derivation of all frozen FR2/CLEAN1 B/D rows through `analyse` (45 s wall /
+  45 CPU-s, 1 thread) reproduces the v4.1 η values and categories (CLEAN1 MNAR D
+  at Γ_cc ∈ {1, 5/4}: EMPTY_VALID_MODEL; all other rows OK).
+* Coverage/plug-in scope restated (paper §Sampling): outer inclusion on the one
+  event {P_obs ∈ R}; Δ_nat covered only if the hidden law is in M_cc(Γ);
+  plug-in with n_complete = 0 is constructed-infeasible (an implementation
+  outcome, not evidence against MCAR; no estimand exists there); Hoeffding is not
+  blocked by fractional masses — CLEAN1 is conditional on the selected records
+  and gets no population CI.
+* Status labels: NUMERICAL_IMPLEMENTATION_CHECKED_WITHIN_SCOPE (this section),
+  HUMAN_REVIEW_UNASSIGNED, NOVELTY_NOT_ESTABLISHED.

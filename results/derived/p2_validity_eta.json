@@ -10,7 +10,23 @@
     "float": 1.0
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full"
+   ],
+   "lo": {
+    "exact": "-81/625",
+    "float": -0.1296
+   },
+   "hi": {
+    "exact": "0",
+    "float": 0.0
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_ATTAINED",
+   "category": "WEAK_A",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-FR2:E0_MCAR",
@@ -21,7 +37,23 @@
     "float": 1.0
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full"
+   ],
+   "lo": {
+    "exact": "-131868/629375",
+    "float": -0.20952214498510427
+   },
+   "hi": {
+    "exact": "0",
+    "float": 0.0
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_ATTAINED",
+   "category": "WEAK_A",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-FR2:E0_MCAR",
@@ -32,7 +64,23 @@
     "float": 1.0
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full"
+   ],
+   "lo": {
+    "exact": "-1188/4375",
+    "float": -0.27154285714285714
+   },
+   "hi": {
+    "exact": "22059/1621400",
+    "float": 0.013604909337609473
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-FR2:E0_MCAR",
@@ -43,7 +91,23 @@
     "float": 1.0
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full"
+   ],
+   "lo": {
+    "exact": "-26406/74375",
+    "float": -0.3550386554621849
+   },
+   "hi": {
+    "exact": "6156/81875",
+    "float": 0.07518778625954199
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-FR2:E0_MCAR",
@@ -54,7 +118,23 @@
     "float": 1.0
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full"
+   ],
+   "lo": {
+    "exact": "-3537/8125",
+    "float": -0.4353230769230769
+   },
+   "hi": {
+    "exact": "19961/129360",
+    "float": 0.15430581323438466
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-FR2:E0_MCAR",
@@ -65,7 +145,23 @@
     "float": 1.0
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full"
+   ],
+   "lo": {
+    "exact": "-324/625",
+    "float": -0.5184
+   },
+   "hi": {
+    "exact": "17/45",
+    "float": 0.37777777777777777
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-FR2:E0_MCAR",
@@ -76,7 +172,23 @@
     "float": 1.0
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full"
+   ],
+   "lo": {
+    "exact": "-324/625",
+    "float": -0.5184
+   },
+   "hi": {
+    "exact": "17/45",
+    "float": 0.37777777777777777
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-FR2:E0_MCAR",
@@ -87,7 +199,26 @@
     "float": 0.25
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full",
+    "rho(1, 0)",
+    "rho(0, 1)",
+    "rho(0, 0)"
+   ],
+   "lo": {
+    "exact": "-81/625",
+    "float": -0.1296
+   },
+   "hi": {
+    "exact": "0",
+    "float": 0.0
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "A_NO_MARGIN",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-FR2:E0_MCAR",
@@ -98,7 +229,26 @@
     "float": 0.25
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full",
+    "rho(1, 0)",
+    "rho(0, 1)",
+    "rho(0, 0)"
+   ],
+   "lo": {
+    "exact": "-131868/629375",
+    "float": -0.20952214498510427
+   },
+   "hi": {
+    "exact": "0",
+    "float": 0.0
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "A_NO_MARGIN",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-FR2:E0_MCAR",
@@ -109,7 +259,26 @@
     "float": 0.25
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full",
+    "rho(1, 0)",
+    "rho(0, 1)",
+    "rho(0, 0)"
+   ],
+   "lo": {
+    "exact": "-1188/4375",
+    "float": -0.27154285714285714
+   },
+   "hi": {
+    "exact": "1143/110000",
+    "float": 0.010390909090909091
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-FR2:E0_MCAR",
@@ -120,7 +289,26 @@
     "float": 0.25
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full",
+    "rho(1, 0)",
+    "rho(0, 1)",
+    "rho(0, 0)"
+   ],
+   "lo": {
+    "exact": "-26406/74375",
+    "float": -0.3550386554621849
+   },
+   "hi": {
+    "exact": "6156/81875",
+    "float": 0.07518778625954199
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-FR2:E0_MCAR",
@@ -131,7 +319,26 @@
     "float": 0.25
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full",
+    "rho(1, 0)",
+    "rho(0, 1)",
+    "rho(0, 0)"
+   ],
+   "lo": {
+    "exact": "-3537/8125",
+    "float": -0.4353230769230769
+   },
+   "hi": {
+    "exact": "11583/83125",
+    "float": 0.13934436090225563
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-FR2:E0_MCAR",
@@ -142,7 +349,26 @@
     "float": 0.25
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full",
+    "rho(1, 0)",
+    "rho(0, 1)",
+    "rho(0, 0)"
+   ],
+   "lo": {
+    "exact": "-324/625",
+    "float": -0.5184
+   },
+   "hi": {
+    "exact": "126/625",
+    "float": 0.2016
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-FR2:E0_MCAR",
@@ -153,7 +379,26 @@
     "float": 0.25
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full",
+    "rho(1, 0)",
+    "rho(0, 1)",
+    "rho(0, 0)"
+   ],
+   "lo": {
+    "exact": "-324/625",
+    "float": -0.5184
+   },
+   "hi": {
+    "exact": "126/625",
+    "float": 0.2016
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-PILOT-CLEAN1:primary_mnar",
@@ -164,7 +409,23 @@
     "float": 1.0
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full"
+   ],
+   "lo": {
+    "exact": "0",
+    "float": 0.0
+   },
+   "hi": {
+    "exact": "2959560796035349/1544672948775434100",
+    "float": 0.001915978912158455
+   },
+   "lo_status": "VALID_ENDPOINT_ATTAINED",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "WEAK_B",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-PILOT-CLEAN1:primary_mnar",
@@ -175,7 +436,23 @@
     "float": 1.0
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full"
+   ],
+   "lo": {
+    "exact": "-11053715484406133368343849079847096140943793/711672573581657505045589343619688878800608992",
+    "float": -0.01553202398790745
+   },
+   "hi": {
+    "exact": "106382266355584157/7223948527074873300",
+    "float": 0.014726332276160409
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-PILOT-CLEAN1:primary_mnar",
@@ -186,7 +463,23 @@
     "float": 1.0
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full"
+   ],
+   "lo": {
+    "exact": "-22763048159909/710018680930650",
+    "float": -0.03205978768061787
+   },
+   "hi": {
+    "exact": "3359585194165304891537248483246325071773509/145326551917217711211447797829771541220674959",
+    "float": 0.02311749057446174
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-PILOT-CLEAN1:primary_mnar",
@@ -197,7 +490,23 @@
     "float": 1.0
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full"
+   ],
+   "lo": {
+    "exact": "-149681209829643671/2377033310112596100",
+    "float": -0.06296975696253643
+   },
+   "hi": {
+    "exact": "3973836197625672977037704871379780575402877/117834810131288325619356785809089789921596442",
+    "float": 0.03372378835420648
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-PILOT-CLEAN1:primary_mnar",
@@ -208,7 +517,23 @@
     "float": 1.0
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full"
+   ],
+   "lo": {
+    "exact": "-916286834933731/8535828977342100",
+    "float": -0.10734596925102005
+   },
+   "hi": {
+    "exact": "4492344119156771669611844853856178686922347/82906958035265829789849099781575615181973352",
+    "float": 0.0541853690645106
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-PILOT-CLEAN1:primary_mnar",
@@ -219,7 +544,23 @@
     "float": 1.0
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full"
+   ],
+   "lo": {
+    "exact": "-20554879539311/93623389142724",
+    "float": -0.21954855221034728
+   },
+   "hi": {
+    "exact": "9803371241197/93623389142724",
+    "float": 0.1047107067044141
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-PILOT-CLEAN1:primary_mnar",
@@ -230,7 +571,23 @@
     "float": 1.0
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full"
+   ],
+   "lo": {
+    "exact": "-20554879539311/93623389142724",
+    "float": -0.21954855221034728
+   },
+   "hi": {
+    "exact": "9803371241197/93623389142724",
+    "float": 0.1047107067044141
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-PILOT-CLEAN1:primary_mnar",
@@ -241,7 +598,20 @@
     "float": 0.0
    },
    "certified": true,
-   "valid_set": "EMPTY"
+   "valid_set": "EMPTY",
+   "ordered_status": "EMPTY_VALID_MODEL",
+   "required_strata": [
+    "rho_full",
+    "rho(1, 0)",
+    "rho(0, 1)",
+    "rho(0, 0)"
+   ],
+   "lo": null,
+   "hi": null,
+   "lo_status": null,
+   "hi_status": null,
+   "category": "EMPTY_VALID_MODEL",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-PILOT-CLEAN1:primary_mnar",
@@ -252,7 +622,20 @@
     "float": 0.0
    },
    "certified": true,
-   "valid_set": "EMPTY"
+   "valid_set": "EMPTY",
+   "ordered_status": "EMPTY_VALID_MODEL",
+   "required_strata": [
+    "rho_full",
+    "rho(1, 0)",
+    "rho(0, 1)",
+    "rho(0, 0)"
+   ],
+   "lo": null,
+   "hi": null,
+   "lo_status": null,
+   "hi_status": null,
+   "category": "EMPTY_VALID_MODEL",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-PILOT-CLEAN1:primary_mnar",
@@ -263,7 +646,26 @@
     "float": 0.25
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full",
+    "rho(1, 0)",
+    "rho(0, 1)",
+    "rho(0, 0)"
+   ],
+   "lo": {
+    "exact": "-22763048159909/710018680930650",
+    "float": -0.03205978768061787
+   },
+   "hi": {
+    "exact": "40148190220064263/1787827038583376700",
+    "float": 0.02245641740147109
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-PILOT-CLEAN1:primary_mnar",
@@ -274,7 +676,26 @@
     "float": 0.25
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full",
+    "rho(1, 0)",
+    "rho(0, 1)",
+    "rho(0, 0)"
+   ],
+   "lo": {
+    "exact": "-149681209829643671/2377033310112596100",
+    "float": -0.06296975696253643
+   },
+   "hi": {
+    "exact": "840138800516/27308410805025",
+    "float": 0.030764836757231098
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-PILOT-CLEAN1:primary_mnar",
@@ -285,7 +706,26 @@
     "float": 0.25
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full",
+    "rho(1, 0)",
+    "rho(0, 1)",
+    "rho(0, 0)"
+   ],
+   "lo": {
+    "exact": "-916286834933731/8535828977342100",
+    "float": -0.10734596925102005
+   },
+   "hi": {
+    "exact": "10582197372931286272049161844817340563775542533/285007145039232861336824951816941000055265217560",
+    "float": 0.03712958624765209
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-PILOT-CLEAN1:primary_mnar",
@@ -296,7 +736,26 @@
     "float": 0.25
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full",
+    "rho(1, 0)",
+    "rho(0, 1)",
+    "rho(0, 0)"
+   ],
+   "lo": {
+    "exact": "-20031597194971/109233643220100",
+    "float": -0.18338303662186195
+   },
+   "hi": {
+    "exact": "1770289780756494878084522965083926039141191/40397894406694948453128979704740042530866792",
+    "float": 0.043821337887925
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-PILOT-CLEAN1:primary_mnar",
@@ -307,7 +766,26 @@
     "float": 0.25
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full",
+    "rho(1, 0)",
+    "rho(0, 1)",
+    "rho(0, 0)"
+   ],
+   "lo": {
+    "exact": "-20031597194971/109233643220100",
+    "float": -0.18338303662186195
+   },
+   "hi": {
+    "exact": "1770289780756494878084522965083926039141191/40397894406694948453128979704740042530866792",
+    "float": 0.043821337887925
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-PILOT-CLEAN1:control_mcar",
@@ -318,7 +796,23 @@
     "float": 1.0
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full"
+   ],
+   "lo": {
+    "exact": "-22995065685600168289048396103411052385777/1759069618904067216605202549550504291661214",
+    "float": -0.013072288577143706
+   },
+   "hi": {
+    "exact": "0",
+    "float": 0.0
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_ATTAINED",
+   "category": "WEAK_A",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-PILOT-CLEAN1:control_mcar",
@@ -329,7 +823,23 @@
     "float": 1.0
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full"
+   ],
+   "lo": {
+    "exact": "-164627980805777717/4898801197491824700",
+    "float": -0.0336057688746518
+   },
+   "hi": {
+    "exact": "2744739240131993/766492474475441700",
+    "float": 0.0035809082692043236
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-PILOT-CLEAN1:control_mcar",
@@ -340,7 +850,23 @@
     "float": 1.0
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full"
+   ],
+   "lo": {
+    "exact": "-223343521319159951/4218712534803482100",
+    "float": -0.052941156686222006
+   },
+   "hi": {
+    "exact": "3132587616387667113113646022750770600428/213426162315265429650367314341863188181659",
+    "float": 0.014677617694124685
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-PILOT-CLEAN1:control_mcar",
@@ -351,7 +877,23 @@
     "float": 1.0
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full"
+   ],
+   "lo": {
+    "exact": "-3316420286948173/38923588200762300",
+    "float": -0.08520335457878528
+   },
+   "hi": {
+    "exact": "5183485406058369788732488063977851184993/180709722858497654693531557184792135745310",
+    "float": 0.028684042696016026
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-PILOT-CLEAN1:control_mcar",
@@ -362,7 +904,23 @@
     "float": 1.0
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full"
+   ],
+   "lo": {
+    "exact": "-1911987419033084465079051132158666823826043/15081718693624517829091377279276491728384026",
+    "float": -0.12677516786209103
+   },
+   "hi": {
+    "exact": "74928859351705879504007687205787653072299/1563583429598331308768327189366131794542550",
+    "float": 0.04792124163848062
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-PILOT-CLEAN1:control_mcar",
@@ -373,7 +931,23 @@
     "float": 1.0
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full"
+   ],
+   "lo": {
+    "exact": "-20554879539311/93623389142724",
+    "float": -0.21954855221034728
+   },
+   "hi": {
+    "exact": "9803371241197/93623389142724",
+    "float": 0.1047107067044141
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-PILOT-CLEAN1:control_mcar",
@@ -384,7 +958,23 @@
     "float": 1.0
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full"
+   ],
+   "lo": {
+    "exact": "-20554879539311/93623389142724",
+    "float": -0.21954855221034728
+   },
+   "hi": {
+    "exact": "9803371241197/93623389142724",
+    "float": 0.1047107067044141
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-PILOT-CLEAN1:control_mcar",
@@ -395,7 +985,26 @@
     "float": 0.25
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full",
+    "rho(1, 0)",
+    "rho(0, 1)",
+    "rho(0, 0)"
+   ],
+   "lo": {
+    "exact": "-22995065685600168289048396103411052385777/1759069618904067216605202549550504291661214",
+    "float": -0.013072288577143706
+   },
+   "hi": {
+    "exact": "0",
+    "float": 0.0
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "A_NO_MARGIN",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-PILOT-CLEAN1:control_mcar",
@@ -406,7 +1015,26 @@
     "float": 0.25
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full",
+    "rho(1, 0)",
+    "rho(0, 1)",
+    "rho(0, 0)"
+   ],
+   "lo": {
+    "exact": "-164627980805777717/4898801197491824700",
+    "float": -0.0336057688746518
+   },
+   "hi": {
+    "exact": "2744739240131993/766492474475441700",
+    "float": 0.0035809082692043236
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-PILOT-CLEAN1:control_mcar",
@@ -417,7 +1045,26 @@
     "float": 0.25
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full",
+    "rho(1, 0)",
+    "rho(0, 1)",
+    "rho(0, 0)"
+   ],
+   "lo": {
+    "exact": "-223343521319159951/4218712534803482100",
+    "float": -0.052941156686222006
+   },
+   "hi": {
+    "exact": "21908242473057371/1568485882997415900",
+    "float": 0.01396776516164122
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-PILOT-CLEAN1:control_mcar",
@@ -428,7 +1075,26 @@
     "float": 0.25
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full",
+    "rho(1, 0)",
+    "rho(0, 1)",
+    "rho(0, 0)"
+   ],
+   "lo": {
+    "exact": "-3316420286948173/38923588200762300",
+    "float": -0.08520335457878528
+   },
+   "hi": {
+    "exact": "22398254798899811/878129257846383900",
+    "float": 0.025506785702405173
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-PILOT-CLEAN1:control_mcar",
@@ -439,7 +1105,26 @@
     "float": 0.25
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full",
+    "rho(1, 0)",
+    "rho(0, 1)",
+    "rho(0, 0)"
+   ],
+   "lo": {
+    "exact": "-300977558902546343/2391452151017649300",
+    "float": -0.12585556385665903
+   },
+   "hi": {
+    "exact": "43845764245152108153711381927943874476087903/1211998967424902312240984556640297456954576446",
+    "float": 0.036176403960400956
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-PILOT-CLEAN1:control_mcar",
@@ -450,7 +1135,26 @@
     "float": 0.25
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full",
+    "rho(1, 0)",
+    "rho(0, 1)",
+    "rho(0, 0)"
+   ],
+   "lo": {
+    "exact": "-20031597194971/109233643220100",
+    "float": -0.18338303662186195
+   },
+   "hi": {
+    "exact": "82303712418662525444333682501014004819167/1759069618904067216605202549550504291661214",
+    "float": 0.0467882064098971
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   },
   {
    "source": "P2-PILOT-CLEAN1:control_mcar",
@@ -461,7 +1165,26 @@
     "float": 0.25
    },
    "certified": true,
-   "valid_set": "NONEMPTY"
+   "valid_set": "NONEMPTY",
+   "ordered_status": "OK",
+   "required_strata": [
+    "rho_full",
+    "rho(1, 0)",
+    "rho(0, 1)",
+    "rho(0, 0)"
+   ],
+   "lo": {
+    "exact": "-20031597194971/109233643220100",
+    "float": -0.18338303662186195
+   },
+   "hi": {
+    "exact": "82303712418662525444333682501014004819167/1759069618904067216605202549550504291661214",
+    "float": 0.0467882064098971
+   },
+   "lo_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "hi_status": "VALID_ENDPOINT_CLOSURE_ONLY",
+   "category": "BOTH_ORDERS",
+   "exactness": "EXACT"
   }
  ],
  "gamma_thresholds": {
@@ -476,7 +1199,8 @@
     "float": 1.0
    },
    "gamma_true": 1.0,
-   "note": "closed form for settings C and D (same value); Gamma_min(o) <= Gamma_true"
+   "note": "closed form for settings C and D (same value); Gamma_min(o) <= Gamma_true",
+   "scoped_status": "OK"
   },
   "P2-PILOT-CLEAN1:primary_mnar": {
    "gamma_min_obs_squared": {
@@ -489,7 +1213,8 @@
     "float": 5.666666666666667
    },
    "gamma_true": 2.3804761428476167,
-   "note": "closed form for settings C and D (same value); Gamma_min(o) <= Gamma_true"
+   "note": "closed form for settings C and D (same value); Gamma_min(o) <= Gamma_true",
+   "scoped_status": "OK"
   },
   "P2-PILOT-CLEAN1:control_mcar": {
    "gamma_min_obs_squared": {
@@ -502,12 +1227,13 @@
     "float": 1.0
    },
    "gamma_true": 1.0,
-   "note": "closed form for settings C and D (same value); Gamma_min(o) <= Gamma_true"
+   "note": "closed form for settings C and D (same value); Gamma_min(o) <= Gamma_true",
+   "scoped_status": "OK"
   }
  },
  "timing": {
-  "wall_s": 5.57,
-  "cpu_s": 5.57,
+  "wall_s": 45.4,
+  "cpu_s": 45.09,
   "threads": "one process"
  }
 }

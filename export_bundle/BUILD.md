@@ -33,6 +33,13 @@ run_manifest.json, STATUS.md, RESEARCH_PACKET.md, RELATED_WORK.md.
 Excluded: data/external (UCI Adult, CC BY 4.0 — re-download from
 https://archive.ics.uci.edu/dataset/2/adult; sha256 in results/raw/p2_pilot_results.json).
 
+## v4.2 packages (2026-10-05)
+* `p2_v4_2_internal.tar.gz` — internal evidence package: v4.2 sources + PDF, REVIEW_BRIEF.md,
+  derived validity/threshold JSON, frozen raw, code/tests, manifests.
+* `p2_v4_2_anon_source.tar.gz` — anonymous source + PDF (main.tex, main.pdf, references.bib,
+  generated/*.tex, tab_relatedwork.tex, icml2026 kit files unmodified, BUILD_ANON.md).
+  Contents verified by unpacking (see SHA256SUMS and the listing in STATUS).
+
 ## v4.1 packages (2026-10-02)
 * `p2_v4_1_internal.tar.gz` — internal evidence package incl. the built PDF,
   derived validity/threshold JSON, read log of the related-work pass.

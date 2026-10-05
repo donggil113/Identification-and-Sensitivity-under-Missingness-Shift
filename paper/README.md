@@ -1,4 +1,6 @@
-# paper/ — manuscript v4.1 (P2)
+# paper/ — manuscript v4.2 (P2)
+
+v4.2 = v4.1 + validity-first order of checks (valid set → bounds → endpoints) stated in §3 and enforced in code; scoped Γ_min(o); plug-in wording. PDF sha256 2223a741ed410c18b62b7a6ce99894567cdd21fbf24248065ab4797ef8517e54.
 
 v4.1 = v4 + mathematical/editorial corrections on the frozen CLEAN1 result
 (Gamma_true vs Gamma_min(o); Hoeffding wording; empty valid sets in setting D;
@@ -7,7 +9,7 @@ proposition; two-paper related-work table). No new experiment.
 v4 = v3 + split repair: empirical pilot table replaced by P2-PILOT-CLEAN1;
 PILOT1/2 moved to appendix as DEVELOPMENT_WITH_PROFILE_OVERLAP.
 
-## Build status (v4.1, 2026-10-02)
+## Build status (v4.2, 2026-10-05; same toolchain as v4.1)
 * **PDF built locally** (`main.pdf`): TeX Live 2026 scheme-basic + packages in a
   user directory (`/home/user/texlive-local`, no sudo), official ICML 2026 kit
   (`icml2026.sty`, `icml2026.bst`, `algorithm.sty`, `algorithmic.sty`,
@@ -19,9 +21,9 @@ PILOT1/2 moved to appendix as DEVELOPMENT_WITH_PROFILE_OVERLAP.
   references follow; appendices pp. 10–15 (two-paper comparison table
   `tab_relatedwork.tex`, App. E, floats to p. 15). Fonts embedded (Nimbus/Times + CM
   subsets). PDF metadata: Author "Anonymous Authors" (template review mode).
-* Page rasterisation NOT_RUN: no rasteriser is available within the approved
-  install scope (TeX Live + ICML kit only); checks were made from the .aux page
-  map, the log, and a stdlib content-stream inspector (table text >= 7 pt).
+* v4.2: all 15 pages rasterised locally with PyMuPDF 1.28.2 (user venv) and
+  pp. 1, 4, 8, 15 inspected; earlier versions relied on the .aux page map, the log
+  and a stdlib content-stream inspector.
 * SUBMISSION_READY = false (TARGET_YEAR 2027, TEMPLATE_YEAR 2026; proofs
   self-checked only; novelty UNVERIFIED).
 

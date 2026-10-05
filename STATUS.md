@@ -1,5 +1,28 @@
 # STATUS — P2: What Can Missing-Modality Evaluations Identify under Selective Observation?
 
+## Update (seventh session, 2026-10-05): validity-first order fixed; v4.2 PDF; REVIEW_BRIEF
+* State read: HEAD aa0afa3 = origin, clean; CLEAN1 config/raw/model hashes unchanged
+  (31c51ae4…, 505f6c2f…, 45132075…); frozen.
+* Code (RESEARCH_PACKET §16): `observation.analyse` enforces valid set non-empty →
+  bounds → endpoint attainment with per-setting required strata (B ≠ D), exact
+  rational certificates, labels EMPTY_VALID_MODEL / LP_INFEASIBLE /
+  VALID_ENDPOINT_ATTAINED / VALID_ENDPOINT_CLOSURE_ONLY / NUMERIC_UNRESOLVED;
+  `gamma_min_scoped` with explicit conditional definitions and support cases.
+  6 boundary fixtures; 45 tests PASS (9 s wall, 1 thread). Frozen B/D rows re-derived
+  through the new order: identical categories (45 s wall / 45 CPU-s, 1 thread).
+* Prior check findings re-labelled: 11 VALID_FIXED, 7 PENDING (not defect-free).
+* Manuscript v4.2 (`paper/main.tex`, `paper/main.pdf`, sha256 2223a741ed410c18b62b7a6ce99894567cdd21fbf24248065ab4797ef8517e54): 15 pages,
+  0 errors / 0 undefined / 0 overfull; Conclusion ends p. 8; metadata Author
+  "Anonymous Authors". All 15 pages rasterised with PyMuPDF 1.28.2 (AGPL-3.0 /
+  Artifex dual licence; wheel sha256 397d6715…8227f, 25.8 MB, installed into a new
+  user venv `/home/user/p2-venv` in 7 s) and pp. 1, 4, 8, 15 inspected visually.
+* REVIEW_BRIEF.md written (3 propositions, assumptions, proof/code lines, the
+  correction, 3 open questions). Reviewer: HUMAN_REVIEW_UNASSIGNED.
+* Labels: NUMERICAL_IMPLEMENTATION_CHECKED_WITHIN_SCOPE · HUMAN_REVIEW_UNASSIGNED ·
+  NOVELTY_NOT_ESTABLISHED. SUBMISSION_READY = false. No new experiment started.
+
+---
+
 ## Update (sixth session, 2026-10-02): CLEAN1 frozen; math/statistics corrections; manuscript v4.1 PDF built
 * State read: HEAD 2517b32 = origin, clean tree; Adult hashes unchanged. CLEAN1 is
   frozen as the empirical result (no new training, mask draw, Γ grid or data).

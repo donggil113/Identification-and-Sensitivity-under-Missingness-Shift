@@ -17,7 +17,7 @@ from run_p2_first_run import build_scenario, build_envs
 from run_p2_clean1 import parse_label_strict, canonical_key, split_clean
 from msid.pilot import parse_adult, entity_key, coarse_x, TableModels, loss_tables, mask_probability
 from msid.finite_model import FiniteJoint, all_x
-from msid.observation import build, truth_from_policy, required_positive_rhos, valid_set_eta, gamma_min_closed_form, gamma_cc_squared
+from msid.observation import build, truth_from_policy, required_positive_rhos, valid_set_eta, gamma_min_closed_form, gamma_cc_squared, analyse, gamma_min_scoped
 from msid.io_utils import frac
 
 t0, c0 = time.time(), time.process_time()
@@ -31,12 +31,20 @@ def rows_for(tag, truth, D, grid):
         "gamma_min_obs_squared": frac(g2), "gamma_min_obs": (float(g2) ** 0.5 if g2 is not None else None),
         "gamma_true_squared": frac(gt), "gamma_true": (float(gt) ** 0.5 if gt is not None else None),
         "note": reason or "closed form for settings C and D (same value); Gamma_min(o) <= Gamma_true"}
+    sc = gamma_min_scoped(truth)
+    out["gamma_thresholds"][tag]["scoped_status"] = sc["status"]
     for s in ("B_cc_only", "D_conditionals"):
         for g in grid:
             b = build(truth, s, pg(g))
             eta, ok = valid_set_eta(b, required_positive_rhos(b, s))
+            # v4.2 ordered analysis: validity first, bounds only for a non-empty valid set
+            an = analyse(b, D, s)
             out["rows"].append({"source": tag, "setting": s, "gamma_cc": g, "eta_max": frac(eta), "certified": ok,
-                                "valid_set": "EMPTY" if eta == 0 else "NONEMPTY"})
+                                "valid_set": "EMPTY" if eta == 0 else "NONEMPTY",
+                                "ordered_status": an["status"], "required_strata": an["required_strata"],
+                                "lo": frac(an.get("lo")), "hi": frac(an.get("hi")),
+                                "lo_status": an.get("lo_status"), "hi_status": an.get("hi_status"),
+                                "category": an.get("category"), "exactness": an["exactness"]})
 
 cfg1 = json.load(open(os.path.join(ROOT, "configs", "p2_first_run.json")))
 J1, _, _, q1, _, _, D1 = build_scenario(cfg1)

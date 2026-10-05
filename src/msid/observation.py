@@ -538,3 +538,130 @@ def gamma_min_closed_form(t: Truth):
         if pos:
             worst = max(worst, max(pos) / min(pos))
     return worst, None
+
+
+# ---------------------------------------------------------------------------
+# v4.2: ordered analysis  (valid set non-empty  ->  bounds  ->  endpoints)
+# ---------------------------------------------------------------------------
+# Notation.  P_Gamma = closed relaxed polytope (the LP set); R_plus = strata
+# whose positive mass the setting's information presupposes (B: complete
+# stratum; D: complete stratum and every stratum whose conditional law is
+# given; A, C: none, every rho is fixed by the data);
+# F_Gamma = {x in P_Gamma : rho_r(x) > 0 for all r in R_plus}.
+# Standard fact used (no new result): P_Gamma closed convex, rho linear.  If
+# F_Gamma != {} and x_plus has every required rho > 0 then every x in P_Gamma
+# is the limit of x_eps = (1-eps) x + eps x_plus in F_Gamma, so
+# cl(F_Gamma) = P_Gamma; if F_Gamma = {} then cl(F_Gamma) = {} and no
+# point or interval of P_Gamma is a closure bound of any valid model.
+# All quantities below are exact rationals; "NUMERIC" labels appear only when
+# an input box came from floating-point data (finite_sample.hoeffding_box,
+# which adds a 1e-9 slack before outward rounding) or when a certificate fails.
+
+STATUS_EMPTY = "EMPTY_VALID_MODEL"
+STATUS_LP_INFEASIBLE = "LP_INFEASIBLE"
+STATUS_ATTAINED = "VALID_ENDPOINT_ATTAINED"
+STATUS_CLOSURE = "VALID_ENDPOINT_CLOSURE_ONLY"
+STATUS_NUMERIC = "NUMERIC_UNRESOLVED"
+
+
+def required_strata(setting: str, built: Built) -> List[str]:
+    """R_plus per setting, spelled out (no sharing between B and D)."""
+    if setting == "A_oracle_w" or setting == "C_cc_plus_unlab":
+        return []
+    if setting == "B_cc_only":
+        return ["rho_full"]
+    if setting == "D_conditionals":
+        given = [n for n in built.names if n.startswith("rho(")]
+        return ["rho_full"] + given
+    raise ValueError(setting)
+
+
+def analyse(built: Built, table, setting: str, numeric_input: bool = False) -> dict:
+    """Ordered analysis of one (setting, Gamma) instance.
+
+    Returns a dict with
+      status      : EMPTY_VALID_MODEL | LP_INFEASIBLE | OK | NUMERIC_UNRESOLVED
+      eta_max     : max over P_Gamma of min_{r in R_plus} rho_r (None if R_plus = {})
+      lo, hi      : inf / sup of the objective over F_Gamma (= over P_Gamma when
+                    F_Gamma != {}), only when status == OK
+      lo_status, hi_status : VALID_ENDPOINT_ATTAINED / VALID_ENDPOINT_CLOSURE_ONLY
+      eta_lo, eta_hi : max eta with every required rho >= eta at that endpoint
+      category    : sign category (classify_sign) or EMPTY_VALID_MODEL
+      exactness   : EXACT (rational data) or NUMERIC_BOX (box from float data)
+    Nothing after the validity step is computed when the valid set is empty.
+    """
+    req = required_strata(setting, built)
+    out = {"setting": setting, "required_strata": req,
+           "exactness": "NUMERIC_BOX" if numeric_input else "EXACT"}
+    eta_max, ok = valid_set_eta(built, req)
+    out["eta_max"] = eta_max
+    if not ok:
+        out["status"] = STATUS_NUMERIC
+        return out
+    if req and eta_max == 0:
+        # distinguish an empty LP set from a non-empty LP set without valid point
+        probe = solve_lp([Q(0)] * len(built.names), built.A, built.b, built.lower, built.upper, "min")
+        out["status"] = STATUS_LP_INFEASIBLE if probe.status != "OPTIMAL" else STATUS_EMPTY
+        out["category"] = out["status"]
+        return out
+    iv = interval(built, table)
+    if iv.status != "OPTIMAL":
+        out["status"] = STATUS_LP_INFEASIBLE
+        out["category"] = STATUS_LP_INFEASIBLE
+        return out
+    if not iv.certified:
+        out["status"] = STATUS_NUMERIC
+        return out
+    out.update({"status": "OK", "lo": iv.lo, "hi": iv.hi})
+    if req:
+        (elo, ok1), (ehi, ok2) = endpoint_eta(built, table, iv.lo, req), endpoint_eta(built, table, iv.hi, req)
+        if not (ok1 and ok2):
+            out["status"] = STATUS_NUMERIC
+            return out
+        out.update({"eta_lo": elo, "eta_hi": ehi,
+                    "lo_status": STATUS_ATTAINED if elo > 0 else STATUS_CLOSURE,
+                    "hi_status": STATUS_ATTAINED if ehi > 0 else STATUS_CLOSURE})
+        out["category"] = classify_sign(iv.lo, iv.hi, elo > 0, ehi > 0, valid=True)
+    else:
+        out.update({"eta_lo": None, "eta_hi": None, "lo_status": STATUS_ATTAINED, "hi_status": STATUS_ATTAINED})
+        out["category"] = classify_sign(iv.lo, iv.hi)
+    return out
+
+
+def gamma_min_scoped(t: Truth):
+    """Scope-checked observable threshold for settings C and D.
+
+    Definitions (all CONDITIONAL quantities):
+      v_c      = P(C=c | R=complete)                    complete-case law
+      mu_r(o)  = P(X_r=o | R=r)                         stratum conditional law
+      V_r(o)   = sum_{c: x_r(c)=o} v_c                  complete-case group mass
+    over incomplete strata r with rho_r > 0 (strata with rho_r = 0 are not
+    sampled, impose nothing and are excluded).  Model: free scale lambda_r > 0,
+    Gamma >= 1, normalisation sum_c P_r(c) = 1, absolute continuity.
+    Cases per group (r, o):
+      V=0, mu>0 : SUPPORT_INCOMPATIBLE  -- no finite Gamma (ratio bound forces P_r(c)=0 on the group)
+      V=0, mu=0 : excluded from the relevant support (no ratio is formed)
+      V>0, mu=0 : NO_FINITE_GAMMA -- with rho_r > 0 required and P_r(c) >= lambda_r v_c / Gamma > 0
+                  the group mass cannot be 0 for any finite Gamma
+      V>0, mu>0 : ratio r_r(o) = mu/V enters the spread
+    Returns dict(status, gamma_min_squared, offending).
+    """
+    worst = Q(1)
+    for r in t.joint.patterns():
+        if r == t.full or t.rho[r] == 0:
+            continue
+        ratios = []
+        for (rr, o), mu in t.mu.items():
+            if rr != r:
+                continue
+            V = sum((t.v[c] for c in t.joint.cells() if observe(c[0], r) == o), Q(0))
+            if V == 0 and mu > 0:
+                return {"status": "SUPPORT_INCOMPATIBLE", "gamma_min_squared": None, "offending": (r, o)}
+            if V == 0 and mu == 0:
+                continue
+            if V > 0 and mu == 0:
+                return {"status": "NO_FINITE_GAMMA", "gamma_min_squared": None, "offending": (r, o)}
+            ratios.append(mu / V)
+        if ratios:
+            worst = max(worst, max(ratios) / min(ratios))
+    return {"status": "OK", "gamma_min_squared": worst, "offending": None}
