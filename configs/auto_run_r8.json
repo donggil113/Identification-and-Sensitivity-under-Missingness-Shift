@@ -1,0 +1,65 @@
+{
+ "run_id": "P2-R8-DELIVERY-2026-10-11",
+ "project": "P2",
+ "manuscript_version": "v4.2",
+ "source_commit": "68e6d1a",
+ "allowed_stages": [
+  "verify_source_and_pdf",
+  "copy_pdf_byte_identical",
+  "render_all_pages_and_view",
+  "package_source_zip",
+  "write_delivery_json",
+  "commit_push_deliverables"
+ ],
+ "forbidden": [
+  "new training",
+  "new data",
+  "mask draws",
+  "Gamma grid",
+  "LP sweep",
+  "theorem variants",
+  "manuscript content edits",
+  "PDF rebuild unless source changed"
+ ],
+ "inputs": {
+  "paper/main.pdf": "2223a741ed410c18b62b7a6ce99894567cdd21fbf24248065ab4797ef8517e54",
+  "paper/main.tex": "21500ccdc810bb7b435b3764fbe9bfd10447c895c4d30159f914c6913ec91d41",
+  "paper/references.bib": "eaeb83a0404b598f2dbb594e993c00ce220d75aa0ec349bf0257c9b63ff46be3",
+  "paper/tab_relatedwork.tex": "3debc46a8138baa4bdab13753bdd571324e7f897e0e87f02962be2262d7504f7",
+  "paper/icml2026.sty": "7cdcf90f6a59c5219e7f15c88f7ed09fcaf598dad91e6cdddc4dc3cb0e397a95",
+  "paper/icml2026.bst": "0ec3d5eb9b02efb7e0b44a32f3775882f42a743d0bdc618f34e6936309b98764"
+ },
+ "rebuild_rule": "main.pdf is byte-identical to HEAD and its sha256 matches paper/README.md -> no rebuild",
+ "runs": 1,
+ "seed": null,
+ "splits": "none (no experiment)",
+ "estimand": "none (delivery only)",
+ "comparators": "none",
+ "solver_precision": "n/a (no computation beyond hashing/rendering)",
+ "stop_conditions": [
+  "sha256 mismatch between paper/main.pdf and README record",
+  "page count != 15",
+  "source zip missing a file referenced by main.tex",
+  "identity string found in anonymous zip"
+ ],
+ "budgets": {
+  "wall_s": 600,
+  "cpu_s": 300,
+  "ram_gb": 2,
+  "new_disk_mb": 50,
+  "downloads": "none"
+ },
+ "renderer": {
+  "pymupdf": "1.28.2 (existing user venv /home/user/p2-venv)",
+  "dpi": 110
+ },
+ "next_command_on_resume": "none: all stages complete",
+ "stage_evidence": {
+  "verify_source_and_pdf": "HEAD 68e6d1a = origin; main.pdf identical to HEAD; sha256 2223a741\u2026",
+  "copy_pdf_byte_identical": "2223a741ed410c18b62b7a6ce99894567cdd21fbf24248065ab4797ef8517e54",
+  "render_all_pages_and_view": "15/15 pages seen (4 on 2026-10-05, 11 on 2026-10-11)",
+  "package_source_zip": "933edd5a9d3f4ab9c53465bc1a5fc161c89901bad9a33c551157d8e5b15da930",
+  "write_delivery_json": "90d352e8bb1d6a53413828e07145bedf5f5261374139a292521a6f170fb984da",
+  "commit_push_deliverables": "pending at write time"
+ }
+}

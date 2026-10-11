@@ -1,5 +1,21 @@
 # STATUS — P2: What Can Missing-Modality Evaluations Identify under Selective Observation?
 
+## Update (R8, 2026-10-11): delivery of the frozen v4.2 PDF — no research change
+* HEAD 68e6d1a = origin at start; paper/main.pdf byte-identical to HEAD (sha256 2223a741…,
+  403,805 bytes, 15 pages, %PDF-1.7); not rebuilt. Delivered as
+  `deliverables/P2_v4.2_68e6d1a.pdf` (byte-identical copy), `deliverables/P2_source.zip`
+  (tex/bib/stored tables/unmodified ICML 2026 kit/BUILD.md), `deliverables/P2_delivery.json`.
+* All 15 pages now seen at least once (pp. 1,4,8,15 on 2026-10-05 at the same hash;
+  pp. 2,3,5–7,9–14 on 2026-10-11; PyMuPDF 1.28.2, 110 dpi). Conclusion ends on p. 8.
+* Contract `configs/auto_run_r8.json`: delivery stages only; no training/data/masks/Γ grid/
+  LP sweep/theorem variants; the validity→bounds→endpoint order was not re-run.
+* Status unchanged: CLEAN1 frozen (expected-mask repair validation, no population CI);
+  EMPTY_VALID_MODEL ≠ relaxed-LP feasible; Γ_true ≠ Γ_min(o); NOVELTY_NOT_ESTABLISHED;
+  HUMAN_REVIEW_UNASSIGNED; SUBMISSION_READY=false. REVIEW_BRIEF.md unchanged.
+* Cost: hashing/zip/render < 5 CPU-s, render 1 s wall; no downloads.
+
+---
+
 ## Update (seventh session, 2026-10-05): validity-first order fixed; v4.2 PDF; REVIEW_BRIEF
 * State read: HEAD aa0afa3 = origin, clean; CLEAN1 config/raw/model hashes unchanged
   (31c51ae4…, 505f6c2f…, 45132075…); frozen.

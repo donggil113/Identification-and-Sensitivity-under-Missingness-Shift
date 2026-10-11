@@ -1,0 +1,141 @@
+{
+ "project": "P2",
+ "manuscript_version": "v4.2",
+ "source_commit": "68e6d1a",
+ "source_commit_full": "68e6d1acf787aea0092be2843d26c6457675f1c9",
+ "branch": "claude/keen-franklin-ua0v00",
+ "pdf": {
+  "path": "deliverables/P2_v4.2_68e6d1a.pdf",
+  "sha256": "2223a741ed410c18b62b7a6ce99894567cdd21fbf24248065ab4797ef8517e54",
+  "bytes": 403805,
+  "pages": 15,
+  "signature": "%PDF-1.7",
+  "byte_identical_to": "paper/main.pdf @ 68e6d1a",
+  "metadata_author": "Anonymous Authors",
+  "title": "What Can Missing-Modality Evaluations Identify under Selective Observation? A Finite-Support Analysis"
+ },
+ "body_end_page": 8,
+ "body_end_evidence": "label end:main after the last sentence of the Conclusion (main.aux of the 2026-10-05 build); page limit of the provisional 2026 style = 8",
+ "style": {
+  "template_year": 2026,
+  "target_year": 2027,
+  "kit": "icml2026.zip sha256 8b29290f5828e176debb57ea9cc00252502973d55ea561a2f18a7f0a326bfc6c",
+  "mode": "anonymous review (\\usepackage{icml2026})",
+  "files_unmodified": true
+ },
+ "build": {
+  "toolchain": "TeX Live 2026 scheme-basic + packages (user dir /home/user/texlive-local), pdfTeX 1.40.29, latexmk 4.88",
+  "command_executed_for_this_pdf": "latexmk -pdf -interaction=nonstopmode main.tex (2026-10-05; shell-escape not enabled in this TeX Live configuration; -halt-on-error was not passed on that run \u2014 the log shows 0 errors)",
+  "log_checks": "0 errors, 0 undefined references, 0 undefined citations, 0 multiply-defined labels, 0 overfull boxes",
+  "rebuilt_today": false,
+  "reason": "paper/main.pdf byte-identical to HEAD and sha256 equals the paper/README.md record"
+ },
+ "visual_check": {
+  "renderer": "PyMuPDF 1.28.2 (user venv), 110 dpi, all 15 pages rasterised 2026-10-11 (1 s)",
+  "pages_viewed": {
+   "2026-10-05 (same sha256)": [
+    1,
+    4,
+    8,
+    15
+   ],
+   "2026-10-11": [
+    2,
+    3,
+    5,
+    6,
+    7,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ]
+  },
+  "all_pages_seen_at_least_once": true,
+  "notes": "no clipped equations/tables; App. D heading on p.12 with its floats on pp.13-14; Table 8 (appendix) is scaled to column width (cosmetic, unchanged)"
+ },
+ "research_status": {
+  "CLEAN1": "frozen expected-mask repair validation on selected records; no population CI",
+  "distinctions_preserved": [
+   "EMPTY_VALID_MODEL vs relaxed-LP feasible",
+   "Gamma_true vs Gamma_min(observed law)",
+   "B/D required-positive strata and conditional-law support"
+  ],
+  "NEW_METHOD": "NOVELTY_NOT_ESTABLISHED",
+  "HUMAN_REVIEW": "UNASSIGNED",
+  "SUBMISSION_READY": false,
+  "numerical_implementation": "CHECKED_WITHIN_SCOPE (45 unit tests, exact LP certificates)"
+ },
+ "source_zip": {
+  "path": "deliverables/P2_source.zip",
+  "entries": [
+   "P2_source/BUILD.md",
+   "P2_source/algorithm.sty",
+   "P2_source/algorithmic.sty",
+   "P2_source/fancyhdr.sty",
+   "P2_source/icml2026.bst",
+   "P2_source/icml2026.sty",
+   "P2_source/main.tex",
+   "P2_source/references.bib",
+   "P2_source/tab_relatedwork.tex",
+   "P2_source/generated/fig_fr2_intervals_coords.tex",
+   "P2_source/generated/tab_clean1.tex",
+   "P2_source/generated/tab_fr1_gammastar.tex",
+   "P2_source/generated/tab_fr1_intervals.tex",
+   "P2_source/generated/tab_fr2_audit.tex",
+   "P2_source/generated/tab_fr2_finite.tex",
+   "P2_source/generated/tab_fr2_primary.tex",
+   "P2_source/generated/tab_fr2_support.tex",
+   "P2_source/generated/tab_fr2_truths.tex",
+   "P2_source/generated/tab_pilot_compare.tex",
+   "P2_source/generated/tab_pilot_intervals.tex",
+   "P2_source/generated/tab_pilot_summary.tex"
+  ],
+  "third_party": "ICML 2026 kit files included unmodified with notices; no data files; no checkpoints (none exist in this project)"
+ },
+ "files": {
+  "deliverables/P2_v4.2_68e6d1a.pdf": {
+   "sha256": "2223a741ed410c18b62b7a6ce99894567cdd21fbf24248065ab4797ef8517e54",
+   "bytes": 403805
+  },
+  "deliverables/P2_source.zip": {
+   "sha256": "933edd5a9d3f4ab9c53465bc1a5fc161c89901bad9a33c551157d8e5b15da930",
+   "bytes": 59788
+  },
+  "paper/main.tex": {
+   "sha256": "21500ccdc810bb7b435b3764fbe9bfd10447c895c4d30159f914c6913ec91d41",
+   "bytes": 65074
+  },
+  "paper/references.bib": {
+   "sha256": "eaeb83a0404b598f2dbb594e993c00ce220d75aa0ec349bf0257c9b63ff46be3",
+   "bytes": 7468
+  },
+  "paper/tab_relatedwork.tex": {
+   "sha256": "3debc46a8138baa4bdab13753bdd571324e7f897e0e87f02962be2262d7504f7",
+   "bytes": 4613
+  },
+  "paper/icml2026.sty": {
+   "sha256": "7cdcf90f6a59c5219e7f15c88f7ed09fcaf598dad91e6cdddc4dc3cb0e397a95",
+   "bytes": 27344
+  },
+  "paper/icml2026.bst": {
+   "sha256": "0ec3d5eb9b02efb7e0b44a32f3775882f42a743d0bdc618f34e6936309b98764",
+   "bytes": 27147
+  },
+  "REVIEW_BRIEF.md": {
+   "sha256": "0ee1e7e44f3e89075c5e6d73d95b49cc8084833a050ffc39de82800815e8b222",
+   "bytes": 8204
+  }
+ },
+ "r8_contract": "configs/auto_run_r8.json",
+ "costs": {
+  "render_wall_s": 1,
+  "hash_zip_wall_s": "<2",
+  "cpu_s_total": "<5 (hashing, zip, render)",
+  "downloads": "none",
+  "new_disk_mb": 0.46
+ },
+ "created_utc": "2026-10-11T02:50:22Z"
+}
