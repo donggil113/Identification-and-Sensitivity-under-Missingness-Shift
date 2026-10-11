@@ -93,7 +93,8 @@
    "P2_source/generated/tab_pilot_intervals.tex",
    "P2_source/generated/tab_pilot_summary.tex"
   ],
-  "third_party": "ICML 2026 kit files included unmodified with notices; no data files; no checkpoints (none exist in this project)"
+  "third_party": "ICML 2026 kit files included unmodified with notices; no data files; no checkpoints (none exist in this project)",
+  "build_md_note": "BUILD.md states the command actually executed for the delivered PDF (latexmk -pdf -interaction=nonstopmode main.tex) and, separately, the recommended stricter reproduction command; the zip also contains generated/tab_pilot_summary.tex, which main.tex does not \\input (harmless extra stored table)."
  },
  "files": {
   "deliverables/P2_v4.2_68e6d1a.pdf": {
@@ -101,8 +102,8 @@
    "bytes": 403805
   },
   "deliverables/P2_source.zip": {
-   "sha256": "933edd5a9d3f4ab9c53465bc1a5fc161c89901bad9a33c551157d8e5b15da930",
-   "bytes": 59788
+   "sha256": "5c003c17ba053d93b1897ec35e35193b83e30ab2a90456b6602762bf2110092f",
+   "bytes": 59984
   },
   "paper/main.tex": {
    "sha256": "21500ccdc810bb7b435b3764fbe9bfd10447c895c4d30159f914c6913ec91d41",
@@ -137,5 +138,12 @@
   "downloads": "none",
   "new_disk_mb": 0.46
  },
- "created_utc": "2026-10-11T02:50:22Z"
+ "created_utc": "2026-10-11T02:50:22Z",
+ "consistency_check": {
+  "method": "one read-only reviewer agent on fixed commit 68e6d1a (AI check, not human review)",
+  "result": "CONSISTENT 7/7",
+  "duration_s": 61,
+  "notes": "led to the BUILD.md wording correction above; PDF unchanged"
+ },
+ "updated_utc": "2026-10-11T02:51:58Z"
 }
